@@ -1,0 +1,52 @@
+{% extends "base.twig" %}
+{% block content %}
+    <main>
+        <div class="jumbotron">
+            <h1 class="text-center">SUMMA THEOLOGIAE COLONIENSES</h1>
+        </div>
+        <div class="container-fluid">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Latein</th>
+                        <th>Deutsch</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                {% for book in books %}
+                    <tr>
+                        <td><strong>{{ book.title_lat }}</strong></td>
+                        <td><strong>{{ book.title_ger }}</strong></td>
+                        <td></td>
+                    </tr>
+                    {% for question in book.questions %}
+                        <tr>
+                            <td class="pl-4"><u>{% if question.type != "quaestio" %}{{ question.type|capitalize }}{% else %}{{ question.type|capitalize }} {{ question.order }}{% if question.title_lat %}: {{ question.title_lat }}{% endif %}{% endif %}</u></td>
+                            <td class="pl-4"><u>{% if question.type != "quaestio" %}{{ question.type|capitalize }}{% else %}{{ question.type|capitalize }} {{ question.order }}{% if question.title_ger %}: {{ question.title_ger }}{% endif %}{% endif %}</u></td>
+                            <td></td>
+                        </tr>
+                        {% for article in question.articles %}
+                            <tr>
+                                <td class="pl-5">{% if article.title_lat %}{{ article.type|capitalize }}{% if article.order != 0 %} {{ article.order }}{% endif %}: {{ article.title_lat }}{% else %}<i>{{ article.type|capitalize }} {% if article.order != 0 %}{{ article.order }}{% endif %}</i>{% endif %}</td>
+                                <td class="pl-5">{% if article.title_ger %}{{ article.type|capitalize }}{% if article.order != 0 %} {{ article.order }}{% endif %}: {{ article.title_ger }}{% else %}<i>{{ article.type|capitalize }} {% if article.order != 0 %}{{ article.order }}{% endif %}</i>{% endif %}</td>
+                                {% if article.status == 0 %}
+                                    <td><span class="badge badge-warning">nicht vergeben</span></td>
+                                {% elseif article.status == 1 %}
+                                    <td><span class="badge badge-info">vergeben/in Arbeit</span></td>
+                                {% elseif article.status == 2%}
+                                    <td><span class="badge badge-success">abgeschlossen</span></td>
+                                {% else %}
+                                    <td><span class="badge badge-alert">kein Status</span></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+        {% endblock %}
+
+
