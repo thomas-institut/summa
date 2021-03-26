@@ -12,7 +12,6 @@
 namespace App;
 
 use App\Http\Controllers\Controller;
-use App\Http\Operations\Users\UserManager;
 use App\Http\Operations\WebManager;
 use Rareloop\Lumberjack\Http\Responses\TimberResponse;
 use Rareloop\Lumberjack\Http\ServerRequest;
@@ -25,7 +24,7 @@ class PageController extends Controller
     public function handle(ServerRequest $request)
     {
         $webInfo=WebManager::get($request);
-        $user=UserManager::get($request);
+
         $context = Timber::get_context();
         $page = new Page();
 
@@ -33,6 +32,6 @@ class PageController extends Controller
         $context['title'] = $page->title;
         $context['content'] = $page->content;
 
-        return new TimberResponse('templates/generic-page.twig', [ "webInfo"=>$webInfo, "user"=>$user, "wp"=>$context]);
+        return new TimberResponse('templates/generic-page.twig', [ "webInfo"=>$webInfo, "wp"=>$context]);
     }
 }
