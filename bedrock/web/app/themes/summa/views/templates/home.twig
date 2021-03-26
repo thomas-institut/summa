@@ -16,20 +16,20 @@
 
                 {% for book in books %}
                     <tr>
-                        <td><strong>{{ book.title_lat }}</strong></td>
-                        <td><strong>{{ book.title_ger }}</strong></td>
+                        <td><strong><a href="{{ webInfo.baseurl }}books/{{ book.id }}">{{ book.title_lat }}</a></strong></td>
+                        <td><strong><a href="{{ webInfo.baseurl }}books/{{ book.id }}">{{ book.title_ger }}</a></strong></td>
                         <td></td>
                     </tr>
                     {% for question in book.questions %}
                         <tr>
-                            <td class="pl-4"><u>{% if question.type != "quaestio" %}{{ question.type|capitalize }}{% else %}{{ question.type|capitalize }} {{ question.order }}{% if question.title_lat %}: {{ question.title_lat }}{% endif %}{% endif %}</u></td>
-                            <td class="pl-4"><u>{% if question.type != "quaestio" %}{{ question.type|capitalize }}{% else %}{{ question.type|capitalize }} {{ question.order }}{% if question.title_ger %}: {{ question.title_ger }}{% endif %}{% endif %}</u></td>
+                            <td class="pl-4"><u><a href="{{ webInfo.baseurl }}books/{{ book.id }}/questions/{{ question.order }}">{% if question.type != "quaestio" %}{{ question.type|capitalize }}{% else %}{{ question.type|capitalize }} {{ question.order }}{% if question.title_lat %}: {{ question.title_lat }}{% endif %}{% endif %}</a></u></td>
+                            <td class="pl-4"><u><a href="{{ webInfo.baseurl }}books/{{ book.id }}/questions/{{ question.order }}">{% if question.type != "quaestio" %}{{ question.type|capitalize }}{% else %}{{ question.type|capitalize }} {{ question.order }}{% if question.title_ger %}: {{ question.title_ger }}{% endif %}{% endif %}</a></u></td>
                             <td></td>
                         </tr>
                         {% for article in question.articles %}
                             <tr>
-                                <td class="pl-5">{% if article.title_lat %}{{ article.type|capitalize }}{% if article.order != 0 %} {{ article.order }}{% endif %}: {{ article.title_lat }}{% else %}<i>{{ article.type|capitalize }} {% if article.order != 0 %}{{ article.order }}{% endif %}</i>{% endif %}</td>
-                                <td class="pl-5">{% if article.title_ger %}{{ article.type|capitalize }}{% if article.order != 0 %} {{ article.order }}{% endif %}: {{ article.title_ger }}{% else %}<i>{{ article.type|capitalize }} {% if article.order != 0 %}{{ article.order }}{% endif %}</i>{% endif %}</td>
+                                <td class="pl-5"><a href="{{ webInfo.baseurl }}books/{{ book.id }}/questions/{{ question.order }}/articles/{{ article.order }}">{% if article.title_lat %}{{ article.type|capitalize }}{% if article.order != 0 %} {{ article.order }}{% endif %}: {{ article.title_lat }}{% else %}<i>{{ article.type|capitalize }} {% if article.order != 0 %}{{ article.order }}{% endif %}</i>{% endif %}</a></td>
+                                <td class="pl-5"><a href="{{ webInfo.baseurl }}books/{{ book.id }}/questions/{{ question.order }}/articles/{{ article.order }}">{% if article.title_ger %}{{ article.type|capitalize }}{% if article.order != 0 %} {{ article.order }}{% endif %}: {{ article.title_ger }}{% else %}<i>{{ article.type|capitalize }} {% if article.order != 0 %}{{ article.order }}{% endif %}</i>{% endif %}</a></td>
                                 {% if article.status == 0 %}
                                     <td><span class="badge badge-warning">nicht vergeben</span></td>
                                 {% elseif article.status == 1 %}

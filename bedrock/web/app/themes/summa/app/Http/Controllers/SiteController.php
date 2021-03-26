@@ -20,16 +20,13 @@ class SiteController extends StandardController
 
     public function home(ServerRequest $request){
 
+        $webInfo=WebManager::get($request);
+        $books = Book::with("questions")->get();
 
-        $books = Book::with("questions")->get()->toArray();
-
-        $text="Because the Teacher of Catholic
-         truth ought not only to teach the proficient, but also to instruct beginners, according to the Apostle: ***As unto little*** [^1] ones in Christ, I gave you milk to drink, not meat (1 Cor 3:1–2), we purpose in this book to treat of whatever belongs to the Christian religion in such a way as may befit the instruction of beginners.
-
-[^1]: This is the first footnote.";
+        $books = $books->makeHidden(["content_lat"]);
 
 
-        $webInfo["markdown2"]=MarkdownExtra::defaultTransform($text);
+
 
 
         return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo, "books" => $books]);
@@ -60,9 +57,17 @@ class SiteController extends StandardController
      */
     public function book(ServerRequest $request, $bookId){
         $webInfo=WebManager::get($request);
-        error_log($bookId);
+        $articles = Article::whereHas('question', function ($q) use ( $bookId){
+                $q->whereHas('book', function ($q2) use ($bookId) {
+                    $q2->where("id", $bookId);
+                });
+        })->get()->toArray();
+        for ($i=0; $i < count($articles); $i++){
+            $articles[$i]["content_lat"]=MarkdownExtra::defaultTransform($articles[$i]["content_lat"]);
+            $articles[$i]["content_ger"]=MarkdownExtra::defaultTransform($articles[$i]["content_ger"]);
+        }
         try {
-            return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo]);
+            return new TimberResponse('views/templates/articles.twig', [ "webInfo"=>$webInfo, "articles"=>$articles]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
@@ -97,10 +102,18 @@ class SiteController extends StandardController
      */
     public function question(ServerRequest $request, $bookId, $questionOrder){
         $webInfo=WebManager::get($request);
-        error_log($bookId);
-        error_log($questionOrder);
+        $articles = Article::whereHas('question', function ($q) use ($questionOrder, $bookId){
+            $q->where("order", $questionOrder)
+                ->whereHas('book', function ($q2) use ($bookId) {
+                    $q2->where("id", $bookId);
+                });
+        })->get()->toArray();
+        for ($i=0; $i < count($articles); $i++){
+            $articles[$i]["content_lat"]=MarkdownExtra::defaultTransform($articles[$i]["content_lat"]);
+            $articles[$i]["content_ger"]=MarkdownExtra::defaultTransform($articles[$i]["content_ger"]);
+        }
         try {
-            return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo]);
+            return new TimberResponse('views/templates/articles.twig', [ "webInfo"=>$webInfo, "articles"=>$articles]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
@@ -138,12 +151,24 @@ class SiteController extends StandardController
      */
     public function article(ServerRequest $request, $bookId, $questionOrder, $articleOrder){
         $webInfo=WebManager::get($request);
-        $question = Article::where("id", "=", $articleOrder)->first()->toArray();
-        $question["content_lat"]=MarkdownExtra::defaultTransform($question["content_lat"]);
-        $question["content_ger"]=MarkdownExtra::defaultTransform($question["content_ger"]);
-        error_log(print_r($question, true));
+        //$question = Article::where("id", "=", $articleOrder)->first()->toArray();
+        $articles = Article::where("order", "=", $articleOrder )->whereHas('question', function ($q) use ($questionOrder, $bookId){
+            $q->where("order", $questionOrder)
+            ->whereHas('book', function ($q2) use ($bookId) {
+                $q2->where("id", $bookId);
+            });
+        })->get()->toArray();
+        error_log(print_r($articles, true));
+
+        for ($i=0; $i < count($articles); $i++){
+            $articles[$i]["content_lat"]=MarkdownExtra::defaultTransform($articles[$i]["content_lat"]);
+            $articles[$i]["content_ger"]=MarkdownExtra::defaultTransform($articles[$i]["content_ger"]);
+        }
+
+
+        error_log(print_r($articles, true));
         try {
-            return new TimberResponse('views/templates/question.twig', [ "webInfo"=>$webInfo, "question"=>$question]);
+            return new TimberResponse('views/templates/articles.twig', [ "webInfo"=>$webInfo, "articles"=>$articles]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);

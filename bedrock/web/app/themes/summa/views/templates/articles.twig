@@ -1,0 +1,36 @@
+{% extends "base.twig" %}
+{% block content %}
+    <main>
+        <div class="jumbotron">
+            <h1 class="text-center">SUMMA THEOLOGIAE COLONIENSES</h1>
+        </div>
+        <div class="container">
+            {% for article in articles %}
+                <div class="container-fluid justify-content-around d-flex flex-row">
+                    <div class="card w-50">
+                        <div class="card-header">
+                            {{ article.title_lat }}
+                        </div>
+                        <div class="card-body">
+                            {{ article.content_lat }}
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                    <div class="card w-50">
+                        <div class="card-header">
+                            {{ article.title_ger }}
+                        </div>
+                        <div class="card-body">
+                            {{ article.content_ger }}
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+    </main>
+        {% endblock %}
+
+
