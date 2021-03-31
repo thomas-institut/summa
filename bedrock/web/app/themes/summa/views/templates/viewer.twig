@@ -2,7 +2,7 @@
 {% block content %}
     <main>
 
-        <div class="container mt-5">
+        <div class="container mt-5 viewer-container">
             <table class="table">
                 {% for work in works %}
                     <tr>
@@ -38,7 +38,9 @@
             </table>
         </div>
 
+
     </main>
+    {% include "templates/viewer.navigation.twig" %}
         {% endblock %}
 
 
