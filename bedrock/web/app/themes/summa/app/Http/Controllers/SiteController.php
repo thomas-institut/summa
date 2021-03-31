@@ -17,6 +17,8 @@ use Rareloop\Lumberjack\Http\Controller as BaseController;
 use Rareloop\Lumberjack\Http\Responses\TimberResponse;
 use Rareloop\Lumberjack\Http\ServerRequest;
 use Illuminate\Container\Container;
+use Timber\Post;
+
 
 class SiteController extends StandardController
 {
@@ -27,6 +29,7 @@ class SiteController extends StandardController
 
         $webInfo=WebManager::get($request);
         $works = Work::with("books")->get();
+        error_log(print_r(\Rareloop\Lumberjack\Post::all(), true));
 
 
 
