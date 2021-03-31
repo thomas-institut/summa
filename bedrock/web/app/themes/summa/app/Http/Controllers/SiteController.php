@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Article;
 use App\Http\Models\Book;
-use App\Http\Models\Question;
+use App\Http\Models\Chapter;
+use App\Http\Models\Chunk;
+use App\Http\Models\Work;
+use App\Http\Operations\Output;
 use App\Http\Operations\WebManager;
+
+use Illuminate\Database\Eloquent\Builder;
 use Michelf\MarkdownExtra;
 use Rareloop\Lumberjack\Exceptions\TwigTemplateNotFoundException;
 use Rareloop\Lumberjack\Http\Controller as BaseController;
@@ -21,27 +26,28 @@ class SiteController extends StandardController
     public function home(ServerRequest $request){
 
         $webInfo=WebManager::get($request);
-        $books = Book::with("questions")->get();
-
-        $books = $books->makeHidden(["content_lat"]);
+        $works = Work::with("books")->get();
 
 
 
 
 
-        return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo, "books" => $books]);
+
+        return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo, "works" => $works]);
     }
 
+
     /**
-     * show all books
      * @param ServerRequest $request
+     * @param $workId
      * @return TimberResponse
      * @throws TwigTemplateNotFoundException
      */
-    public function books(ServerRequest $request){
+    public function work (ServerRequest $request, $workId){
         $webInfo=WebManager::get($request);
+        $works = Output::create($workId);
         try {
-            return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo]);
+            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
@@ -49,126 +55,58 @@ class SiteController extends StandardController
     }
 
     /**
-     * get a specific book by id
      * @param ServerRequest $request
+     * @param $workId
      * @param $bookId
      * @return TimberResponse
-     * @throws \Rareloop\Lumberjack\Exceptions\TwigTemplateNotFoundException
+     * @throws TwigTemplateNotFoundException
      */
-    public function book(ServerRequest $request, $bookId){
+    public function book(ServerRequest $request, $workId, $bookId){
         $webInfo=WebManager::get($request);
-        $articles = Article::whereHas('question', function ($q) use ( $bookId){
-                $q->whereHas('book', function ($q2) use ($bookId) {
-                    $q2->where("id", $bookId);
-                });
-        })->get()->toArray();
-        for ($i=0; $i < count($articles); $i++){
-            $articles[$i]["content_lat"]=MarkdownExtra::defaultTransform($articles[$i]["content_lat"]);
-            $articles[$i]["content_ger"]=MarkdownExtra::defaultTransform($articles[$i]["content_ger"]);
-        }
+        $works=Output::create($workId, $bookId);
         try {
-            return new TimberResponse('views/templates/articles.twig', [ "webInfo"=>$webInfo, "articles"=>$articles]);
+            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
         }
     }
 
+
     /**
-     * show all questions of specific book
      * @param ServerRequest $request
+     * @param $workId
      * @param $bookId
+     * @param $chapterId
      * @return TimberResponse
      * @throws TwigTemplateNotFoundException
      */
-    public function questions(ServerRequest $request, $bookId){
+    public function chapter(ServerRequest $request, $workId, $bookId, $chapterId){
         $webInfo=WebManager::get($request);
-        error_log($bookId);
+        $works=Output::create($workId, $bookId, $chapterId);
         try {
-            return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo]);
+            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
         }
     }
 
+
     /**
-     * get a specific question by bookid and question order
      * @param ServerRequest $request
+     * @param $workId
      * @param $bookId
-     * @param $questionOrder
+     * @param $chapterId
+     * @param $articleId
      * @return TimberResponse
      * @throws TwigTemplateNotFoundException
      */
-    public function question(ServerRequest $request, $bookId, $questionOrder){
+    public function article(ServerRequest $request, $workId, $bookId, $chapterId, $articleId){
         $webInfo=WebManager::get($request);
-        $articles = Article::whereHas('question', function ($q) use ($questionOrder, $bookId){
-            $q->where("order", $questionOrder)
-                ->whereHas('book', function ($q2) use ($bookId) {
-                    $q2->where("id", $bookId);
-                });
-        })->get()->toArray();
-        for ($i=0; $i < count($articles); $i++){
-            $articles[$i]["content_lat"]=MarkdownExtra::defaultTransform($articles[$i]["content_lat"]);
-            $articles[$i]["content_ger"]=MarkdownExtra::defaultTransform($articles[$i]["content_ger"]);
-        }
+        $works=Output::create($workId, $bookId, $chapterId, $articleId);
         try {
-            return new TimberResponse('views/templates/articles.twig', [ "webInfo"=>$webInfo, "articles"=>$articles]);
-        }
-        catch (TwigTemplateNotFoundException $e){
-            return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
-        }
-    }
-
-    /**
-     * show all articles of specific question in specific book
-     * @param ServerRequest $request
-     * @param $bookId
-     * @param $questionOrder
-     * @return TimberResponse
-     * @throws TwigTemplateNotFoundException
-     */
-    public function articles(ServerRequest $request, $bookId, $questionOrder){
-        $webInfo=WebManager::get($request);
-        error_log($bookId);
-        error_log($questionOrder);
-        try {
-            return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo]);
-        }
-        catch (TwigTemplateNotFoundException $e){
-            return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
-        }
-    }
-
-    /**
-     * get a specific article by bookid, question order and article order
-     * @param ServerRequest $request
-     * @param $bookId
-     * @param $questionOrder
-     * @param $articleOrder
-     * @return TimberResponse
-     * @throws TwigTemplateNotFoundException
-     */
-    public function article(ServerRequest $request, $bookId, $questionOrder, $articleOrder){
-        $webInfo=WebManager::get($request);
-        //$question = Article::where("id", "=", $articleOrder)->first()->toArray();
-        $articles = Article::where("order", "=", $articleOrder )->whereHas('question', function ($q) use ($questionOrder, $bookId){
-            $q->where("order", $questionOrder)
-            ->whereHas('book', function ($q2) use ($bookId) {
-                $q2->where("id", $bookId);
-            });
-        })->get()->toArray();
-        error_log(print_r($articles, true));
-
-        for ($i=0; $i < count($articles); $i++){
-            $articles[$i]["content_lat"]=MarkdownExtra::defaultTransform($articles[$i]["content_lat"]);
-            $articles[$i]["content_ger"]=MarkdownExtra::defaultTransform($articles[$i]["content_ger"]);
-        }
-
-
-        error_log(print_r($articles, true));
-        try {
-            return new TimberResponse('views/templates/articles.twig', [ "webInfo"=>$webInfo, "articles"=>$articles]);
+            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);

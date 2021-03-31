@@ -18,7 +18,12 @@ class Article extends Model
 
     function question()
     {
-        return $this->hasOne('App\Http\Models\Question', 'id', 'question_id');
+        return $this->hasOne('App\Http\Models\Chapter', 'id', 'question_id');
+    }
+
+    function chunks()
+    {
+        return $this->hasMany('App\Http\Models\Chunk', 'article_id', 'id');
     }
 
 

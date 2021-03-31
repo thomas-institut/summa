@@ -6,19 +6,19 @@ namespace App\Http\Models;
 //use DareOne\models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Chunk extends Model
 {
     protected $fillable = [
 
     ];
 
-    protected $table = "s_books";
+    protected $table = "s_chunks";
     protected $primaryKey ="id";
     public $timestamps = false;
 
-    function chapters()
+    function article()
     {
-        return $this->hasMany('App\Http\Models\Chapter', 'book_id', 'id')->with("articles");
+        return $this->hasOne('App\Http\Models\Article', 'id', 'article_id');
     }
 
 
