@@ -34,6 +34,10 @@
   display: none !important;
 }
 
+.generic-container {
+  background-color: #fbffee !important;
+}
+
 .table td, .table th {
   border: unset !important;
 }
