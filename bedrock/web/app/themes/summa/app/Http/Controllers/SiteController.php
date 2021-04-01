@@ -28,15 +28,9 @@ class SiteController extends StandardController
     public function home(ServerRequest $request){
 
         $webInfo=WebManager::get($request);
-        $works = Work::with("books")->get();
+        $toc = Work::with("books")->get();
         error_log(print_r(\Rareloop\Lumberjack\Post::all(), true));
-
-
-
-
-
-
-        return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo, "works" => $works]);
+        return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo, "toc" => $toc]);
     }
 
 
@@ -49,8 +43,9 @@ class SiteController extends StandardController
     public function work (ServerRequest $request, $workId){
         $webInfo=WebManager::get($request);
         $works = Output::create($workId);
+        $toc = Work::with("books")->get();
         try {
-            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works]);
+            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
@@ -67,8 +62,9 @@ class SiteController extends StandardController
     public function book(ServerRequest $request, $workId, $bookId){
         $webInfo=WebManager::get($request);
         $works=Output::create($workId, $bookId);
+        $toc = Work::with("books")->get();
         try {
-            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works]);
+            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
@@ -87,8 +83,9 @@ class SiteController extends StandardController
     public function chapter(ServerRequest $request, $workId, $bookId, $chapterId){
         $webInfo=WebManager::get($request);
         $works=Output::create($workId, $bookId, $chapterId);
+        $toc = Work::with("books")->get();
         try {
-            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works]);
+            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
@@ -108,8 +105,9 @@ class SiteController extends StandardController
     public function article(ServerRequest $request, $workId, $bookId, $chapterId, $articleId){
         $webInfo=WebManager::get($request);
         $works=Output::create($workId, $bookId, $chapterId, $articleId);
+        $toc = Work::with("books")->get();
         try {
-            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works]);
+            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);

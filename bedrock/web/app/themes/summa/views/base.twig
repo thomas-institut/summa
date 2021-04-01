@@ -6,7 +6,9 @@
 
     <body id="body_wrapper" hx-history-elt class="bg-stc-background">
     <script>
-        $('#body_wrapper').removeClass("modal-open")
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
     {% include "navbar.twig" %}
         {% block content %}

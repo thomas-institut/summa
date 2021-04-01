@@ -12,6 +12,24 @@
   padding-bottom: 0 !important;
 }
 
+.current-footnotes {
+  max-height: 400px !important;
+  min-width: 300px !important;
+  max-width: 25vw !important;
+  border-top-right-radius: 0.45rem !important;
+  border-top-left-radius: 0.45rem !important;
+  background-color: #e6e6e6;
+  margin: auto;
+  bottom: 60px !important;
+  padding: 10px !important;
+  hyphens: auto;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  border-style: solid !important;
+  border-width: thin;
+  border-color: #343a40 !important;
+}
+
 .footnotes {
   display: none !important;
 }

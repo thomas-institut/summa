@@ -8,57 +8,8 @@
                 Diese im Aufbau befindliche Projektseite gilt der ersten vollständigen modernen deutschen Übersetzung der <i>Summa theologiae</i> des Thomas von Aquin. Denn obwohl die <i>Summa theologiae</i> das Hauptwerk des Thomas ist und zweifellos zu den „Great Books“ zählt, fehlt eine solche, deutsche Übersetzung. Diese soll als open science-Projekt in den nächsten Jahren am Thomas-Institut entstehen und bis zum doppelten Thomas-Jubiläum 2024/25 abgeschlossen und frei zugänglich sein. Demnächst erfahren Sie mehr!
             </p>
         </div>
-        <div class="container-fluid bg-light">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Latein</th>
-                        <th>Deutsch</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-
-                {% for work in works %}
-                    <tr>
-                        <td><strong><a href="{{ webInfo.baseurl }}index/{{ work.project_id }}">{{ work.title_lat }}</a></strong></td>
-                        <td><strong><a href="{{ webInfo.baseurl }}index/{{ work.project_id }}">{{ work.title_ger }}</a></strong></td>
-                        <td></td>
-                    </tr>
-                    {% for book in work.books %}
-                        <tr>
-                            <td class="pl-4"><u><a href="{{ webInfo.baseurl }}index/{{ work.project_id }}/{{ book.project_id }}">{{ book.title_lat }}</a></u></td>
-                            <td class="pl-4"><u><a href="{{ webInfo.baseurl }}index/{{ work.project_id }}/{{ book.project_id }}">{{ book.title_ger }}</a></u></td>
-                            <td></td>
-                        </tr>
-                        {% for chapter in book.chapters %}
-                            <tr>
-                                <td class="pl-5"><a href="{{ webInfo.baseurl }}index/{{ work.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}">{% if chapter.type == "questiones" %}{{ chapter.thomas_id }}: {% endif %}{{ chapter.title_lat }}</a></td>
-                                <td class="pl-5"><a href="{{ webInfo.baseurl }}index/{{ work.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}">{% if chapter.type == "questiones" %}{{ chapter.thomas_id }}: {% endif %} {{ chapter.title_ger }}</a></td>
-                                <td></td>
-                            </tr>
-                            {% for article in chapter.articles %}
-                                <tr>
-                                    <td class="pl-5"><a href="{{ webInfo.baseurl }}index/{{ work.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}/{{ article.project_id }}">{% if article.type == "articulus" %}{{ article.thomas_id }}: {% endif %}{{ article.title_lat }}</a></td>
-                                    <td class="pl-5"><a href="{{ webInfo.baseurl }}index/{{ work.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}/{{ article.project_id }}">{% if article.type == "articulus" %}{{ article.thomas_id }}: {% endif %}{{ article.title_ger }}</a></td>
-                                    <td>
-                                        {% if article.status == 0 %}
-                                            <span class="badge badge-warning">nicht vergeben</span>
-                                        {% elseif article.status == 1 %}
-                                            <span class="badge badge-info">in Übersetzung</span>
-                                        {% elseif article.status == 2 %}
-                                            <span class="badge badge-success">übersetzt von {% if article.translator %}{{ article.translator }}{% else %}anonym{% endif %}</span>
-                                        {% else %}
-                                            <span class="badge badge-alert">Status fehlt</span>
-                                        {% endif %}
-
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        {% endfor %}
-
-                    {% endfor %}
-                {% endfor %}
-            </table>
+        <div class="container-fluid bg-dark p-3">
+            {% include 'templates/toc.twig' %}
         </div>
     </main>
         {% endblock %}

@@ -1,7 +1,35 @@
+
+<!-- The Modal -->
+<div class="modal fade" id="toc-modal">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-dark">
+                <h4 class="modal-title text-light">Navigation</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body bg-dark">
+                {% include 'templates/toc.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="footnotes-bar" class="collapse">
+    <div  class="current-footnotes fixed-bottom d-flex flex-column">
+        <div class="d-flex justify-content-end">
+            <i data-toggle="collapse" data-target="#footnotes-bar" class="fas fa-times"></i>
+        </div>
+        <span class="footnotes-text">Lorem ipsum dolor sit amet</span>
+    </div>
+</div>
 <nav class="navbar fixed-bottom navbar-dark bg-dark d-flex justify-content-center">
     <ul class="pagination">
         <li class="page-item"><a class="page-link bg-dark text-stc-primary" href="#"><i class="fas fa-arrow-circle-left"></i></a></li>
-        <li class="page-item"><a class="page-link bg-dark text-stc-primary" href="#">{{ webInfo.currentPageText }}#</a></li>
+        <li class="page-item"><a class="page-link bg-dark text-stc-primary" href="#" data-toggle="modal" data-target="#toc-modal"><i class="fas fa-list-ol"></i></a></li>
         <li class="page-item"><a class="page-link bg-dark text-stc-primary" href="#"><i class="fas fa-arrow-circle-right"></i></a></li>
     </ul>
 </nav>

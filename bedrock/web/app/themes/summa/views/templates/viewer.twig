@@ -3,40 +3,21 @@
     <main>
 
         <div class="container mt-5 mb-5 pb-3 viewer-container">
-            <table class="table">
-                {% for work in works %}
-                    <tr>
-                        <td><h1 class="text-center">{{ work.title_lat }}</h1></td>
-                        <td><h1 class="text-center">{{ work.title_ger }}</h1></td>
-                    </tr>
-                    {% for book in work.books %}
-                        <tr>
-                            <td><h2 class="text-center">{{ book.title_lat }}</h2></td>
-                            <td><h2 class="text-center">{{ book.title_ger }}</h2></td>
-                        </tr>
-                        {% for chapter in book.chapters %}
-                            <tr>
-                                <td><h3 class="text-center">{{ chapter.title_lat }}</h3></td>
-                                <td><h3 class="text-center">{{ chapter.title_ger }}</h3></td>
-                            </tr>
-                            {% for article in chapter.articles %}
-                                <tr>
-                                    <td><h4 class="text-center">{{ article.title_lat }}</h4></td>
-                                    <td><h4 class="text-center">{{ article.title_ger }}</h4></td>
-                                </tr>
-                                {% for chunk in article.chunks %}
-                                    <tr>
-                                        <td class="chunk-box w-50"><div>{{ chunk.text_lat }}</div></td>
-                                        <td class="chunk-box w-50"><div>{{ chunk.text_ger }}</div></td>
-                                    </tr>
-                                {% endfor %}
-                            {% endfor %}
-                        {% endfor %}
-                    {% endfor %}
-
-                {% endfor %}
-            </table>
+            {% include 'templates/toc.twig' %}
         </div>
+        <script>
+            $(document).on("click", "sup", function () {
+
+                var sup_id = $(this).attr("id");
+                var fn_id = sup_id.replace("fnref:", "")
+                fn_id = fn_id-1;
+                var footnote_html = $(this).closest(".chunk_content").find('li:nth('+fn_id+')').html()
+                $(".footnotes-text").html(footnote_html)
+                $('#footnotes-bar').collapse("show")
+
+            })
+
+        </script>
 
 
     </main>
