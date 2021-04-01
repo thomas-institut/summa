@@ -1,10 +1,10 @@
-<ul class="list-group list-group-flush">
+<ul class="toc-list list-group list-group-flush p-2 p-md-3 p-lg-5">
     {% for book in toc.0.books %}
-        <li class="list-group-item list-group-item-dark"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}">{{ book.title_lat }}</a></li>
+        <li class="list-group-item bg-stc-tertiary"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}">{{ book.title_lat }}</a></li>
         {% for chapter in book.chapters%}
-            <li class="list-group-item list-group-item-dark pl-3"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}">{{ chapter.type_lat }}</a>{% if chapter.title_lat %}: <i>{{ chapter.title_lat }}</i>{% endif %}<i class="ml-2 fas fa-circle {% if chapter.translation_status == 2 %}text-success{% elseif chapter.translation_status == 1 %}text-warning{% else %}text-danger{% endif %}" data-toggle="tooltip" title="{% if chapter.translation_status == 2 %}übersetzt{% elseif chapter.translation_status == 1 %}in Übersetzung{% else %}zu übersetzen{% endif %}"></i></li>
+            <li class="list-group-item bg-stc-tertiary pl-3"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}">{{ chapter.type_lat }}</a>{% if chapter.title_lat %}: <i>{{ chapter.title_lat }}</i>{% endif %}<i class="ml-2 fas fa-circle {% if chapter.translation_status == 2 %}text-success{% elseif chapter.translation_status == 1 %}text-warning{% else %}text-danger{% endif %}" data-toggle="tooltip" title="{% if chapter.translation_status == 2 %}übersetzt{% elseif chapter.translation_status == 1 %}in Übersetzung{% else %}zu übersetzen{% endif %}"></i></li>
             {% for article in chapter.articles%}
-                <li class="list-group-item list-group-item-dark pl-5"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}/{{ article.project_id }}">{{ article.type_lat }}</a>{% if article.title_lat %}: <i>{{ article.title_lat }}</i>{% endif %}</li>
+                <li class="list-group-item bg-stc-tertiary pl-5"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}/{{ article.project_id }}">{{ article.type_lat }}</a>{% if article.title_lat %}: <i>{{ article.title_lat }}</i>{% endif %}</li>
             {% endfor %}
         {% endfor %}
     {% endfor %}

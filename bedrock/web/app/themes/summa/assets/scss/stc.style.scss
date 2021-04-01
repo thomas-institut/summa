@@ -34,6 +34,13 @@
   border-color: #343a40!important;
 }
 
+.fixed-width {
+  position: fixed; /* Make it stick/fixed */
+  top: 0; /* Stay on top */
+  width: 100%; /* Full width */
+  transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}
+
 .footnotes {
   display: none!important;
 }
@@ -49,6 +56,10 @@
 
 .text-stc-primary {
   color: $primary!important;
+}
+
+.toc-list {
+  border-radius: 0.45rem;
 }
 .viewer-container {
   background-color: $tertiary!important;
