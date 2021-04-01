@@ -2,7 +2,7 @@
 {% block content %}
     <main>
 
-        <div class="container mt-5 viewer-container">
+        <div class="container mt-5 mb-5 pb-3 viewer-container">
             <table class="table">
                 {% for work in works %}
                     <tr>
@@ -26,8 +26,8 @@
                                 </tr>
                                 {% for chunk in article.chunks %}
                                     <tr>
-                                        <td><p class="">{{ chunk.text_lat }}</p></td>
-                                        <td><p class="">{{ chunk.text_ger }}</p></td>
+                                        <td class="chunk-box"><div>{{ chunk.text_lat }}</div></td>
+                                        <td class="chunk-box"><div>{{ chunk.text_ger }}</div></td>
                                     </tr>
                                 {% endfor %}
                             {% endfor %}

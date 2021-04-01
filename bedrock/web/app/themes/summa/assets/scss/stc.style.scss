@@ -11,9 +11,14 @@
 .bg-stc-tertiary {
   background-color: $tertiary!important;
 }
+.chunk-box td{
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
 
-
-
+.footnotes {
+  display: none!important;
+}
 .table td, .table th {
   border: unset!important;
 }
