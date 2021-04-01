@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" href="#">SuThCo</a>
+    <a class="navbar-brand" href="{{ webInfo.baseurl }}">SUMMA<img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/CologneCathedralSilhouette.png" height="30"></a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -17,29 +17,29 @@
             <li class="nav-item dropdown">
                 <span class="nav-link dropdown-toggle" data-toggle="dropdown" >Werk</span>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Geschichte der Summa Theologiae</a>
-                    <a class="dropdown-item" href="#">Thomas von Aquin</a>
-                    <a class="dropdown-item" href="#">Übersetzungen</a>
-                    <a class="dropdown-item" href="#">Editionen</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}geschichte">Geschichte der Summa Theologiae</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}thomas-von-aquin">Thomas von Aquin</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}uebersetzungen">Übersetzungen</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}editionen">Editionen</a>
 
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <span class="nav-link dropdown-toggle" data-toggle="dropdown" >Über uns</span>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Kontakt</a>
-                    <a class="dropdown-item" href="#">Team</a>
-                    <a class="dropdown-item" href="#">Impressum</a>
-                    <a class="dropdown-item" href="#">Datenschutz</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}kontakt">Kontakt</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}team">Team</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}impressum">Impressum</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}datenschutz">Datenschutz</a>
 
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <span class="nav-link dropdown-toggle" data-toggle="dropdown" >Mitmachen</span>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Das Ziel</a>
-                    <a class="dropdown-item" href="#">Wie kann ich Übersetzer werden?</a>
-                    <a class="dropdown-item" href="#">Wie kann ich das Projekt unterstützen?</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}ziel">Das Ziel</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}how-to">Wie kann ich Übersetzer werden?</a>
+                    <a class="dropdown-item" href="{{ webInfo.baseurl }}unterstuetzen">Wie kann ich das Projekt unterstützen?</a>
 
                 </div>
             </li>
