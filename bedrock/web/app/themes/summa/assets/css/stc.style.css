@@ -112,22 +112,6 @@ h2 {
   background-repeat: no-repeat;
 }
 
-.landing-page-join {
-  height: 400px !important;
-  background-image: url("../img/tablet.jpg");
-  background-size: 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-.landing-page-project {
-  height: 400px !important;
-  background-image: url("../img/lib.jpg");
-  background-size: 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
 .landing-page-ms {
   height: 400px !important;
   background: linear-gradient(0deg, #BE2C5C, #BE2C5C), url("../img/summa_ms.jpg");
@@ -202,12 +186,32 @@ h2 {
   width: 60% !important;
 }
 
-@media (max-width: 768px) {
+.z-img-join {
+  background-image: url("../img/tablet.jpg");
+}
+
+.z-img-project {
+  background-image: url("../img/lib.jpg");
+}
+
+@media (max-width: 767px) {
   .landing-page-cite {
     height: 200px !important;
     width: auto;
     border-radius: 50% !important;
     margin-top: auto !important;
+  }
+
+  .landing-page-info {
+    height: 200px !important;
+    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100% !important;
+  }
+
+  .landing-page-info-text {
+    width: 100% !important;
   }
 
   .news-box {
@@ -216,15 +220,15 @@ h2 {
   }
 
   .news-card {
-    width: 450px !important;
+    width: 92vw !important;
   }
 
   .news-img {
-    width: 450px !important;
-    height: 375px !important;
+    width: 92vw !important;
+    height: 69vw !important;
   }
 }
-@media (min-width: 769px) and (max-width: 1280px) {
+@media (min-width: 768px) and (max-width: 1280px) {
   .news-box {
     padding: 0 !important;
   }
@@ -238,15 +242,27 @@ h2 {
     height: 192px !important;
   }
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   .landing-page-cite {
     height: 250px !important;
     width: auto;
     border-radius: 50% !important;
     margin-top: auto !important;
   }
+
+  .landing-page-info {
+    height: 400px !important;
+    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 60% !important;
+  }
+
+  .landing-page-info-text {
+    width: 40% !important;
+  }
 }
-@media (min-width: 769px) and (min-width: 1281px) {
+@media (min-width: 1281px) {
   .news-box {
     padding-left: 40px !important;
     padding-right: 40px !important;
