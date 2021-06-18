@@ -12,7 +12,10 @@ Router::get('index/{workId}/{bookId}/{chapterId}', 'SiteController@chapter');
 Router::get('index/{workId}/{bookId}/{chapterId}/{articleId}', 'SiteController@article');
 
 
-
+/**
+ *  Admin Routes
+ */
+Router::get('/redaktion', 'AdminController@home');
 
 
 

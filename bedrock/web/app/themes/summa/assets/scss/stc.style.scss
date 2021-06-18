@@ -1,8 +1,23 @@
 @import "stc._variables";
-@import url('https://fonts.googleapis.com/css2?family=Piazzolla:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
+a {
+  color: $primary!important;
+  font-weight: bold!important;
+}
 
+body {
+  font-family: "Open Sans", sans-serif;
+}
 
+h1 {
+  color: $primary!important;
+  font-weight: bold!important;
+}
+
+h2 {
+  color: $primary!important;
+}
 
 .bg-stc-background {
   background-color: $background!important;
@@ -10,9 +25,47 @@
 .bg-stc-tertiary {
   background-color: $tertiary!important;
 }
+
+.bg-summa-primary {
+  background-color: $primary!important;
+}
+
+.btn-summa {
+  background-color: $primary!important;
+  color: white!important;
+  border: none!important;
+}
+
+.btn-summa:hover {
+  background-color: lighten($primary, 30)!important;
+}
+
+
+.btn-summa-secondary {
+  background-color: white!important;
+  color: $primary!important;
+  border: none!important;
+}
+
+.btn-summa-secondary:hover {
+  background-color: darken(white, 10)!important;
+}
+
+.content-container {
+  max-width: 1280px!important;
+  min-height: 100vh!important;
+}
+
 .chunk-box td{
   padding-top: 0!important;
   padding-bottom: 0!important;
+}
+
+.content-padding {
+  padding-left: 75px!important;
+  padding-right: 75px!important;
+  padding-top: 25px!important;
+  padding-bottom: 25px!important;
 }
 
 .current-footnotes {
@@ -34,6 +87,8 @@
   border-color: #343a40!important;
 }
 
+
+
 .fixed-width {
   position: fixed; /* Make it stick/fixed */
   top: 0; /* Stay on top */
@@ -49,14 +104,91 @@
 .generic-container{
   background-color: $tertiary!important;
 }
+
+
+
+.landing-page-img {
+  height: 400px!important;
+  background-image: url('../img/arch.jpg');
+  background-size:100%;
+  background-position: center center;
+  background-repeat: no-repeat
+}
+
+.landing-page-join {
+  height: 400px!important;
+  background-image: url('../img/tablet.jpg');
+  background-size:100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.landing-page-project {
+  height: 400px!important;
+  background-image: url('../img/lib.jpg');
+  background-size:100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.landing-page-ms {
+  height: 400px!important;
+  background:linear-gradient(0deg, $primary, $primary), url('../img/summa_ms.jpg');
+  background-size:100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.nav-content {
+  max-width: 1280px!important;
+}
+
+.nav-link {
+  color: $dark_grey!important;
+}
+
+.nav-link:hover {
+  color: $primary!important;
+}
+
+.nav-link-footer {
+  color: white!important;
+  font-size: 12px!important;
+}
+
+.nav-link-footer:hover {
+  color: darken(white, 10)!important;
+}
+
+.nav-link-social {
+  color: $primary!important;
+}
+
+.nav-link-social:hover {
+  color: lighten($primary, 30)!important;
+}
+
+
+
 .table td, .table th {
   border: unset!important;
 }
 
 
 
-.text-stc-primary {
+.text-summa-primary {
   color: $primary!important;
+}
+
+.title-box {
+  max-width: 1024px!important;
+}
+
+.title-text {
+    color: $dark_grey;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .toc-list {
@@ -66,4 +198,67 @@
   background-color: $tertiary!important;
   border-radius: 0.45rem!important;
   min-width: 768px!important;
+}
+.w-40 {
+  width: 40%!important;
+}
+.w-60 {
+  width: 60%!important;
+}
+
+@media (max-width: 768px) {
+  .landing-page-cite {
+    height: 200px!important;
+    width: auto;
+    border-radius: 50%!important;
+    margin-top: auto!important;
+  }
+
+  .news-box {
+    padding: 0!important;
+    width: auto!important;
+  }
+  .news-card {
+    width: 450px!important;
+  }
+  .news-img {
+    width: 450px!important;
+    height: 375px!important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1280px) {
+  .news-box {
+    padding: 0!important;
+}
+  .news-card {
+    width: 256px!important;
+  }
+  .news-img {
+    width: 256px!important;
+    height: 192px!important;
+  }
+}
+
+@media (min-width: 769px) {
+  .landing-page-cite {
+    height: 250px!important;
+    width: auto;
+    border-radius: 50%!important;
+    margin-top: auto!important;
+  }
+  
+  @media (min-width: 1281px) {
+    .news-box {
+      padding-left: 40px!important;
+      padding-right: 40px!important;
+    }
+    .news-card {
+      width: 400px!important;
+    }
+    .news-img {
+      width: 400px!important;
+      height: 300px!important;
+    }
+  }
 }

@@ -1,14 +1,17 @@
 {% extends "base.twig" %}
 {% block content %}
-    <main>
-        <div class="container mt-5 mb-5 pb-3 generic-container shadow shadow-lg">
+<main class="bg-dark">
+    <div class="content-container m-auto bg-light shadow d-flex flex-column" style="height: 100%!important;">
+        <div class="content-padding">
             <h1 class="p-2 p-sm-4">{{ wp.posts.0.post_title }}</h1>
             <hr>
             <div class="p-2 p-sm-4">
                 {{ wp.posts.0.post_content}}
             </div>
-
         </div>
-    </main>
+
+    </div>
+</main>
+
 
 {% endblock %}

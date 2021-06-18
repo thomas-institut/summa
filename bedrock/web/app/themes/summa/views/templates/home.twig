@@ -1,16 +1,94 @@
 {% extends "base.twig" %}
 {% block content %}
-    <main>
-        <div class="jumbotron bg-stc-background shadow mt-5">
-            <h1 class="text-center display-4">SUMMA THEOLOGIAE COLONIENSES
-            </h1>
-            <p class="lead">
-                Diese im Aufbau befindliche Projektseite gilt der ersten vollständigen modernen deutschen Übersetzung der <i>Summa theologiae</i> des Thomas von Aquin. Denn obwohl die <i>Summa theologiae</i> das Hauptwerk des Thomas ist und zweifellos zu den „Great Books“ zählt, fehlt eine solche, deutsche Übersetzung. Diese soll als open science-Projekt in den nächsten Jahren am Thomas-Institut entstehen und bis zum doppelten Thomas-Jubiläum 2024/25 abgeschlossen und frei zugänglich sein. Demnächst erfahren Sie mehr!
-            </p>
+    <main class="bg-dark">
+        <div class="jumbotron landing-page-img">
+
         </div>
-        <div class="container-fluid bg-dark p-3">
-            {% include 'templates/toc.twig' %}
+        <div class="content-container m-auto bg-light shadow d-flex flex-column" style="height: 100%!important;">
+            <div class="title-box align-self-center d-flex justify-content-center w-100 content-padding">
+                <span class="text-center title-text"><strong>summa21:</strong> Die Übersetzung der <i>Summa theologiae</i> für das 21. Jahrhundert. Eines der größten Co-Science Projekte Europas</span>
+            </div>
+            <h1 class="text-summa-primary content-padding" style="padding-left: 75px!important;">Projektstand:</h1>
+            <div class="status-box align-self-center d-flex flex-column w-100 content-padding">
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-summa-primary" role="progressbar" style="width: 43%" aria-valuenow="2" aria-valuemin="0" aria-valuemax="000"></div>
+                </div>
+                <span class="pt-3">43% der Kapitel sind in Übersetzung</span>
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-summa-primary" role="progressbar" style="width: 24%" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="pt-3">24% der Kapitel sind übersetzt und veröffentlicht</span>
+                <span class="mt-3 text-summa-primary" style="font-size: 50px; font-weight: bold"><strong>{{ data.translator|length }}</strong></span>
+                <span >Übersetzer<sup>*</sup>innen wirken am Projekt mit.</span>
+            </div>
+            <h1 class="text-summa-primary content-padding d-flex justify-content-between" style="padding-bottom: 0!important; margin-bottom: 0!important;"><span class="pt-5">Corpus:</span> <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" height="150" width="auto"></h1>
+            <div class="corpus-box w-100">
+                <div class="bg-summa-primary d-flex flex-row" style="height: 300px!important;">
+                    <div class="w-50 bg-dark landing-page-ms" style="height: 100%!important;"></div>
+                    <div class="w-50 p-3 p-md-5 d-flex flex-column bg-summa-primary" style="height: 100%!important;">
+                        <span class="text-white">Die Anzahl der übersetzten und validierten Textpassen wächst von Tag zu Tag. Hier haben Sie Zugriff auf sämtliche freigegebene Texte, können suchen und erhalten präzise Quellen angaben. </span>
+                        <a href="{{ webInfo.baseurl }}corpus" class="btn btn-summa-secondary mt-3 ">zum Corpus</a>
+                    </div>
+
+                </div>
+            </div>
+            <h1 class="text-summa-primary content-padding mt-3">Nachrichten:</h1>
+            <div class="content-padding news-box align-self-center d-flex flex-column flex-md-row justify-content-md-around w-100">
+                {% for post in data.news %}
+                <div class="card border-0 bg-transparent news-card">
+                    <img src="{{ post.thumbnail }}" class="card-img-top news-img" alt="...">
+                    <small class="text-end">{{ post.post_date_gmt|date("d.m.Y") }}</small>
+                    <div class="card-body">
+                        <h5 class="card-title text-summa-primary">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.preview }} <a>mehr</a></p>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+            <div class="info-box d-flex flex-row">
+                <div class="landing-page-project w-60"></div>
+                <div class="w-40 p-3 p-md-4">
+                    <h3 class="text-summa-primary">Das Projekt</h3>
+                    <p>
+                        Die Summa theologica ist eines der größten philosophischen Werke des Abendlandes. Das Projekt summa21 übersetzt den 750 Jahre alten Text in die Sprache des 21. Jahrhunderts. Die enorme Übersetzungsleistung ruht auf den Schultern vieler – das Vorhaben ist eines der größten Co-Science-Projekt Europas.
+                    </p>
+                    <a href="{{ webInfo.baseurl }}projekt" class="btn btn-summa mt-3 ">mehr zum Projekt</a>
+                </div>
+            </div>
+            <div class="info-box d-flex flex-row mt-5">
+                <div class="landing-page-join w-60"></div>
+                <div class="w-40 p-3 p-md-4">
+                    <h3 class="text-summa-primary">Mitwirken</h3>
+                    <p>
+                        Die summa21 ist als großes Gemeinschaftsprojekt angelegt. Anders lässt sich der umfangreiche Textcorpus nicht handhaben. Hier können Sie erfahren, wie Sie bei der Übersetzungsarbeit mitwirken können und wie der Übertragungsprozess angelegt ist.
+                    </p>
+                    <a href="{{ webInfo.baseurl }}mitwirken" class="btn btn-summa mt-3">mehr zum Projekt</a>
+                </div>
+            </div>
+            <div class="citation-box w-100 mt-5">
+                <div class="bg-stc-background d-flex flex-row justify-content-between justify-content-lg-around">
+                    <div class="w-25 p-5 ">
+                        <img class="landing-page-cite align-self-center" src="{{ webInfo.baseurl }}app/themes/summa/assets/img/speer.png">
+                    </div>
+                    <div class="w-50 p-3 p-md-5 d-flex flex-column align-content-center">
+                        <cite class="text-dark" style="font-size: 25px">»Hier könnte ein Zitat einer Galions- figur stehen: Was ist das Besondere an dem Projekt? Was entdecke ich selbst neu an der summa? Was hätte
+                            ich nicht gedacht?«
+                        </cite>
+                        <span>Andreas Speer</span>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="team-box">
+
+            </div>
+            <div class="partner-box"></div>
         </div>
+
     </main>
         {% endblock %}
 

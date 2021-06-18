@@ -9,7 +9,7 @@ return [
     /**
      * The name of the cookie that is set in a visitors browser
      */
-    'cookie' => getenv('SESSION_COOKIE') ?: 'lumberjack_session',
+    'cookie' => getenv('SESSION_COOKIE') ?: 'summa_session',
 
     /**
      * How long the session will persist for

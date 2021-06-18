@@ -1,61 +1,48 @@
-<nav id="navbar" class="navbar fixed-width navbar-expand-md bg-dark navbar-dark w-100 shadow">
-    <!-- Brand -->
-    <a class="navbar-brand" href="{{ webInfo.baseurl }}">SUMMA<img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/CologneCathedralSilhouette.png" height="30"></a>
-
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ webInfo.baseurl }}">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-                <span class="nav-link dropdown-toggle" data-toggle="dropdown" >Werk</span>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}geschichte-der-summa-theologiae">Geschichte der Summa Theologiae</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}thomas-von-aquin">Thomas von Aquin</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}ubersetzungshistorie">Übersetzungshistorie</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}editionen">Editionen</a>
-
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <span class="nav-link dropdown-toggle" data-toggle="dropdown" >Über uns</span>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}kontakt">Kontakt</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}team">Team</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}impressum">Impressum</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}datenschutz">Datenschutzerklärung</a>
-
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <span class="nav-link dropdown-toggle" data-toggle="dropdown" >Mitmachen</span>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}projektziel">Projektziel</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}guidelines">Guidelines</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}wie-kann-ich-ubersetzer-werden">Wie kann ich Übersetzer werden?</a>
-                    <a class="dropdown-item" href="{{ webInfo.baseurl }}wie-kann-ich-das-projekt-unterstutzen">Wie kann ich das Projekt unterstützen?</a>
-                </div>
-            </li>
-        </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid nav-content" >
+        <a class="navbar-brand" href="{{ webInfo.baseurl }}">
+            <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/summa_pre_logo.png" alt="" width="auto" height="50">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="pDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        PROJEKT
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="pDropdown">
+                        <li><a class="dropdown-item" href="{{ webInfo.baseurl }}projekt">SUMMA21</a></li>
+                        <li><a class="dropdown-item" href="{{ webInfo.baseurl }}team">TEAM</a></li>
+                        <li><a class="dropdown-item" href="{{ webInfo.baseurl }}unterstutzen">UNTERSTÜTZEN</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ webInfo.baseurl }}corpus">CORPUS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ webInfo.baseurl }}mitwirken">MITWIRKEN</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ webInfo.baseurl }}thomas">THOMAS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ webInfo.baseurl }}kontakt">KONTAKT</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mb-2 mb-lg-0 align-self-start">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-social" href="#"><i class="fab fa-facebook"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-social" href="#"><i class="fab fa-twitter"></i></a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
-<script>
-    var prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
-        var currentScrollPos = window.pageYOffset;
-        console.log(currentScrollPos)
-        if (currentScrollPos === 0 || prevScrollpos > currentScrollPos  ) {
-            document.getElementById("navbar").style.top = "0";
-        } else {
-            document.getElementById("navbar").style.top = "-50px";
-        }
-        prevScrollpos = currentScrollPos;
-    }
-</script>
-
+<div class="alert alert-warning alert-dismissible fade show" role="alert" style="position: fixed!important; z-index: 9999!important; top: 50vh!important; left: 30%!important;">
+    <strong>Heiliger Thomas!</strong> Diese Seite befindet sich gerade im Aufbau. Komm später nochmal wieder, denn dann gibt es ganz sicher mehr zu sehen!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
