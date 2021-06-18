@@ -61,12 +61,7 @@ h2 {
   padding-bottom: 0!important;
 }
 
-.content-padding {
-  padding-left: 75px!important;
-  padding-right: 75px!important;
-  padding-top: 25px!important;
-  padding-bottom: 25px!important;
-}
+
 
 .current-footnotes {
   //min-height: 80px!important;
@@ -116,13 +111,11 @@ h2 {
 }
 
 
-.landing-page-ms {
-  height: 400px!important;
-  background:linear-gradient(0deg, $primary, $primary), url('../img/summa_ms.jpg');
-  background-size:100%;
-  background-position: center center;
-  background-repeat: no-repeat;
+
+.landing-page-corpus-text {
+  color: white!important;
 }
+
 
 .nav-content {
   max-width: 1280px!important;
@@ -200,11 +193,32 @@ h2 {
 }
 
 @media (max-width: 767px) {
+
+  .content-padding {
+    padding-left: 25px!important;
+    padding-right: 25px!important;
+    padding-top: 25px!important;
+    padding-bottom: 25px!important;
+  }
+
   .landing-page-cite {
     height: 200px !important;
     width: auto;
     border-radius: 50% !important;
     margin-top: auto !important;
+  }
+
+
+  .landing-page-corpus-text {
+    font-size: 1.1em!important;
+  }
+  .landing-page-corpus-text-container {
+    height: 300px!important;
+    width: 100%!important;
+    background:linear-gradient(0deg, $primary-opacity, $primary-opacity), url('../img/summa_ms.jpg');
+    background-size:100%;
+    background-position: center center;
+    background-repeat: no-repeat;
   }
 
   .landing-page-info {
@@ -217,6 +231,7 @@ h2 {
 
   .landing-page-info-text {
     width: 100%!important;
+
   }
   .news-box {
     padding: 0 !important;
@@ -247,11 +262,34 @@ h2 {
 }
 
 @media (min-width: 768px) {
+  .content-padding {
+    padding-left: 75px!important;
+    padding-right: 75px!important;
+    padding-top: 25px!important;
+    padding-bottom: 25px!important;
+  }
+
   .landing-page-cite {
     height: 250px !important;
     width: auto;
     border-radius: 50% !important;
     margin-top: auto !important;
+  }
+
+  .landing-page-corpus {
+    height: 400px!important;
+    background:linear-gradient(0deg, $primary-opacity, $primary-opacity), url('../img/summa_ms.jpg');
+    background-size:100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 50%!important;
+  }
+
+  .landing-page-corpus-text {
+    font-size: 20px!important;
+  }
+  .landing-page-corpus-text-container {
+    width: 50%!important;
   }
 
   .landing-page-info {
@@ -264,6 +302,22 @@ h2 {
 
   .landing-page-info-text {
     width: 40%!important;
+  }
+
+  .w-25-md {
+    width: 25%!important;
+  }
+
+  .w-50-md {
+    width: 50%!important;
+  }
+
+  .w-75-md {
+    width: 75%!important;
+  }
+
+  .w-100-md {
+    width: 100%!important;
   }
 }
 @media (min-width: 1281px) {

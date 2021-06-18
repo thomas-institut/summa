@@ -24,12 +24,11 @@
             <h1 class="text-summa-primary content-padding d-flex justify-content-between" style="padding-bottom: 0!important; margin-bottom: 0!important;"><span class="pb-3 pt-md-5">Corpus:</span> <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto"></h1>
             <div class="corpus-box w-100">
                 <div class="bg-summa-primary d-flex flex-row" style="height: 300px!important;">
-                    <div class="w-50 bg-dark landing-page-ms" style="height: 100%!important;"></div>
-                    <div class="w-50 p-3 p-md-5 d-flex flex-column bg-summa-primary" style="height: 100%!important;">
-                        <span class="text-white">Die Anzahl der übersetzten und validierten Textpassen wächst von Tag zu Tag. Hier haben Sie Zugriff auf sämtliche freigegebene Texte, können suchen und erhalten präzise Quellen angaben. </span>
+                    <div class="bg-dark landing-page-corpus d-none d-md-block" style="height: 100%!important;"></div>
+                    <div class="landing-page-corpus-text-container p-3 p-md-5 d-flex flex-column bg-summa-primary">
+                        <span class="landing-page-corpus-text">Die Anzahl der übersetzten und validierten Textpassen wächst von Tag zu Tag. Hier haben Sie Zugriff auf sämtliche freigegebene Texte, können suchen und erhalten präzise Quellen angaben. </span>
                         <a href="{{ webInfo.baseurl }}corpus" class="btn btn-summa-secondary mt-3 ">zum Corpus</a>
                     </div>
-
                 </div>
             </div>
             <h1 class="text-summa-primary content-padding mt-3">Nachrichten:</h1>
@@ -69,15 +68,15 @@
                 </div>
             </div>
             <div class="citation-box w-100 mt-5">
-                <div class="bg-stc-background d-flex flex-row justify-content-between justify-content-lg-around">
-                    <div class="w-25 p-5 ">
+                <div class="bg-stc-background d-flex flex-column flex-md-row justify-content-center">
+                    <div class="w-100 w-25-md p-2 p-md-5 d-flex justify-content-center">
                         <img class="landing-page-cite align-self-center" src="{{ webInfo.baseurl }}app/themes/summa/assets/img/speer.png">
                     </div>
-                    <div class="w-50 p-3 p-md-5 d-flex flex-column align-content-center">
-                        <cite class="text-dark" style="font-size: 25px">»Hier könnte ein Zitat einer Galions- figur stehen: Was ist das Besondere an dem Projekt? Was entdecke ich selbst neu an der summa? Was hätte
+                    <div class="w-100 w-50-md p-3 p-md-5 d-flex flex-column align-content-center">
+                        <cite class="text-dark text-center" style="font-size: 25px">»Hier könnte ein Zitat einer Galions- figur stehen: Was ist das Besondere an dem Projekt? Was entdecke ich selbst neu an der summa? Was hätte
                             ich nicht gedacht?«
                         </cite>
-                        <span>Andreas Speer</span>
+                        <span class="text-end">Andreas Speer</span>
                     </div>
                 </div>
 
