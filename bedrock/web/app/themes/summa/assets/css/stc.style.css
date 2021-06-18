@@ -253,12 +253,12 @@ h2 {
   }
 
   .news-card {
-    width: 400px !important;
+    width: 360px !important;
   }
 
   .news-img {
-    width: 400px !important;
-    height: 300px !important;
+    width: 360px !important;
+    height: 270px !important;
   }
 }
 
