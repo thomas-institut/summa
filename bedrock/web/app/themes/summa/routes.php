@@ -19,6 +19,13 @@ Router::get('/redaktion', 'AdminController@home');
 
 
 
+/**
+ *  Async Routes
+ */
+Router::get('/book-count', 'AsyncController@bookCount');
+Router::get('/chapter-count', 'AsyncController@chapterCount');
+Router::get('/article-count', 'AsyncController@articleCount');
+Router::get('/translator-count', 'AsyncController@translatorCount');
 
 
 
