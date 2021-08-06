@@ -13,6 +13,7 @@ use Michelf\MarkdownExtra;
 
 class Output
 {
+
     public static function create($workId, $bookId=null, $chapterId=null, $articleId=null){
 
         $works = Work::where("project_id", "=", $workId)->get()->toArray();

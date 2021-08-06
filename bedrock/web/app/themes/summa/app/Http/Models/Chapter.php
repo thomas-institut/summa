@@ -26,6 +26,11 @@ class Chapter extends Model
         return $this->hasMany('App\Http\Models\Article', 'chapter_id', 'id')->with('chunks');
     }
 
+    function articlesNoChunks()
+    {
+        return $this->hasMany('App\Http\Models\Article', 'chapter_id', 'id');
+    }
+
 
 
 

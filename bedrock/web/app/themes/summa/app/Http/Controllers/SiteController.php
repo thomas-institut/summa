@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Models\Book;
+use App\Http\Models\Chapter;
 use App\Http\Models\Translator;
 use App\Http\Models\Work;
 use App\Http\Operations\Output;
@@ -24,9 +26,6 @@ class SiteController extends StandardController
     public function home(ServerRequest $request){
 
         $webInfo=WebManager::get($request);
-        $toc = Work::with("books")->get();
-        #error_log(print_r(wp_get_current_user(), true));
-
         $news_posts = Timber::get_posts(array(
             'category_name' => 'News',
                 'status' => 'publish',
@@ -35,9 +34,7 @@ class SiteController extends StandardController
                 'orderby'        => 'date',
         )
         );
-        error_log(print_r($news_posts, true));
         for ($i=0;$i<count($news_posts);$i++ ){
-            error_log(print_r($news_posts[$i]->thumbnail, true));
             $news_posts[$i]->thumbnail = $news_posts[$i]->thumbnail()->src("medium");
             if ($news_posts[$i]->post_excerpt!=""){
                 $news_posts[$i]->preview = $news_posts[$i]->post_excerpt;
@@ -52,12 +49,49 @@ class SiteController extends StandardController
 
             }
         }
-
         $data["news"]=$news_posts;
         $data["translator"]=Translator::all()->toArray();
-        error_log(print_r($data["translator"], true));
 
         return new TimberResponse('views/templates/home.twig', [ "webInfo"=>$webInfo, "data" => $data]);
+    }
+
+    public function project(ServerRequest $request){
+
+        $webInfo=WebManager::get($request);
+        $webInfo["route"]="projekt";
+        $news_posts = Timber::get_posts(array(
+                'category_name' => 'News',
+                'status' => 'publish',
+                'posts_per_page' => '3',
+                'order'          => 'DESC',
+                'orderby'        => 'date',
+            )
+        );
+        for ($i=0;$i<count($news_posts);$i++ ){
+            $news_posts[$i]->thumbnail = $news_posts[$i]->thumbnail()->src("medium");
+            if ($news_posts[$i]->post_excerpt!=""){
+                $news_posts[$i]->preview = $news_posts[$i]->post_excerpt;
+            } else {
+                $post_content = str_replace("<!-- wp:paragraph -->", "", $news_posts[$i]->post_content);
+                $post_content = str_replace("<!-- /wp:paragraph -->", "", $post_content);
+                if (strlen($post_content)>128){
+                    $news_posts[$i]->preview = substr($post_content, 0, 128)." ...";
+                } else {
+                    $news_posts[$i]->preview = $post_content;
+                }
+
+            }
+        }
+        $data["news"]=$news_posts;
+        $data["translator"]=Translator::all()->toArray();
+
+        return new TimberResponse('views/templates/project.twig', [ "webInfo"=>$webInfo, "data" => $data]);
+    }
+
+    public function index(ServerRequest $request){
+        $webInfo=WebManager::get($request);
+        $toc=Work::with("booksNoChunks")->get();
+        return new TimberResponse('views/templates/index.twig', [ "webInfo"=>$webInfo, "toc" => $toc]);
     }
 
 
@@ -110,7 +144,28 @@ class SiteController extends StandardController
     public function chapter(ServerRequest $request, $workId, $bookId, $chapterId){
         $webInfo=WebManager::get($request);
         $works=Output::create($workId, $bookId, $chapterId);
-        $toc = Work::with("books")->get();
+        $toc = Work::with("booksNoChunks")->get();
+        // OUTSOURCING
+        $book = Book::where("project_id", "=", $bookId)->first()->toArray();
+        $chapters=Chapter::where("book_id", "=", $book["id"])->get()->toArray();
+
+        $webInfo["navigation"]=array();
+        $webInfo["navigation"]["firstChapter"]=$chapters[0];
+        $webInfo["navigation"]["lastChapter"]=$chapters[count($chapters)-1];
+        foreach ($chapters as $chapter){
+            if ($chapter["project_id"]==$chapterId){
+                $webInfo["navigation"]["currentChapter"]=$chapter;
+            }
+        }
+        if ($webInfo["navigation"]["currentChapter"]["order"]!=0){
+            $webInfo["navigation"]["prevChapter"]=$chapters[$webInfo["navigation"]["currentChapter"]["order"]-1];
+        }
+        if ($webInfo["navigation"]["currentChapter"]["order"]!=$chapters[count($chapters)-1]){
+            $webInfo["navigation"]["nextChapter"]=$chapters[$webInfo["navigation"]["currentChapter"]["order"]+1];
+        }
+        error_log(print_r($webInfo["navigation"], true));
+
+        //END OF OUTSOURCING
         try {
             return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
         }
@@ -132,7 +187,7 @@ class SiteController extends StandardController
     public function article(ServerRequest $request, $workId, $bookId, $chapterId, $articleId){
         $webInfo=WebManager::get($request);
         $works=Output::create($workId, $bookId, $chapterId, $articleId);
-        $toc = Work::with("books")->get();
+        $toc = Work::with("booksNoChunks")->get();
         try {
             return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
         }

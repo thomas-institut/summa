@@ -17,6 +17,11 @@ h2 {
   color: #BE2C5C !important;
 }
 
+.accordion-button:not(.collapsed) {
+  color: #BE2C5C !important;
+  background-color: #fbeef2;
+}
+
 .bg-stc-background {
   background-color: #dcd5d9 !important;
 }
@@ -27,6 +32,12 @@ h2 {
 
 .bg-summa-primary {
   background-color: #BE2C5C !important;
+}
+
+.bs-tooltip-start .tooltip-arrow::before, .bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow::before {
+  left: -1px;
+  border-width: 0.4rem 0 0.4rem 0.4rem;
+  border-left-color: #BE2C5C !important;
 }
 
 .btn-summa {
@@ -77,6 +88,12 @@ h2 {
   border-color: #343a40 !important;
 }
 
+.dropdown-item.active, .dropdown-item:active {
+  text-decoration: none !important;
+  background-color: #BE2C5C !important;
+  color: #fbffee !important;
+}
+
 .fixed-width {
   position: fixed;
   /* Make it stick/fixed */
@@ -89,12 +106,27 @@ h2 {
   z-index: 1030 !important;
 }
 
+.footer {
+  min-height: 200px !important;
+}
+
+.footer-picture {
+  width: 1280px !important;
+  position: relative !important;
+  margin-top: auto !important;
+}
+
 .footnotes {
   display: none !important;
 }
 
 .generic-container {
   background-color: #fbffee !important;
+}
+
+.index-list-item:hover, .index-list-item:hover .text-summa-primary, .index-list-item:hover .text-dark {
+  color: white !important;
+  background-color: #BE2C5C !important;
 }
 
 .landing-page-img {
@@ -121,6 +153,13 @@ h2 {
   color: #BE2C5C !important;
 }
 
+.nav-link-active {
+  text-decoration: initial !important;
+  text-decoration-line: underline !important;
+  text-decoration-thickness: 3px !important;
+  text-decoration-color: #BE2C5C !important;
+}
+
 .nav-link-footer {
   color: white !important;
   font-size: 12px !important;
@@ -136,6 +175,32 @@ h2 {
 
 .nav-link-social:hover {
   color: #e89bb4 !important;
+}
+
+.page-item:hover .bg-light {
+  background-color: #e89bb4 !important;
+}
+
+.paragraph-padding {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.project-page-img {
+  height: 400px !important;
+  background-image: url("../img/iStock-458128417_[Mlenny].jpg");
+  background-size: 120%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.project-page-divider {
+  height: 300px !important;
+  background: url("../img/iStock-624695614_[Jacob Ammentorp Lund].jpg");
+  background-size: 130%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 100% !important;
 }
 
 .table td, .table th {
@@ -159,6 +224,15 @@ h2 {
 
 .toc-list {
   border-radius: 0.45rem;
+}
+
+.tooltip-inner {
+  max-width: 200px;
+  padding: 0.25rem 0.5rem;
+  color: #fff;
+  text-align: center;
+  background-color: #BE2C5C !important;
+  border-radius: 0.25rem;
 }
 
 .viewer-container {
@@ -236,6 +310,11 @@ h2 {
     width: 92vw !important;
     height: 69vw !important;
   }
+
+  .paragraph-padding {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+  }
 }
 @media (min-width: 768px) and (max-width: 1280px) {
   .news-box {
@@ -295,6 +374,20 @@ h2 {
     width: 40% !important;
   }
 
+  .paragraph-padding {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+  }
+
+  .project-page-divider {
+    height: 400px !important;
+    background: url("../img/iStock-624695614_[Jacob Ammentorp Lund].jpg");
+    background-size: 130%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 50% !important;
+  }
+
   .w-25-md {
     width: 25% !important;
   }
@@ -324,6 +417,13 @@ h2 {
   .news-img {
     width: 360px !important;
     height: 270px !important;
+  }
+}
+@media (max-width: 1280px) {
+  .footer-picture {
+    padding-bottom: 0 !important;
+    margin-top: -200px !important;
+    width: 100vw !important;
   }
 }
 

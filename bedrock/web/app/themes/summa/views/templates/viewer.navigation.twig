@@ -1,20 +1,11 @@
 
-<!-- The Modal -->
-<div class="modal fade" id="toc-modal">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark">
-
-            <!-- Modal Header -->
-            <div class="modal-header bg-dark">
-                <h4 class="modal-title text-light">Navigation</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body bg-dark">
-                {% include 'templates/toc.twig' %}
-            </div>
-        </div>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" data-bs-scroll="true" data-bs-backdrop="false">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Schnellnavigation</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        {% include "templates/toc.twig" %}
     </div>
 </div>
 
@@ -26,11 +17,13 @@
         <span class="footnotes-text">Lorem ipsum dolor sit amet</span>
     </div>
 </div>
-<nav class="navbar fixed-bottom navbar-dark bg-dark d-flex justify-content-center">
+<nav class="navbar fixed-bottom navbar-dark bg-summa-primary d-flex justify-content-center">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link bg-dark text-stc-primary" href="#"><i class="fas fa-arrow-circle-left"></i></a></li>
-        <li class="page-item"><a class="page-link bg-dark text-stc-primary" href="#" data-toggle="modal" data-target="#toc-modal"><i class="fas fa-list-ol"></i></a></li>
-        <li class="page-item"><a class="page-link bg-dark text-stc-primary" href="#"><i class="fas fa-arrow-circle-right"></i></a></li>
+        <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ webInfo.navigation.firstChapter.thomas_id }}"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ webInfo.navigation.firstChapter.project_id }}"><i class="fas fa-angle-double-left"></i></a></li>
+        <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ webInfo.navigation.prevChapter.thomas_id }}"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ webInfo.navigation.prevChapter.project_id }}"><i class="fas fa-angle-left"></i></a></li>
+        <li class="page-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><a class="page-link bg-light text-stc-primary" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Schnellnavigation"><small>{{ works.0.books.0.title_lat }} | {{ works.0.books.0.chapters.0.thomas_id }}: {{ works.0.books.0.chapters.0.title_lat }}</small></a></li>
+        <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ webInfo.navigation.nextChapter.thomas_id }}"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ webInfo.navigation.nextChapter.project_id }}"><i class="fas fa-angle-right"></i></a></li>
+        <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ webInfo.navigation.lastChapter.thomas_id }}"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ webInfo.navigation.lastChapter.project_id }}"><i class="fas fa-angle-double-right"></i></a></li>
     </ul>
 </nav>
 

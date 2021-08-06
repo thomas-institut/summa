@@ -21,6 +21,10 @@ class Work extends Model
         return $this->hasMany('App\Http\Models\Book', 'work_id', 'id')->with("chapters");
     }
 
+    function booksNoChunks() {
+        return $this->hasMany('App\Http\Models\Book', 'work_id', 'id')->with("chaptersNoChunks");
+    }
+
 
 
 

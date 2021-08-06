@@ -37,6 +37,16 @@ class AsyncController extends StandardController
         $count=Translator::count();
         return new TimberResponse('views/templates/home.project-counter.twig', [ "count"=>$count, "name" => "translator-count"]);
     }
+    public function statusChapterCount(ServerRequest $request){
+        $chapter=Chapter::count();
+        $wipChapter=Chapter::where("translation_status", "=", "1")->count();
+        $completedChapter=Chapter::where("translation_status", "=", "2")->count();
+        $count["wip"]=round($wipChapter/$chapter*100, 2);
+        $count["completed"]=round($completedChapter/$chapter*100, 2);
+
+        return new TimberResponse('views/templates/home.project-status.twig', [ "count"=>$count, "name" => "chapter-count"]);
+    }
+
 
 
 

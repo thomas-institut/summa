@@ -9,62 +9,12 @@
                 <span class="text-center title-text"><strong>summa21:</strong> Die Übersetzung der <i>Summa theologiae</i> für das 21. Jahrhundert. Eines der größten Co-Science Projekte Europas</span>
             </div>
             <h1 class="text-summa-primary content-padding" style="padding-left: 75px!important;">Projektstand:</h1>
-            <div class="status-box align-self-center d-flex flex-column w-100 content-padding">
-                <div class="progress mt-3">
-                    <div class="progress-bar bg-summa-primary" role="progressbar" style="width: 43%" aria-valuenow="2" aria-valuemin="0" aria-valuemax="000"></div>
+            <div id="project-status" class="status-box align-self-center d-flex flex-column w-100 content-padding" hx-get="{{ webInfo.baseurl }}status-chapter-count"
+                 hx-trigger="load"
+                 hx-swap="outerHTML">
+                <div class="spinner-border text-summa-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
                 </div>
-                <span class="pt-3">43% der Kapitel sind in Übersetzung</span>
-                <div class="progress mt-3">
-                    <div class="progress-bar bg-summa-primary" role="progressbar" style="width: 24%" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <span class="pt-3">24% der Kapitel sind übersetzt und veröffentlicht</span>
-
-                <ul class="list-group list-group-horizontal-md mt-5 w-100">
-                    <li class="list-group-item w-25-md">
-                        <h2 id="book-count" class="text-center"
-                            hx-get="{{ webInfo.baseurl }}book-count"
-                            hx-trigger="load"
-                            hx-swap="outerHTML">
-                            <div class="spinner-border text-summa-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </h2>
-                        <h5 class="text-center">Bücher</h5>
-                    </li>
-                    <li class="list-group-item w-25-md">
-                        <h2 id="chapter-count" class="text-center"
-                            hx-get="{{ webInfo.baseurl }}chapter-count"
-                            hx-trigger="load"
-                            hx-swap="outerHTML">
-                            <div class="spinner-border text-summa-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </h2>
-                        <h5 class="text-center">Capitula</h5>
-                    </li>
-                    <li class="list-group-item w-25-md">
-                        <h2 id="article-count" class="text-center"
-                            hx-get="{{ webInfo.baseurl }}article-count"
-                            hx-trigger="load"
-                            hx-swap="outerHTML">
-                            <div class="spinner-border text-summa-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </h2>
-                        <h5 class="text-center">Articuli</h5>
-                    </li>
-                    <li class="list-group-item w-25-md">
-                        <h2 id="translator-count" class="text-center"
-                            hx-get="{{ webInfo.baseurl }}translator-count"
-                            hx-trigger="load"
-                            hx-swap="outerHTML">
-                            <div class="spinner-border text-summa-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </h2>
-                        <h5 class="text-center">Übersetzer<sup>*</sup>innen</h5>
-                    </li>
-                </ul>
 
             </div>
             <h1 class="text-summa-primary content-padding d-flex justify-content-between" style="padding-bottom: 0!important; margin-bottom: 0!important;"><span class="pb-3 pt-md-5">Corpus:</span> <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto"></h1>
@@ -132,6 +82,10 @@
 
             </div>
             <div class="partner-box"></div>
+            <div class="d-flex justify-content-between footer-picture pt-5">
+                <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/summa_pre_logo.png" class="d-none d-md-block align-self-end" height="50" width="auto" style="margin-bottom: 0!important;">
+                <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto">
+            </div>
         </div>
 
     </main>

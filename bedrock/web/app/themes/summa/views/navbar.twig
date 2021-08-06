@@ -8,8 +8,8 @@
         </button>
         <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="pDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item dropdown ">
+                    <a class="nav-link {% if webInfo.route == "projekt" %}nav-link-active{% endif %} dropdown-toggle" href="#" id="pDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         PROJEKT
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="pDropdown">
@@ -19,30 +19,33 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ webInfo.baseurl }}corpus">CORPUS</a>
+                    <a class="nav-link {% if webInfo.route == "corpus" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}corpus" >CORPUS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ webInfo.baseurl }}mitwirken">MITWIRKEN</a>
+                    <a class="nav-link {% if webInfo.route == "mitwirken" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}mitwirken">MITWIRKEN</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ webInfo.baseurl }}thomas">THOMAS</a>
+                    <a class="nav-link {% if webInfo.route == "thomas" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}thomas">THOMAS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ webInfo.baseurl }}kontakt">KONTAKT</a>
+                    <a class="nav-link {% if webInfo.route == "kontakt" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}kontakt">KONTAKT</a>
                 </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0 align-self-start">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-social" href="#"><i class="fab fa-facebook"></i></a>
+                <li class="nav-item" >
+                    <a class="nav-link nav-link-social" href="https://lists.uni-koeln.de/mailman/listinfo/summa-newsletter/" data-bs-toggle="tooltip" data-bs-placement="left" title="Newsletter"><i class="fas fa-paper-plane"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-social" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="nav-link nav-link-social" href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="Facebook"><i class="fab fa-facebook"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-social" href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="Twitter"><i class="fab fa-twitter"></i></a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="alert alert-warning alert-dismissible fade show" role="alert" style="position: fixed!important; z-index: 9999!important; top: 50vh!important; left: 30%!important;">
+<!--div class="alert alert-warning alert-dismissible fade show" role="alert" style="position: fixed!important; z-index: 9999!important; top: 50vh!important; left: 30%!important;">
     <strong>Heiliger Thomas!</strong> Diese Seite befindet sich gerade im Aufbau. Komm später nochmal wieder, denn dann gibt es ganz sicher mehr zu sehen!
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+</div-->

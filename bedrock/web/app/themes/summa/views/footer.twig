@@ -1,4 +1,5 @@
-<nav id="ff" class="navbar navbar-expand bg-summa-primary d-flex flex-column">
+<nav id="ff" class="navbar navbar-expand footer bg-summa-primary d-flex flex-column">
+
     <div class="container-fluid nav-content d-flex justify-content-start align-content-start" >
             <ul class="navbar-nav align-self-start">
                 <li class="nav-item mr-1">
@@ -10,9 +11,17 @@
                 <li class="nav-item mr-1">
                     <a class="nav-link nav-link-footer" href="https://portal.uni-koeln.de/datenschutz" target="_blank"><small class="">DATENSCHUTZ</small></a>
                 </li>
-
+                <li class="nav-item mr-1">
+                    <a class="nav-link nav-link-footer" href="https://lists.uni-koeln.de/mailman/listinfo/summa-newsletter/" target="_blank"><small class="">NEWSLETTER</small></a>
+                </li>
             </ul>
     </div>
 </nav>
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 
 

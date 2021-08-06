@@ -1,0 +1,101 @@
+{% extends "base.twig" %}
+{% block content %}
+    <main class="bg-dark">
+        <div class="jumbotron project-page-img">
+
+        </div>
+        <div class="content-container m-auto bg-light shadow d-flex flex-column" style="height: 100%!important;">
+            <div class="title-box align-self-center d-flex justify-content-center w-100 content-padding">
+                <span class="text-center title-text">Darum geht es: ####(Maßangabe) hoch­ mittelalterliches Latein in die Sprache des 21. Jahrhundert zu bringen.
+                Präzise, adäquat und mit Esprit.</span>
+            </div>
+            <h5 class="text-summa-primary content-padding" style="padding-left: 75px!important;"><strong>Die Summa theologiae – was für ein Werk!</strong></h5>
+            <p class="content-padding paragraph-padding">
+                ###Dieser Absatz sagt, dass die summa zu den größten Werken des Mittelalters zählen ist - und warum (ruhig auch ein kurzes Zitat oder so bringen) 750 Zei­ chen Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            </p>
+            <p class="content-padding paragraph-padding">
+                At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd guberg­ ren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accu­ sam et justo duo dolores et ea rebum. Stet clita kasd gubergren.
+            </p>
+            <p class="content-padding paragraph-padding">
+                No sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            </p>
+
+            <h5 class="text-summa-primary content-padding" style="padding-left: 75px!important;"><strong>Anspruch und Herausforderung</strong></h5>
+            <p class="content-padding paragraph-padding">
+                - Hier eine Aufzählung<br>
+                - Wie viele Kapitel<br>
+                - Wie viele Zeilen<br>
+                - Wie viele Regalmeter<br>
+                - Wie viele Kommentare, Sekundärliteratur etc. weltweit<br>
+            </p>
+            <p class="content-padding paragraph-padding">
+                ###Dieser Absatz sagt, was der Anspruch des Projekts ist: Was man am Schluss haben möchte. Und warum das so herausfordert und auch warum man sich auf diese Herausforderung einlässt. 450 Zeichen</p>
+            <p class="content-padding paragraph-padding">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labor.</p>
+
+
+            <div class="corpus-box w-100">
+                <div class="bg-summa-primary d-flex flex-row" style="height: 300px!important;">
+                    <div class="bg-dark project-page-divider " style="height: 100%!important;"></div>
+                    <div class="d-none d-md-block bg-summa-primary">
+                    </div>
+                </div>
+            </div>
+            <h5 class="text-summa-primary content-padding" style="padding-left: 75px!important;"><strong>Die Summa theologiae – was für ein Werk!</strong></h5>
+            <p class="content-padding paragraph-padding">
+                ###Dieser Absatz sagt, wie das Co-Science-Projekt angelegt ist und wie das läuft. 350 Zeichen Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <h5 class="text-summa-primary content-padding" style="padding-left: 75px!important;"><strong>Projektstand</strong></h5>
+            <div id="project-status" class="status-box align-self-center d-flex flex-column w-100 content-padding" hx-get="{{ webInfo.baseurl }}status-chapter-count"
+                 hx-trigger="load"
+                 hx-swap="outerHTML">
+                <div class="spinner-border text-summa-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+
+            </div>
+
+            <div class="info-box d-flex flex-column flex-md-row mt-5">
+                <div class="landing-page-info z-img-join"></div>
+                <div class="landing-page-info-text p-3 p-md-4">
+                    <h3 class="text-summa-primary">Mitwirken</h3>
+                    <p>
+                        Die summa21 ist als großes Gemeinschaftsprojekt angelegt. Anders lässt sich der umfangreiche Textcorpus nicht handhaben. Hier können Sie erfahren, wie Sie bei der Übersetzungsarbeit mitwirken können und wie der Übertragungsprozess angelegt ist.
+                    </p>
+                    <a href="{{ webInfo.baseurl }}mitwirken" class="btn btn-summa mt-3">mehr erfahren</a>
+                </div>
+            </div>
+
+
+            <h1 class="text-summa-primary content-padding mt-3">Nachrichten:</h1>
+            <div class="content-padding news-box align-self-center d-flex flex-column flex-md-row justify-content-md-around w-100">
+                {% for post in data.news %}
+                <div class="card border-0 bg-transparent news-card">
+                    <img src="{{ post.thumbnail }}" class="card-img-top news-img" alt="...">
+                    <small class="text-end">{{ post.post_date_gmt|date("d.m.Y") }}</small>
+                    <div class="card-body">
+                        <h5 class="card-title text-summa-primary">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.preview }} <a>mehr</a></p>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+            <div class="team-box">
+
+            </div>
+            <div class="partner-box"></div>
+            <div class="d-flex justify-content-between pt-5" style="padding-bottom: 0!important; margin-bottom: 0!important;">
+                <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/summa_pre_logo.png" class="d-none d-md-block align-self-end" height="50" width="auto" style="margin-bottom: 0!important;">
+                <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto">
+            </div>
+        </div>
+
+    </main>
+        {% endblock %}
+
+

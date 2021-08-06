@@ -1,11 +1,61 @@
-<ul class="toc-list list-group list-group-flush p-2 p-md-3 p-lg-5">
-    {% for book in toc.0.books %}
-        <li class="list-group-item bg-stc-tertiary"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}">{{ book.title_lat }}</a></li>
-        {% for chapter in book.chapters%}
-            <li class="list-group-item bg-stc-tertiary pl-3"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}">{{ chapter.type_lat }}</a>{% if chapter.title_lat %}: <i>{{ chapter.title_lat }}</i>{% endif %}<i class="ml-2 fas fa-circle {% if chapter.translation_status == 2 %}text-success{% elseif chapter.translation_status == 1 %}text-warning{% else %}text-danger{% endif %}" data-toggle="tooltip" title="{% if chapter.translation_status == 2 %}übersetzt{% elseif chapter.translation_status == 1 %}in Übersetzung{% else %}zu übersetzen{% endif %}"></i></li>
-            {% for article in chapter.articles%}
-                <li class="list-group-item bg-stc-tertiary pl-5"><a href="{{ webInfo.baseurl }}index/{{ toc.0.project_id }}/{{ book.project_id }}/{{ chapter.project_id }}/{{ article.project_id }}">{{ article.type_lat }}</a>{% if article.title_lat %}: <i>{{ article.title_lat }}</i>{% endif %}</li>
-            {% endfor %}
-        {% endfor %}
+<div class="accordion accordion-flush" id="accordionBooks">
+    {% for book in toc.0.books_no_chunks %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ book.project_id }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ book.project_id }}" aria-expanded="false" aria-controls="collapse{{ book.project_id }}">
+                    <strong class="text-summa-primary" style="width: 70px!important;">{{ book.thomas_id }}</strong> <span>{{ book.title_lat }}</span>
+                </button>
+            </h2>
+
+            <div id="collapse{{ book.project_id }}" class="accordion-collapse collapse {% if book.project_id == works.0.books.0.project_id %}show{% endif %}" aria-labelledby="heading{{ book.project_id }}" data-bs-parent="#accordionBooks">
+                <div class="accordion-body p-0">
+                    <div class="accordion accordion-flush" id="accordionChapters{{ book.project_id }}">
+                        {% for chapter in book.chapters_no_chunks %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{ book.project_id }}-{{ chapter.project_id }}">
+                                    <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ book.project_id }}-{{ chapter.project_id }}" aria-expanded="false" aria-controls="collapse{{ book.project_id }}-{{ chapter.project_id }}">
+                                        <strong class="text-summa-primary" style="min-width: 70px!important; margin-left: 25px!important;" >{{ chapter.thomas_id }}</strong>
+                                        <span style="font-size: 16px!important;">
+                                                    {% if chapter.title_lat != "" and chapter.title_ger != "" %}
+                                                        {{ chapter.title_lat }} - {{ chapter.title_ger }}
+                                                    {% elseif chapter.title_lat != "" %}
+                                                        {{ chapter.title_lat }}
+                                                    {% else %}
+                                                    {% endif %}
+                                        </span>
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ book.project_id }}-{{ chapter.project_id }}" class="accordion-collapse collapse {% if chapter.project_id == works.0.books.0.chapters.0.project_id%}show{% endif %}" aria-labelledby="heading{{ book.project_id }}-{{ chapter.project_id }}" data-bs-parent="#accordionChapters{{ book.project_id }}">
+                                    <div class="accordion-body p-0">
+                                        <ul class="list-group list-group-flush">
+                                            {% for article in chapter.articles_no_chunks %}
+                                                <a class="list-group-item index-list-item d-flex flex-row" href="{{ webInfo.baseurl }}index/Sth/{{ book.project_id }}/{{ chapter.project_id }}#{{ article.project_id }}">
+                                                    <span class="text-summa-primary" style="min-width: 40px!important; margin-left: 35px!important; font-size: 15px!important;">{{ article.thomas_id }}</span>
+                                                    <span class="text-dark" style="font-size: 15px!important; font-weight: lighter">
+                                                                {% if article.title_lat != "" and article.title_ger != "" %}
+                                                                    {{ article.title_lat }} - {{ article.title_ger }}
+                                                                {% elseif article.title_lat != "" %}
+                                                                    {{ article.title_lat }}
+                                                                {% else %}
+                                                                    {% if article.type == "articulus" %}
+                                                                        <i>Überschrift folgt</i>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            </span>
+                                                    <i class="fas fa-external-link-square-alt text-white"></i>
+                                                </a>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
     {% endfor %}
-</ul>
+</div>

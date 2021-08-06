@@ -26,6 +26,11 @@ class PageController extends Controller
         $webInfo=WebManager::get($request);
 
         $context = Timber::get_context();
+        $webInfo["route"]=strtolower($context["wp_title"]);
+        if ($webInfo["route"]=="team" or $webInfo["route"]=="unterstutzen"){
+            $webInfo["route"]="projekt";
+        }
+
         $page = new Page();
 
         $context['post'] = $page;
