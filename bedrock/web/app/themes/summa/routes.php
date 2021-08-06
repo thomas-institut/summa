@@ -8,6 +8,7 @@ use Rareloop\Lumberjack\Facades\Router;
 Router::get('', 'SiteController@home');
 Router::get('projekt', 'SiteController@project');
 Router::get('index', 'SiteController@index');
+Router::get('corpus', 'SiteController@corpus');
 
 Router::get('index/{workId}', 'SiteController@work');
 Router::get('index/{workId}/{bookId}', 'SiteController@book');

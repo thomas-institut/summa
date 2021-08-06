@@ -93,6 +93,11 @@ class SiteController extends StandardController
         $toc=Work::with("booksNoChunks")->get();
         return new TimberResponse('views/templates/index.twig', [ "webInfo"=>$webInfo, "toc" => $toc]);
     }
+    public function corpus(ServerRequest $request){
+        $webInfo=WebManager::get($request);
+        $toc=Work::with("booksNoChunks")->get();
+        return new TimberResponse('views/templates/corpus.twig', [ "webInfo"=>$webInfo, "toc" => $toc]);
+    }
 
 
     /**

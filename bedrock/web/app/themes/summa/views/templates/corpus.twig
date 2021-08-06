@@ -1,0 +1,43 @@
+{% extends "base.twig" %}
+{% block content %}
+    <main class="bg-dark">
+        <div class="jumbotron landing-page-img">
+
+        </div>
+        <div class="content-container m-auto bg-light shadow d-flex flex-column" style="height: 100%!important;">
+            <div class="title-box align-self-center d-flex justify-content-center w-100 content-padding">
+                <span class="text-center title-text">Corpus</span>
+            </div>
+            {% include "templates/toc.twig" %}
+            <h5 class="text-summa-primary content-padding" style="padding-left: 75px!important;"><strong>Die Summa theologiae</strong></h5>
+            <p class="content-padding paragraph-padding">
+                Thomas von Aquin (*1224 / †1225) zählt zu den berühmtesten und bis heute einflussreichsten Philosophen
+                und Theologen des Mittelalters. Die <i>Summa theologiae</i> gilt als das Hauptwerk des Thomas, das wie keine
+                andere Schrift seine Wirkung und die Wirkungsgeschichte seines Denkens bestimmt. Die <i>Summa theologiae</i>,
+                die eine umfassende christliche Weltdeutung vom Standpunkt einer allgemein gültigen wissenschaftlichen
+                Vernunft darstellt, zählt zweifellos zu den „Great Books“ der Menschheitsgeschichte. Zwischen 1266 und
+                1268 in Rom begonnen, konzipiert Thomas seine Summa mit einem explizit didaktischen Anspruch der
+                Vermittlung einer zunehmend akademischen Debatte für die in der Seelsorge tätigen dominikanischen
+                Mitbrüder. Das hat dem Werk bis heute eine breite Leserschaft beschert. Während seines zweiten Pariser
+                Professorats zwischen 1270 und 1272 bildet die Arbeit an seiner zweiten Summa die Konstante in Thomas‘
+                schier unvorstellbarem Schaffen. Von Legenden umgeben ist schließlich Thomas‘ Abbruch der Arbeit an
+                seiner Summa am 1. Dezember 1273 in Neapel inmitten des Bußtraktats.</p>
+            <p class="content-padding paragraph-padding">
+                Die Summa theologiae umfasst drei Bücher, von denen das zweite noch einmal von Thomas unterteilt wird.
+                Die Summa spiegelt den Diskussionsstil an den Universitäten wider und ist in Fragen (Quästionen) und
+                Teilfragen (Artikel) gegliedert. Der erste Teil (<i>Prima Pars</i>) umfasst 109 Quästionen, die beiden Teile
+                des zweiten Teils umfassen 114 Quästionen (<i>Prima Secundae</i>) und 189 Quästionen (<i>Secunda Secundae</i>). Vom
+                dritten Teil (<i>Tertia Pars</i>) hat Thomas 90 Quästionen fertiggestellt, ein aus seinen Werken kompiliertes
+                <i>Supplementum</i> umfasst noch einmal 99 Quästionen.
+            </p>
+
+            <div class="d-flex justify-content-between footer-picture pt-5">
+                <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/summa_pre_logo.png" class="d-none d-md-block align-self-end" height="50" width="auto" style="margin-bottom: 0!important;">
+                <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto">
+            </div>
+        </div>
+
+    </main>
+        {% endblock %}
+
+
