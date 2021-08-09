@@ -280,6 +280,10 @@ h2 {
 }
 
 @media (max-width: 767px) {
+  .content-container {
+    padding-bottom: 200px !important;
+  }
+
   .content-padding {
     padding-left: 25px !important;
     padding-right: 25px !important;
@@ -288,7 +292,7 @@ h2 {
   }
 
   .jumbotron {
-    height: 220px !important;
+    height: 200px !important;
   }
 
   .landing-page-cite {
