@@ -1,6 +1,6 @@
 <head>
     {% block head %}
-    <title>summa21 :: home</title>
+    <title>summa21 :: summa theologiae {% if webInfo.route  %}| {{ webInfo.route|lower }}{% elseif wp.posts.0.post_title %}| {{ wp.posts.0.post_title|lower }}{% endif %}</title>
     <meta charset="{{ site.charset }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="format-detection" content="telephone=no">

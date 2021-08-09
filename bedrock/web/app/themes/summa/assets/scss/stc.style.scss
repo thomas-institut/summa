@@ -72,6 +72,11 @@ h2 {
   padding-bottom: 0!important;
 }
 
+.chunk-content {
+  text-align: justify!important;
+  font-size: 2px!important;
+}
+
 
 
 .current-footnotes {
@@ -222,6 +227,10 @@ h2 {
   width: 100%!important;
 }
 
+.table table {
+  min-width: 1024px!important;
+  overflow-x: auto!important;
+}
 
 .table td, .table th {
   border: unset!important;
@@ -263,6 +272,10 @@ h2 {
   border-radius: 0.45rem!important;
   min-width: 768px!important;
 }
+
+.viewer-box {
+  min-width: 1024px!important;
+}
 .w-40 {
   width: 40%!important;
 }
@@ -271,11 +284,15 @@ h2 {
 }
 
 .z-img-join {
-  background-image: url('../img/tablet.jpg');
+  background-image: url('../img/iStock-1185878314_[Jay Yuno].jpg');
 }
 
 .z-img-project {
   background-image: url('../img/lib.jpg');
+}
+
+.z-img-team {
+  background-image: url('../img/iStock-1277859289.jpg');
 }
 
 @media (max-width: 767px) {
@@ -285,6 +302,10 @@ h2 {
     padding-right: 25px!important;
     padding-top: 25px!important;
     padding-bottom: 25px!important;
+  }
+
+  .jumbotron {
+    height: 220px!important;
   }
 
   .landing-page-cite {
@@ -336,6 +357,10 @@ h2 {
   .paragraph-padding {
     padding-top: 1px!important;
     padding-bottom: 1px!important;
+  }
+
+  .project-page-divider {
+    height: 250px!important;
   }
 }
 

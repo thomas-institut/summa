@@ -90,11 +90,13 @@ class SiteController extends StandardController
 
     public function index(ServerRequest $request){
         $webInfo=WebManager::get($request);
+        $webInfo["route"]="index";
         $toc=Work::with("booksNoChunks")->get();
         return new TimberResponse('views/templates/index.twig', [ "webInfo"=>$webInfo, "toc" => $toc]);
     }
     public function corpus(ServerRequest $request){
         $webInfo=WebManager::get($request);
+        $webInfo["route"]="corpus";
         $toc=Work::with("booksNoChunks")->get();
         return new TimberResponse('views/templates/corpus.twig', [ "webInfo"=>$webInfo, "toc" => $toc]);
     }
@@ -152,7 +154,7 @@ class SiteController extends StandardController
         $toc = Work::with("booksNoChunks")->get();
         // OUTSOURCING
         $book = Book::where("project_id", "=", $bookId)->first()->toArray();
-        $chapters=Chapter::where("book_id", "=", $book["id"])->get()->toArray();
+        $chapters=Chapter::where("book_id", "=", $book["id"])->with("book")->get()->toArray();
 
         $webInfo["navigation"]=array();
         $webInfo["navigation"]["firstChapter"]=$chapters[0];
@@ -169,7 +171,7 @@ class SiteController extends StandardController
             $webInfo["navigation"]["nextChapter"]=$chapters[$webInfo["navigation"]["currentChapter"]["order"]+1];
         }
         error_log(print_r($webInfo["navigation"], true));
-
+        $webInfo["route"]=$webInfo["navigation"]["currentChapter"]["book"]["thomas_id"].", ".$webInfo["navigation"]["currentChapter"]["thomas_id"]." - ".$webInfo["navigation"]["currentChapter"]["title_lat"];
         //END OF OUTSOURCING
         try {
             return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
