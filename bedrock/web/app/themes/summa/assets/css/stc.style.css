@@ -6,6 +6,7 @@ a {
 
 body {
   font-family: "Open Sans", sans-serif;
+  font-size: 1.1rem !important;
 }
 
 h1 {
@@ -156,6 +157,8 @@ h2 {
 
 .nav-link {
   color: #2d2d2d !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.15rem !important;
 }
 
 .nav-link:hover {
@@ -197,7 +200,7 @@ h2 {
 
 .project-page-img {
   height: 400px !important;
-  background-image: url("../img/iStock-458128417_[Mlenny].jpg");
+  background-image: url("../img/shutterstock_1939368049.jpg");
   background-size: 120%;
   background-position: center center;
   background-repeat: no-repeat;
