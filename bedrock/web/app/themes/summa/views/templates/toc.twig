@@ -17,7 +17,7 @@
                                         <strong class="text-summa-primary" style="min-width: 70px!important; margin-left: 25px!important;" >{{ chapter.thomas_id }}</strong>
                                         <span style="font-size: 16px!important;">
                                                     {% if chapter.title_lat != "" and chapter.title_ger != "" %}
-                                                        {{ chapter.title_lat }} - {{ chapter.title_ger }}
+                                                        {{ chapter.title_lat }}
                                                     {% elseif chapter.title_lat != "" %}
                                                         {{ chapter.title_lat }}
                                                     {% else %}
@@ -33,7 +33,7 @@
                                                     <span class="text-summa-primary" style="min-width: 40px!important; margin-left: 35px!important; font-size: 15px!important;">{{ article.thomas_id }}</span>
                                                     <span class="text-dark" style="font-size: 15px!important; font-weight: lighter">
                                                                 {% if article.title_lat != "" and article.title_ger != "" %}
-                                                                    {{ article.title_lat }} - {{ article.title_ger }}
+                                                                    {{ article.title_lat }}
                                                                 {% elseif article.title_lat != "" %}
                                                                     {{ article.title_lat }}
                                                                 {% else %}

@@ -13,6 +13,8 @@ use Rareloop\Lumberjack\Exceptions\TwigTemplateNotFoundException;
 
 use Rareloop\Lumberjack\Http\Responses\TimberResponse;
 use Rareloop\Lumberjack\Http\ServerRequest;
+use Rareloop\Lumberjack\Post;
+
 
 use Timber\Timber;
 
@@ -36,6 +38,7 @@ class SiteController extends StandardController
         );
         for ($i=0;$i<count($news_posts);$i++ ){
             $news_posts[$i]->thumbnail = $news_posts[$i]->thumbnail()->src("medium");
+            $news_posts[$i]->author = $news_posts[$i]->author();
             if ($news_posts[$i]->post_excerpt!=""){
                 $news_posts[$i]->preview = $news_posts[$i]->post_excerpt;
             } else {
@@ -87,6 +90,38 @@ class SiteController extends StandardController
 
         return new TimberResponse('views/templates/project.twig', [ "webInfo"=>$webInfo, "data" => $data]);
     }
+
+    public function news(ServerRequest $request){
+
+        $webInfo=WebManager::get($request);
+        $webInfo["route"]="aktuelles";
+        $news_posts = Timber::get_posts(array(
+                'category_name' => 'News',
+                'status' => 'publish',
+                'order'          => 'DESC',
+                'orderby'        => 'date',
+            )
+        );
+        error_log(print_r(Post::all(), true));
+        for ($i=0;$i<count($news_posts);$i++ ){
+            $news_posts[$i]->thumbnail = $news_posts[$i]->thumbnail()->src("medium");
+
+            if ($news_posts[$i]->post_excerpt!=""){
+                $news_posts[$i]->preview = $news_posts[$i]->post_excerpt;
+            } else {
+                $post_content = str_replace("<!-- wp:paragraph -->", "", $news_posts[$i]->post_content);
+                $post_content = str_replace("<!-- /wp:paragraph -->", "", $post_content);
+                $news_posts[$i]->preview = $post_content;
+
+
+            }
+        }
+        $data["news"]=$news_posts;
+
+
+        return new TimberResponse('views/templates/news.twig', [ "webInfo"=>$webInfo, "data" => $data]);
+    }
+
 
     public function index(ServerRequest $request){
         $webInfo=WebManager::get($request);

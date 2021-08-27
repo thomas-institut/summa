@@ -7,21 +7,32 @@
 namespace App;
 
 use App\Http\Controllers\Controller;
+use App\Http\Operations\WebManager;
 use Rareloop\Lumberjack\Http\Responses\TimberResponse;
+use Rareloop\Lumberjack\Http\ServerRequest;
 use Rareloop\Lumberjack\Post;
 use Timber\Timber;
+use Timber\User;
 
 class SingleController extends Controller
 {
-    public function handle()
+    public function handle(ServerRequest $request)
     {
+        $webInfo=WebManager::get($request);
+        $webInfo["route"]="aktuelles";
+        global $wp_query;
         $context = Timber::get_context();
-        $post = new Post();
+        $lpost = new Post();
 
-        $context['post'] = $post;
-        $context['title'] = $post->title;
-        $context['content'] = $post->content;
 
-        return new TimberResponse('templates/generic-page.twig', $context);
+        $post['post'] = $lpost;
+        $post['title'] = $lpost->title;
+        $post['content'] = $lpost->content;
+        $post["author"]=$lpost->author();
+        $data["post"]=$lpost;
+
+        error_log(print_r("HSADASDASASDASD", true));
+
+        return new TimberResponse('templates/post.twig', [ "webInfo"=>$webInfo, "data" => $data]);
     }
 }

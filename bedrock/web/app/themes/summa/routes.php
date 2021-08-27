@@ -7,6 +7,7 @@ use Rareloop\Lumberjack\Facades\Router;
  */
 Router::get('', 'SiteController@home');
 Router::get('projekt', 'SiteController@project');
+Router::get('aktuelles', 'SiteController@news');
 Router::get('index', 'SiteController@index');
 Router::get('corpus', 'SiteController@corpus');
 

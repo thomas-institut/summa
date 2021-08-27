@@ -99,6 +99,11 @@ h2 {
   border-color: #343a40!important;
 }
 
+.dropdown-item {
+  font-size: 0.85rem!important;
+  letter-spacing: 0.15rem!important;
+}
+
 .dropdown-item.active, .dropdown-item:active {
   text-decoration: none!important;
   background-color: $primary!important;
@@ -170,6 +175,11 @@ h2 {
   color: $dark_grey!important;
   font-size: 0.85rem!important;
   letter-spacing: 0.15rem!important;
+
+}
+
+.nav-link:focus {
+  outline: none!important;
 
 }
 
@@ -296,7 +306,7 @@ h2 {
 }
 
 .z-img-team {
-  background-image: url('../img/iStock-1277859289.jpg');
+  background-image: url('../img/Triumph_des_Thomas_von_Aquin.jpg');
 }
 
 @media (max-width: 767px) {
@@ -345,7 +355,6 @@ h2 {
 
   .landing-page-info-text {
     width: 100%!important;
-
   }
   .news-box {
     padding: 0 !important;
