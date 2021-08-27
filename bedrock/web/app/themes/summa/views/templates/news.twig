@@ -9,7 +9,7 @@
                     {% for post in data.news %}
                         <div class="d-flex border p-3">
                             <img src="{{ post.thumbnail }}"
-                                 class="flex-shrink-0 me-3 mt-3" style="width:100px;height:100px;">
+                                 class="flex-shrink-0 me-3 mt-3" style="width:100px;height:75px;">
                             <div>
                                 <h4 class="text-summa-primary"><a href="{{ webInfo.baseurl }}{{ post.slug }}" >{{ post.title }}</a> <h6 class="fst-italic">{{ post.post_date_gmt|date("d.m.Y") }}|{{ post.author.first_name }} {{ post.author.last_name }}</h6></h4>
                                 <p>{{ post.preview }} </p>
