@@ -56,7 +56,7 @@
                                 {% for chunk in article.chunks %}
                                     <tr>
                                         <td class="chunk-box w-50"><div class="chunk_content" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_lat">{% if chunk.text_lat!="\n" %}{{ chunk.text_lat }}{% else %}<span class="badge badge-dark">Transkription fehlt</span>{% endif %}</div></td>
-                                        <td class="chunk-box w-50"><div class="chunk_content" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_ger">{% if chunk.text_ger!="\n" %}{{ chunk.text_ger }}{% else %}<span class="badge badge-dark">Übersetzung fehlt: <a href="{{ webInfo.baseurl }}wie-kann-ich-ubersetzer-werden" class="text-stc-primary">Übersetzer werden?</a></span>{% endif %}</div></td>
+                                        <td class="chunk-box w-50"><div class="chunk_content" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_ger">{% if chunk.text_ger!="\n" %}{{ chunk.text_ger }}{% else %}<small class="text-dark text-center">Für diesen Absatz fehlt eine Übersetzung: <a href="{{ webInfo.baseurl }}mitwirken" class="text-stc-primary">Übersetzer werden?</a></small>{% endif %}</div></td>
                                     </tr>
                                 {% endfor %}
                             {% endfor %}
@@ -77,6 +77,8 @@
                 $('#footnotes-bar').collapse("show")
 
             })
+
+
 
         </script>
 

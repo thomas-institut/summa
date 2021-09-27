@@ -42,7 +42,7 @@
                     <small class="text-end">{{ post.post_date_gmt|date("d.m.Y") }}</small>
                     <div class="card-body">
                         <h5 class="card-title text-summa-primary">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.preview }} <a>mehr</a></p>
+                        <p class="card-text">{{ post.preview }} <a href="{{ webInfo.baseurl }}{{ post.slug }}">mehr</a></p>
                     </div>
                 </div>
                 {% endfor %}
@@ -74,7 +74,7 @@
                         wie Sie bei der Übersetzungsarbeit mitwirken können und wie der Übertragungsprozess
                         angelegt ist.
                     </p>
-                    <a href="{{ webInfo.baseurl }}mitwirken" class="btn btn-summa mt-3">mehr zum Projekt</a>
+                    <a href="{{ webInfo.baseurl }}mitwirken" class="btn btn-summa mt-3">mehr dazu</a>
                 </div>
             </div>
             <div class="citation-box w-100 mt-5">
