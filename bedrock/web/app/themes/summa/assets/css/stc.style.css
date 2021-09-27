@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
 a {
-  color: #BE2C5C !important;
+  color: #be2c5c !important;
   font-weight: bold !important;
 }
 
@@ -10,16 +10,16 @@ body {
 }
 
 h1 {
-  color: #BE2C5C !important;
+  color: #be2c5c !important;
   font-weight: bold !important;
 }
 
 h2 {
-  color: #BE2C5C !important;
+  color: #be2c5c !important;
 }
 
 .accordion-button:not(.collapsed) {
-  color: #BE2C5C !important;
+  color: #be2c5c !important;
   background-color: #fbeef2;
 }
 
@@ -32,17 +32,17 @@ h2 {
 }
 
 .bg-summa-primary {
-  background-color: #BE2C5C !important;
+  background-color: #be2c5c !important;
 }
 
 .bs-tooltip-start .tooltip-arrow::before, .bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow::before {
   left: -1px;
   border-width: 0.4rem 0 0.4rem 0.4rem;
-  border-left-color: #BE2C5C !important;
+  border-left-color: #be2c5c !important;
 }
 
 .btn-summa {
-  background-color: #BE2C5C !important;
+  background-color: #be2c5c !important;
   color: white !important;
   border: none !important;
 }
@@ -53,7 +53,7 @@ h2 {
 
 .btn-summa-secondary {
   background-color: white !important;
-  color: #BE2C5C !important;
+  color: #be2c5c !important;
   border: none !important;
 }
 
@@ -101,7 +101,7 @@ h2 {
 
 .dropdown-item.active, .dropdown-item:active {
   text-decoration: none !important;
-  background-color: #BE2C5C !important;
+  background-color: #be2c5c !important;
   color: #fbffee !important;
 }
 
@@ -137,7 +137,7 @@ h2 {
 
 .index-list-item:hover, .index-list-item:hover .text-summa-primary, .index-list-item:hover .text-dark {
   color: white !important;
-  background-color: #BE2C5C !important;
+  background-color: #be2c5c !important;
 }
 
 .landing-page-img {
@@ -171,14 +171,14 @@ h2 {
 }
 
 .nav-link:hover {
-  color: #BE2C5C !important;
+  color: #be2c5c !important;
 }
 
 .nav-link-active {
   text-decoration: initial !important;
   text-decoration-line: underline !important;
   text-decoration-thickness: 3px !important;
-  text-decoration-color: #BE2C5C !important;
+  text-decoration-color: #be2c5c !important;
 }
 
 .nav-link-footer {
@@ -191,7 +191,7 @@ h2 {
 }
 
 .nav-link-social {
-  color: #BE2C5C !important;
+  color: #be2c5c !important;
 }
 
 .nav-link-social:hover {
@@ -234,7 +234,7 @@ h2 {
 }
 
 .text-summa-primary {
-  color: #BE2C5C !important;
+  color: #be2c5c !important;
 }
 
 .title-box {
@@ -257,7 +257,7 @@ h2 {
   padding: 0.25rem 0.5rem;
   color: #fff;
   text-align: center;
-  background-color: #BE2C5C !important;
+  background-color: #be2c5c !important;
   border-radius: 0.25rem;
 }
 
