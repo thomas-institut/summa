@@ -145,10 +145,12 @@ class SiteController extends StandardController
      */
     public function work (ServerRequest $request, $workId){
         $webInfo=WebManager::get($request);
-        $works = Output::create($workId);
-        $toc = Work::with("books")->get();
+        //$works = Output::create($workId);
+        //$toc = Work::with("books")->get();
+        $works = array();
+        $toc = array();
         try {
-            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
+            return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);
@@ -164,6 +166,7 @@ class SiteController extends StandardController
      */
     public function book(ServerRequest $request, $workId, $bookId){
         $webInfo=WebManager::get($request);
+        $webInfo["route"]="book";
         $works=Output::create($workId, $bookId);
         $toc = Work::with("books")->get();
         try {
@@ -185,6 +188,7 @@ class SiteController extends StandardController
      */
     public function chapter(ServerRequest $request, $workId, $bookId, $chapterId){
         $webInfo=WebManager::get($request);
+        $webInfo["route"]="chapter";
         $works=Output::create($workId, $bookId, $chapterId);
         $toc = Work::with("booksNoChunks")->get();
         // OUTSOURCING
@@ -201,12 +205,16 @@ class SiteController extends StandardController
         }
         if ($webInfo["navigation"]["currentChapter"]["order"]!=0){
             $webInfo["navigation"]["prevChapter"]=$chapters[$webInfo["navigation"]["currentChapter"]["order"]-1];
+        } else {
+            $webInfo["navigation"]["prevChapter"]=$chapters[$webInfo["navigation"]["currentChapter"]["order"]];
         }
-        if ($webInfo["navigation"]["currentChapter"]["order"]!=$chapters[count($chapters)-1]){
+        if ($webInfo["navigation"]["currentChapter"]["order"]!=count($chapters)-1){
             $webInfo["navigation"]["nextChapter"]=$chapters[$webInfo["navigation"]["currentChapter"]["order"]+1];
+        } else {
+            $webInfo["navigation"]["nextChapter"]=$chapters[$webInfo["navigation"]["currentChapter"]["order"]];
         }
-        error_log(print_r($webInfo["navigation"], true));
-        $webInfo["route"]=$webInfo["navigation"]["currentChapter"]["book"]["thomas_id"].", ".$webInfo["navigation"]["currentChapter"]["thomas_id"]." - ".$webInfo["navigation"]["currentChapter"]["title_lat"];
+
+        $webInfo["route_title"]=$webInfo["navigation"]["currentChapter"]["book"]["thomas_id"].", ".$webInfo["navigation"]["currentChapter"]["thomas_id"]." - ".$webInfo["navigation"]["currentChapter"]["title_lat"];
         //END OF OUTSOURCING
         try {
             return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
@@ -228,10 +236,10 @@ class SiteController extends StandardController
      */
     public function article(ServerRequest $request, $workId, $bookId, $chapterId, $articleId){
         $webInfo=WebManager::get($request);
-        $works=Output::create($workId, $bookId, $chapterId, $articleId);
-        $toc = Work::with("booksNoChunks")->get();
+        $works=array();
+        $toc = array();
         try {
-            return new TimberResponse('views/templates/viewer.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
+            return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo, "works"=>$works, "toc"=>$toc]);
         }
         catch (TwigTemplateNotFoundException $e){
             return new TimberResponse('views/templates/errors/404.twig', [ "webInfo"=>$webInfo]);

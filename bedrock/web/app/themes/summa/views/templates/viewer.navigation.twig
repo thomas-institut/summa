@@ -19,11 +19,16 @@
 </div>
 <nav id="control-bar" class="navbar fixed-bottom navbar-dark bg-summa-primary d-flex justify-content-center">
     <ul class="pagination">
+        {% if webInfo.route == "chapter" %}
+        <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Ganzes Buch {{ works.0.books.0.thomas_id }} anzeigen"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}"><i class="fas fa-book"></i></a></li>
         <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ webInfo.navigation.firstChapter.thomas_id }}"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ webInfo.navigation.firstChapter.project_id }}"><i class="fas fa-angle-double-left"></i></a></li>
         <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ webInfo.navigation.prevChapter.thomas_id }}"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ webInfo.navigation.prevChapter.project_id }}"><i class="fas fa-angle-left"></i></a></li>
         <li class="page-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><a class="page-link bg-light text-stc-primary" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Schnellnavigation"><small><span class="d-none d-md-inline">{{  works.0.books.0.title_lat }}</span><span class="d-md-none">Buch {{  works.0.books.0.thomas_id }}</span> | {{ works.0.books.0.chapters.0.thomas_id }}: <span class="d-none d-md-inline">{% if works.0.books.0.chapters.0.title_lat|length > 25 %}{{ works.0.books.0.chapters.0.title_lat|slice(0,22) }}...{% else %}{{ works.0.books.0.chapters.0.title_lat }}{% endif %}</span><span class="d-md-none">{% if works.0.books.0.chapters.0.title_lat|length > 15 %}{{ works.0.books.0.chapters.0.title_lat|slice(0,12) }}...{% else %}{{ works.0.books.0.chapters.0.title_lat }}{% endif %}</span></small></a></li>
         <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ webInfo.navigation.nextChapter.thomas_id }}"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ webInfo.navigation.nextChapter.project_id }}"><i class="fas fa-angle-right"></i></a></li>
         <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ webInfo.navigation.lastChapter.thomas_id }}"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ webInfo.navigation.lastChapter.project_id }}"><i class="fas fa-angle-double-right"></i></a></li>
+        {% elseif webInfo.route == "book" %}
+            <li class="page-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Einzelne Questiones"><a class="page-link bg-light text-stc-primary" href="{{ webInfo.baseurl }}index/{{ works.0.project_id }}/{{ works.0.books.0.project_id }}/{{ works.0.books.0.chapters.0.project_id }}"><i class="far fa-dot-circle"></i></a></li>
+        {% endif %}
     </ul>
 </nav>
 
