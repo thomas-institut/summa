@@ -224,6 +224,15 @@ h2 {
   width: 100% !important;
 }
 
+.project-page-leonida {
+  height: 300px !important;
+  background: url("../img/leonida.jpg");
+  background-size: 130%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 100% !important;
+}
+
 .table table {
   min-width: 1024px !important;
   overflow-x: auto !important;
@@ -361,6 +370,10 @@ h2 {
   .project-page-divider {
     height: 250px !important;
   }
+
+  .project-page-leonida {
+    height: 250px !important;
+  }
 }
 @media (min-width: 768px) and (max-width: 1280px) {
   .news-box {
@@ -428,6 +441,15 @@ h2 {
   .project-page-divider {
     height: 400px !important;
     background: url("../img/iStock-624695614_[Jacob Ammentorp Lund].jpg");
+    background-size: 130%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 50% !important;
+  }
+
+  .project-page-leonida {
+    height: 400px !important;
+    background: url("../img/leonida.jpg");
     background-size: 130%;
     background-position: center center;
     background-repeat: no-repeat;

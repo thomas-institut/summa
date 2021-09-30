@@ -56,7 +56,7 @@ class Output
 
 
     private static function getChapters($bookId, $chapterId){
-        return Chapter::where("book_id", "=", $bookId)->where("project_id", "=", $chapterId)->get()->toArray();
+        return Chapter::with("translator")->where("book_id", "=", $bookId)->where("project_id", "=", $chapterId)->get()->toArray();
     }
 
     private static function getAllChapters($bookId){

@@ -32,6 +32,13 @@
                                     {% endif %}
                                 </td>
                             </tr>
+                            {% if chapter.translator_id != null %}
+                                <tr>
+                                    <td></td>
+                                    <td><h6 class="fst-italic text-center" style="font-size: 12px!important;">Übersetzt von: {{ chapter.translator.first_name }} {{ chapter.translator.last_name }}</h6></td>
+                                </tr>
+                            {% endif %}
+
                             {% for article in chapter.articles %}
                                 {% if article.type == "articulus" %}
                                 <tr id="{{ article.project_id }}">
@@ -60,7 +67,9 @@
                                     </tr>
                                 {% endfor %}
                             {% endfor %}
+
                         {% endfor %}
+
                     {% endfor %}
 
                 {% endfor %}
