@@ -30,7 +30,7 @@ return [
     /**
      * If true, the cookie will only be sent if the connection is done over HTTPS
      */
-    'secure' => getenv('SESSION_SECURE_COOKIE') ?: false,
+    'secure' => getenv('SESSION_SECURE_COOKIE') ?: true,
 
     /**
      * If true, JavaScript will not be able to access the cookie data
