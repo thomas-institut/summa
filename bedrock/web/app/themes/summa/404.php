@@ -13,7 +13,7 @@
 namespace App;
 
 use App\Http\Controllers\Controller;
-use App\Http\Operations\Users\UserManager;
+
 use App\Http\Operations\WebManager;
 use Rareloop\Lumberjack\Http\Responses\TimberResponse;
 use Rareloop\Lumberjack\Http\ServerRequest;
@@ -27,7 +27,7 @@ class Error404Controller extends Controller
     public function handle(ServerRequest $request)
     {
         $webInfo=WebManager::get($request);
-        $userInfo=UserManager::get($request);
-        return new TimberResponse('templates/errors/404.twig', ["webInfo"=>$webInfo, "userInfo"=>$userInfo], 404);
+
+        return new TimberResponse('templates/errors/404.twig', ["webInfo"=>$webInfo], 404);
     }
 }

@@ -1,0 +1,51 @@
+{% extends "base.twig" %}
+{% block content %}
+    <div class="content-container m-auto bg-light shadow d-flex flex-column" style="min-height: 100vh!important;">
+        <div class="content-padding">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ webInfo.baseurl }}redaktion">Redaktion</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ chapter.book.project_id }}.{{ chapter.project_id }}</li>
+                </ol>
+            </nav>
+            <hr>
+            <div class="p-2 p-sm-4">
+                <div class="card" id="content_wrapper">
+                    <div class="card-header">Buch {{ chapter.book.thomas_id }}/{{ chapter.thomas_id }}: {{ chapter.title_lat }}</div>
+                    <div class="card-body">
+                        <form hx-post="{{ webInfo.baseurl }}redaktion/chapters/{{ chapter.id }}" hx-select="#content_wrapper" hx-target="#content_wrapper">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="statusSelect" name="translation_status" aria-label="Status">
+                                    <option value="0" {% if chapter.translation_status == 0 %}selected{% endif %}>nicht vergeben</option>
+                                    <option value="1" {% if chapter.translation_status == 1 %}selected{% endif %}>vergeben</option>
+                                    <option value="2" {% if chapter.translation_status == 2 %}selected{% endif %}>veröffentlicht</option>
+                                </select>
+                                <label for="translation_status">Status</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="translatorSelect" name="translator_id" aria-label="Translator">
+                                    <option>Auswählen</option>
+                                    {% for translator in translators %}
+                                    <option value="{{ translator.id }}" {%  if chapter.translator_id == translator.id %}selected{% endif %}>{{ translator.first_name }} {{ translator.last_name }}</option>
+                                    {% endfor %}
+
+                                </select>
+                                <label for="translatorSelect">Übersetzer</label>
+                            </div>
+                            <button type="submit" class="btn btn-outline-success w-100">Übernehmen</button>
+                            {%  if webInfo.chunk_change %}<span class="text-success">Änderungen vorgenommen</span>{% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between footer-picture pt-5" style="padding-bottom: 0!important; margin-bottom: 0!important;">
+            <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/summa21_Logo_quer.png" class="d-none d-md-block align-self-end" height="50" width="auto" style="margin-bottom: 0!important;">
+            <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto">
+        </div>
+    </div>
+
+    {% include "templates/viewer.navigation.twig" %}
+        {% endblock %}
+
+

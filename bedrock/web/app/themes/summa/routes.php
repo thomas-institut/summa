@@ -21,6 +21,13 @@ Router::get('index/{workId}/{bookId}/{chapterId}/{articleId}', 'SiteController@a
  *  Admin Routes
  */
 Router::get('/redaktion', 'AdminController@home');
+Router::get('/redaktion/chapters/{chapterId}', 'AdminController@chapter');
+Router::post('/redaktion/chapters/{chapterId}', 'AdminController@setChapter');
+Router::post('/redaktion/translators/{translatorId}', 'AdminController@setTranslator');
+Router::post('/redaktion/translators', 'AdminController@createTranslator');
+Router::get('/redaktion/index/{workId}/{bookId}/{chapterId}/{articleId}', 'AdminController@article');
+Router::post('/redaktion/preview', 'AdminController@getPreview');
+Router::post('/redaktion/index/{workId}/{bookId}/{chapterId}/{articleId}', 'AdminController@setChunk');
 
 
 

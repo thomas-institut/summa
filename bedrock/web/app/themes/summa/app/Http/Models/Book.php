@@ -26,6 +26,11 @@ class Book extends Model
         return $this->hasMany('App\Http\Models\Chapter', 'book_id', 'id')->with("articlesNoChunks");
     }
 
+    function chaptersNoArticles()
+    {
+        return $this->hasMany('App\Http\Models\Chapter', 'book_id', 'id')->with("translator");
+    }
+
 
 
 

@@ -28,6 +28,8 @@ class WebManager
         }
 
         $webInfo["env"]=$_ENV["WP_ENV"];
+        $webInfo["user"]=wp_get_current_user();
+        error_log(print_r($webInfo["user"], true));
 
         return $webInfo;
     }

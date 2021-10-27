@@ -160,6 +160,16 @@ h2 {
 
 }
 
+.htmx-indicator{
+  opacity:0;
+  transition: opacity 500ms ease-in;
+}
+.htmx-request .htmx-indicator{
+  opacity:1
+}
+.htmx-request.htmx-indicator{
+  opacity:1
+}
 
 
 .landing-page-corpus-text {
@@ -297,7 +307,7 @@ h2 {
 }
 
 .viewer-box {
-  min-width: 1024px!important;
+  min-width: 100%!important;
 }
 .w-40 {
   width: 40%!important;
@@ -390,6 +400,11 @@ h2 {
 
   .project-page-leonida {
     height: 250px!important;
+  }
+  .w-33 {
+    min-width: 400px!important;
+    max-width: 400px!important;
+
   }
 }
 

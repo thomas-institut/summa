@@ -31,6 +31,14 @@
                 <li class="nav-item">
                     <a class="nav-link {% if webInfo.route == "kontakt" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}kontakt">KONTAKT</a>
                 </li>
+                {% if webInfo.user.ID > 0 %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if webInfo.route == "redaktion" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}wp/wp-admin" data-bs-toggle="tooltip" data-bs-placement="left" title="Wordpress"><i class="fas fa-cog"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if webInfo.route == "redaktion" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}redaktion" data-bs-toggle="tooltip" data-bs-placement="left" title="Redaktion"><i class="fas fa-user-edit"></i></a>
+                    </li>
+                {% endif %}
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0 align-self-start">
                 <li class="nav-item" >

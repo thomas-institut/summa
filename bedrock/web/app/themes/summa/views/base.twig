@@ -11,9 +11,12 @@
         });
     </script>
     {% include "navbar.twig" %}
+    <main class="w-100">
         {% block content %}
             <p>Sorry, no content</p>
         {% endblock %}
+    </main>
+
     {% include "footer.twig" %}
     </body>
 </html>

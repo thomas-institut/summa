@@ -1,24 +1,23 @@
 {% extends "base.twig" %}
 {% block content %}
-    <main>
-        <div class="content-container m-auto bg-light shadow d-flex flex-column p-3 p-md-5 viewer-box" style="height: 100%!important;">
+        <div class="content-container m-auto bg-light shadow d-flex flex-column p-0 p-md-5 viewer-box" style="height: 100%!important; ">
             <table class="table">
                 {% for work in works %}
                     <tr>
-                        <td><h1 class="text-center">{{ work.title_lat }}</h1></td>
+                        <td><h1 class="text-center text-left">{{ work.title_lat }}</h1></td>
                         <td><h1 class="text-center">{{ work.title_ger }}</h1></td>
                     </tr>
                     {% for book in work.books %}
                         <tr>
-                            <td><h2 class="text-center">{{ book.title_lat }}</h2></td>
+                            <td><h2 class="text-center text-left">{{ book.title_lat }}</h2></td>
                             <td><h2 class="text-center">{{ book.title_ger }}</h2></td>
                         </tr>
                         {% for chapter in book.chapters %}
                             <tr>
                                 <td>
-                                    <h3 class="text-center">{{ chapter.type_lat }}</h3>
+                                    <h3 class="text-center text-left">{{ chapter.type_lat }}</h3>
                                     {% if chapter.title_lat %}
-                                        <h6 class="text-center font-italic">
+                                        <h6 class="text-center font-italic text-left">
                                         {{ chapter.title_lat }}
                                         </h6>
                                     {% endif %}
@@ -43,9 +42,9 @@
                                 {% if article.type == "articulus" %}
                                 <tr id="{{ article.project_id }}">
                                     <td>
-                                        <h4 class="text-center">{{ article.type_lat }}</h4>
+                                        <h4 class="text-center text-left">{{ article.type_lat }}</h4>
                                         {% if article.title_lat %}
-                                            <h6 class="text-center font-italic">
+                                            <h6 class="text-center font-italic text-left">
                                         {{ article.title_lat }}
                                             </h6>
                                         {% endif %}
@@ -62,8 +61,8 @@
                                 {% endif %}
                                 {% for chunk in article.chunks %}
                                     <tr>
-                                        <td class="chunk-box w-50"><div class="chunk_content" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_lat">{% if chunk.text_lat!="\n" %}{{ chunk.text_lat }}{% else %}<span class="badge badge-dark">Transkription fehlt</span>{% endif %}</div></td>
-                                        <td class="chunk-box w-50"><div class="chunk_content" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_ger">{% if chunk.text_ger!="\n" %}{{ chunk.text_ger }}{% else %}<small class="text-dark text-center">Für diesen Absatz fehlt eine Übersetzung: <a href="{{ webInfo.baseurl }}mitwirken" class="text-stc-primary">Übersetzer werden?</a></small>{% endif %}</div></td>
+                                        <td class="chunk-box w-50"><div class="chunk_content text-left" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_lat">{% if chunk.text_lat!="\n" %}{{ chunk.text_lat }}{% else %}<span class="badge badge-dark">Transkription fehlt</span>{% endif %}</div></td>
+                                        <td class="chunk-box w-50"><div class="chunk_content" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_ger">{% if chapter.translation_status == 2 %}{{ chunk.text_ger }}{% elseif chapter.translation_status == 0 %}<small class="text-dark text-center">Für diesen Absatz fehlt eine Übersetzung: <a href="{{ webInfo.baseurl }}mitwirken" class="text-stc-primary">Übersetzer werden?</a></small>{% elseif chapter.translation_status == 1 %}<small class="text-summa-primary text-center fst-italic">Dieser Absatz befindet sich derzeit in Übersetzung. Wir würden uns freuen, wenn Sie später nochmal vorbeischauen</small>{% endif %}</div></td>
                                     </tr>
                                 {% endfor %}
                             {% endfor %}
@@ -90,9 +89,6 @@
 
 
         </script>
-
-
-    </main>
     {% include "templates/viewer.navigation.twig" %}
         {% endblock %}
 

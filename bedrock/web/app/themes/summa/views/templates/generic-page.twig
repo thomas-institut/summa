@@ -1,6 +1,5 @@
 {% extends "base.twig" %}
 {% block content %}
-<main>
     <div class="content-container m-auto bg-light shadow d-flex flex-column" style="min-height: 100vh!important;">
         <div class="content-padding">
             <h1 class="p-2 p-sm-4">{{ wp.posts.0.post_title }}</h1>
@@ -14,7 +13,6 @@
             <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto">
         </div>
     </div>
-</main>
 
 
 {% endblock %}

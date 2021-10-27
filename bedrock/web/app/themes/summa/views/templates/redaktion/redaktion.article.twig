@@ -1,0 +1,171 @@
+{% extends "base.twig" %}
+{% block content %}
+        <div class="content-container m-auto bg-light shadow d-flex flex-column p-0 p-md-5 viewer-box" style="height: 100%!important; ">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ webInfo.baseurl }}redaktion">Redaktion</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ works.0.project_id }}.{{ works.0.books.0.project_id }}.{{ works.0.books.0.chapters.0.project_id }}.{{ works.0.books.0.chapters.0.articles.0.project_id }}</li>
+                </ol>
+            </nav>
+            <hr>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                {% for work in works %}
+                    {% for book in work.books %}
+                        {% for chapter in book.chapters %}
+                            {% for chunk in chapter.articles.0.chunks %}
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link {% if loop.index == 1 %}active{% endif %}" id="navtab{{ chunk.id }}" data-bs-toggle="tab" data-bs-target="#tab{{ chunk.id }}" type="button" role="tab" aria-controls="navtab{{ chunk.id }}" aria-selected="{% if loop.index == 1 %}true{% else %}false{% endif %}">{{ chunk.type }}:{{ chunk.project_id }}</button>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                {% for work in works %}
+                    {% for book in work.books %}
+                        {% for chapter in book.chapters %}
+                            {% for chunk in chapter.articles.0.chunks %}
+                            <div class="tab-pane fade {% if loop.index == 1 %}show active{% endif %}" id="tab{{ chunk.id }}" role="tabpanel" aria-labelledby="tab{{ chunk.id }}">
+                                <div id="box{{ chunk.id }}" class="card mb-3" style="border-top-right-radius: 0!important; border-top-left-radius: 0!important;">
+                                    <div class="card-body">
+                                        <div class="w-100 mb-2">
+                                            <div class="form-floating">
+                                                <textarea class="form-control input-text"  placeholder="Leave a comment here" name="input-preview" id="editor{{ chunk.id }}" style="height: 100px; white-space: pre-wrap!important;" hx-post="{{ webInfo.baseurl }}redaktion/preview?chunk={{ chunk.id }}"  hx-target="#preview_text{{ chunk.id }}" hx-trigger="keyup changed delay:1s" hx-swap="innerHTML" hx-indicator="#spinner{{ chunk.id }}">{{ chunk.text_ger_md }}</textarea>
+                                                <label for="floatingTextarea2">Editor</label>
+                                            </div>
+                                        </div>
+                                        <div class="w-100 fs-6 mb-2">
+                                            <span class="text-summa-primary">Transkription: </span>{{ chunk.text_lat }}
+                                        </div>
+
+                                        <div class="w-100 fs-6 mb-2" id="preview_text{{ chunk.id }}">
+                                            <span class="text-summa-primary">Vorschau: </span>
+                                            <span>
+                                                {% if chunk.text_ger %}
+                                                    {{ chunk.text_ger }}
+                                                {% else %}
+                                                    <span class="text-danger">kein Text</span>
+                                                {% endif %}
+                                            </span>
+                                            <div id="spinner{{ chunk.id }}" class="spinner-border htmx-indicator fs-6" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <form hx-post="{{ webInfo.baseurl }}redaktion/index/Sth/{{ book.project_id }}/{{ chapter.project_id }}/{{ chapter.articles.0.project_id }}" hx-select="#preview_wrapper" hx-target="#preview_wrapper">
+                                            <textarea hidden id="input{{ chunk.id }}" class="input-wrapper" name="chunk_text" value="{{ chunk.text_ger_md }}" style="white-space: pre-wrap!important;"></textarea>
+                                            <input hidden id="id{{ chunk.id }}" name="chunk_id" value="{{ chunk.id }}">
+                                            <button class="btn btn-outline-success w-100" type="submit">Veröffentlichen</button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+
+            </div>
+            <script>
+                $(document).on("keyup", ".input-text", function () {
+                    let input_text = $(this).val()
+                    console.log("Textarea Val")
+                    console.log(input_text)
+                    $(this).closest(".card").find(".input-wrapper").val(input_text)
+                    console.log($(this).closest(".card").find(".input-wrapper").val())
+                })
+            </script>
+
+
+
+
+            <div id="preview_wrapper">
+                {%  if webInfo.chunk_change %}<span class="text-success">Chunk geändert!</span>{% endif %}
+                <h5 class="text-center" style="letter-spacing: 1rem!important;">VORSCHAU</h5>
+                <hr>
+                <table class="table">
+                    {% for work in works %}
+                        <tr>
+                            <td><h1 class="text-center text-left">{{ work.title_lat }}</h1></td>
+                            <td><h1 class="text-center">{{ work.title_ger }}</h1></td>
+                        </tr>
+                        {% for book in work.books %}
+                            <tr>
+                                <td><h2 class="text-center text-left">{{ book.title_lat }}</h2></td>
+                                <td><h2 class="text-center">{{ book.title_ger }}</h2></td>
+                            </tr>
+                            {% for chapter in book.chapters %}
+                                <tr>
+                                    <td>
+                                        <h3 class="text-center text-left">{{ chapter.type_lat }}</h3>
+                                        {% if chapter.title_lat %}
+                                            <h6 class="text-center font-italic text-left">
+                                                {{ chapter.title_lat }}
+                                            </h6>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <h3 class="text-center">{{ chapter.type_ger }}</h3>
+                                        {% if chapter.title_ger %}
+                                            <h6 class="text-center font-italic">
+                                                {{ chapter.title_ger }}
+                                            </h6>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% if chapter.translator_id != null %}
+                                    <tr>
+                                        <td></td>
+                                        <td><h6 class="fst-italic text-center" style="font-size: 12px!important;">Übersetzt von: {{ chapter.translator.first_name }} {{ chapter.translator.last_name }}</h6></td>
+                                    </tr>
+                                {% endif %}
+
+                                {% for article in chapter.articles %}
+                                    {% if article.type == "articulus" %}
+                                        <tr id="{{ article.project_id }}">
+                                            <td>
+                                                <h4 class="text-center text-left">{{ article.type_lat }}</h4>
+                                                {% if article.title_lat %}
+                                                    <h6 class="text-center font-italic text-left">
+                                                        {{ article.title_lat }}
+                                                    </h6>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <h4 class="text-center">{{ article.type_ger }}</h4>
+                                                {% if article.title_ger %}
+                                                    <h6 class="text-center font-italic">
+                                                        {{ article.title_ger }}
+                                                    </h6>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% for chunk in article.chunks %}
+                                        <tr>
+                                            <td class="chunk-box w-50"><div class="chunk_content text-left" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_lat">{% if chunk.text_lat!="\n" %}{{ chunk.text_lat }}{% else %}<span class="badge badge-dark">Transkription fehlt</span>{% endif %}</div></td>
+                                            <td class="chunk-box w-50"><div class="chunk_content" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_ger">{{ chunk.text_ger }}</div></td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+
+                            {% endfor %}
+
+                        {% endfor %}
+
+                    {% endfor %}
+                </table>
+            </div>
+
+
+
+        </div>
+
+    {% include "templates/viewer.navigation.twig" %}
+        {% endblock %}
+
+

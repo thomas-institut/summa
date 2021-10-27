@@ -1,0 +1,139 @@
+{% extends "base.twig" %}
+{% block content %}
+    <div class="content-container m-auto bg-light shadow d-flex flex-column" style="min-height: 100vh!important;">
+        <div class="content-padding">
+            <h1 class="p-2 p-sm-4">Redaktion</h1>
+            <hr>
+            <div class="p-2 p-sm-4">
+               <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="editor-tab" data-bs-toggle="tab" data-bs-target="#editor" type="button" role="tab" aria-controls="Editor" aria-selected="true">Editor</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="qtab" data-bs-toggle="tab" data-bs-target="#qverwaltung" type="button" role="tab" aria-controls="qverwaltung" aria-selected="false">Q-Verwaltung</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="translator-tab" data-bs-toggle="tab" data-bs-target="#translator" type="button" role="tab" aria-controls="translator" aria-selected="false">Übersetzer:innen</button>
+                </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="editor" role="tabpanel" aria-labelledby="editor-tab">
+                        <div class="card"  style="border-top-right-radius: 0!important; border-top-left-radius: 0!important;">
+                            <i class="text-center text-summa-primary">Wähle einen Artikel</i>
+                            {% include 'templates/redaktion/redaktion.toc.twig' %}
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="qverwaltung" role="tabpanel" aria-labelledby="qtab">
+                        {% for book in books %}
+                            <div class="card">
+                                <h5 class="text-center">{{ book.title_lat }}</h5>
+                                <ul class="list-group list-group-flush">
+                                    {% for chapter in book.chapters_no_articles %}
+                                        <a class="list-group-item d-flex flex-column text-dark fs-6" href="{{ webInfo.baseurl }}redaktion/chapters/{{ chapter.id }}">
+                                            <span class="d-flex justify-content-between"><span>{{ chapter.thomas_id }}: {{ chapter.title_lat }}</span><i class="fas fa-circle {% if chapter.translation_status == 0 %}text-danger{% elseif chapter.translation_status == 1 %}text-warning{% elseif chapter.translation_status == 2%}text-success{% endif %}"></i></span>
+                                            <small class="text-end">{{ chapter.translator.first_name }} {{ chapter.translator.last_name }} </small>
+                                        </a>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="tab-pane fade" id="translator" role="tabpanel" aria-labelledby="translator-tab">
+                        <div class="card"  style="border-top-right-radius: 0!important; border-top-left-radius: 0!important;">
+                            <div id="translator_wrapper">
+                                <ul class="list-group list-group-flush" >
+                                    <li class="list-group-item"><button class="btn btn-success w-100"  data-bs-toggle="modal" data-bs-target="#addTranslator">Hinzufügen</button></li>
+                                    {% for translator in translators %}
+                                        <li class="list-group-item">
+                                            <form hx-post="{{ webInfo.baseurl }}redaktion/translators/{{ translator.id }}" hx-select="#translator_wrapper" hx-target="#translator_wrapper" hx-swap="outerHTML">
+                                                <div class="input-group w-100">
+                                                    <div class="form-floating">
+                                                        <input id="vorname{{ translator.id }}" type="text" class="form-control" placeholder="Vorname" aria-label="Vorname" name="first_name" value="{{ translator.first_name }}">
+                                                        <label for="vorname{{ translator.id }}">Vorname</label>
+                                                    </div>
+                                                    <div class="form-floating">
+                                                        <input id="nachname{{ translator.id }}" type="text" class="form-control" placeholder="Nachname" aria-label="Nachname" name="last_name" value="{{ translator.last_name }}">
+                                                        <label for="nachname{{ translator.id }}">Nachname</label>
+                                                    </div>
+                                                    <div class="form-floating">
+                                                        <input id="email{{ translator.id }}" type="email" class="form-control" placeholder="E-Mail" aria-label="E-Mail" name="email" value="{{ translator.email }}">
+                                                        <label for="email{{ translator.id }}">E-Mail</label>
+                                                    </div>
+                                                    <div class="form-floating">
+                                                        <input id="title{{ translator.id }}" type="text" class="form-control" placeholder="..." aria-label="Titel" name="title" value="{{ translator.title }}">
+                                                        <label for="title{{ translator.id }}">Titel</label>
+                                                    </div>
+                                                    <div class="form-floating">
+                                                        <input id="inst{{ translator.id }}" type="text" class="form-control" placeholder="..." aria-label="Institution" name="institution" value="{{ translator.institution }}">
+                                                        <label for="inst{{ translator.id }}">Institution</label>
+                                                    </div>
+                                                    <button class="btn btn-outline-success w-25" type="submit" id="button-addon2">Übernehmen</button>
+                                                </div>
+                                            </form>
+                                            {%  if webInfo.chunk_change and translatorId == translator.id %}<span class="text-success fs-6">Änderung übernommen</span>{% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="modal" tabindex="-1" id="addTranslator">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Übersetzer:in hinzufügen</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form hx-post="{{ webInfo.baseurl }}redaktion/translators" hx-select="#translator_wrapper" hx-target="#translator_wrapper" hx-swap="outerHTML">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="email" class="form-control" id="emailAdd" placeholder="name@example.com" name="email">
+                                                        <label for="emailAdd">E-Mail</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="first_nameAdd" placeholder="name@example.com" name="first_name">
+                                                        <label for="first_nameAdd">Vorname</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="last_nameAdd" placeholder="name@example.com" name="last_name">
+                                                        <label for="last_nameAdd">Nachname</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="titleAdd" placeholder="..." name="title">
+                                                        <label for="titleAdd">Titel</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="instAdd" placeholder="..." name="institution">
+                                                        <label for="instAdd">Institution</label>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-success w-100"  >Hinzufügen</button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    var myModal = new bootstrap.Modal(document.getElementById('addTranslator'), {
+                                        keyboard: false
+                                    })
+                                    myModal.hide()
+                                    $('body').removeClass('modal-open');
+                                    $('body').removeAttr("style")
+                                    $('.modal-backdrop').remove();
+                                    //$('.modal-backdrop').toggle();
+
+                                </script>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between footer-picture pt-5" style="padding-bottom: 0!important; margin-bottom: 0!important;">
+            <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/summa21_Logo_quer.png" class="d-none d-md-block align-self-end" height="50" width="auto" style="margin-bottom: 0!important;">
+            <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto">
+        </div>
+    </div>
+
+
+{% endblock %}

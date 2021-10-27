@@ -152,6 +152,19 @@ h2 {
   background-image: url("../img/iStock-829775428_[cristianoalessandro].jpg");
 }
 
+.htmx-indicator {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.htmx-request .htmx-indicator {
+  opacity: 1;
+}
+
+.htmx-request.htmx-indicator {
+  opacity: 1;
+}
+
 .landing-page-corpus-text {
   color: white !important;
 }
@@ -277,7 +290,7 @@ h2 {
 }
 
 .viewer-box {
-  min-width: 1024px !important;
+  min-width: 100% !important;
 }
 
 .w-40 {
@@ -373,6 +386,11 @@ h2 {
 
   .project-page-leonida {
     height: 250px !important;
+  }
+
+  .w-33 {
+    min-width: 400px !important;
+    max-width: 400px !important;
   }
 }
 @media (min-width: 768px) and (max-width: 1280px) {

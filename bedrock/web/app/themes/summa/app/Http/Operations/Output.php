@@ -81,6 +81,8 @@ class Output
     private static function getAllChunks($articleId){
         $chunks = Chunk::where("article_id", "=", $articleId)->get()->toArray();
         for ($i=0; $i < count($chunks); $i++){
+            $chunks[$i]["text_lat_md"]=$chunks[$i]["text_lat"];
+            $chunks[$i]["text_ger_md"]=$chunks[$i]["text_ger"];
             $chunks[$i]["text_lat"]=MarkdownExtra::defaultTransform($chunks[$i]["text_lat"]);
             $chunks[$i]["text_ger"]=MarkdownExtra::defaultTransform($chunks[$i]["text_ger"]);
         }
