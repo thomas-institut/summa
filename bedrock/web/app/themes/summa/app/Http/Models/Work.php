@@ -1,11 +1,14 @@
 <?php
 
 
-
 namespace App\Http\Models;
-//use DareOne\models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Work
+ * @package App\Http\Models
+ * @author Mark Eschweiler - Universität zu Köln / Thomas-Institut
+ */
 class Work extends Model
 {
     protected $fillable = [
@@ -13,7 +16,7 @@ class Work extends Model
     ];
 
     protected $table = "s_works";
-    protected $primaryKey ="id";
+    protected $primaryKey = "id";
     public $timestamps = false;
 
     function books()
@@ -21,17 +24,10 @@ class Work extends Model
         return $this->hasMany('App\Http\Models\Book', 'work_id', 'id')->with("chapters");
     }
 
-    function booksNoChunks() {
+    function booksNoChunks()
+    {
         return $this->hasMany('App\Http\Models\Book', 'work_id', 'id')->with("chaptersNoChunks");
     }
-
-
-
-
-
-
-
-
 
 
 }

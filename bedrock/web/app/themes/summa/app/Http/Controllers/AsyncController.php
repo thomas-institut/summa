@@ -18,7 +18,11 @@ use Rareloop\Lumberjack\Http\ServerRequest;
 use Timber\Timber;
 
 
-
+/**
+ * Class AsyncController
+ * @package App\Http\Controllers
+ * @author Mark Eschweiler - Universität zu Köln / Thomas-Institut
+ */
 class AsyncController extends StandardController
 {
     public function bookCount(ServerRequest $request){

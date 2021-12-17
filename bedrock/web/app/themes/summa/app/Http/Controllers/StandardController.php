@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 
 use Rareloop\Lumberjack\Http\Controller as BaseController;
 
-
+/**
+ * Class StandardController
+ * @package App\Http\Controllers
+ * @author Mark Eschweiler - Universität zu Köln / Thomas-Institut
+ */
 class StandardController extends BaseController
 {
 

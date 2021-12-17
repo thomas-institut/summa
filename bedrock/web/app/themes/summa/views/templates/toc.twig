@@ -1,4 +1,5 @@
 <div class="accordion accordion-flush" id="accordionBooks">
+    <small class="text-secondary mx-3" style="font-size: 13px!important;"><i class="far fa-circle mx-2"></i>Übersetzer gesucht<i class="fas fa-adjust mx-2"></i>in Übersetzung<i class="fas fa-circle mx-2"></i> Übersetzt</small>
     {% for book in toc.0.books_no_chunks %}
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading{{ book.project_id }}">
@@ -15,6 +16,15 @@
                                 <h2 class="accordion-header" id="heading{{ book.project_id }}-{{ chapter.project_id }}">
                                     <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ book.project_id }}-{{ chapter.project_id }}" aria-expanded="false" aria-controls="collapse{{ book.project_id }}-{{ chapter.project_id }}">
                                         <strong class="text-summa-primary" style="min-width: 70px!important; margin-left: 25px!important;" >{{ chapter.thomas_id }}</strong>
+                                        <span class="mx-2 text-secondary" style="font-size: 13px!important;">
+                                            {% if chapter.translation_status == 0 %}
+                                                <i class="far fa-circle"></i>
+                                            {% elseif chapter.translation_status == 1 %}
+                                                <i class="fas fa-adjust"></i>
+                                            {% else %}
+                                                <i class="fas fa-circle"></i>
+                                            {% endif %}
+                                        </span>
                                         <span style="font-size: 16px!important;">
                                                     {% if chapter.title_lat != "" and chapter.title_ger != "" %}
                                                         {{ chapter.title_lat }}

@@ -6,6 +6,11 @@ namespace App\Http\Models;
 //use DareOne\models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Article
+ * @package App\Http\Models
+ * @author Mark Eschweiler - Universität zu Köln / Thomas-Institut
+ */
 class Article extends Model
 {
     protected $fillable = [

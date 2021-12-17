@@ -1,11 +1,14 @@
 <?php
 
 
-
 namespace App\Http\Models;
-//use DareOne\models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Book
+ * @package App\Http\Models
+ * @author Mark Eschweiler - Universität zu Köln / Thomas-Institut
+ */
 class Book extends Model
 {
     protected $fillable = [
@@ -13,7 +16,7 @@ class Book extends Model
     ];
 
     protected $table = "s_books";
-    protected $primaryKey ="id";
+    protected $primaryKey = "id";
     public $timestamps = false;
 
     function chapters()
@@ -30,16 +33,6 @@ class Book extends Model
     {
         return $this->hasMany('App\Http\Models\Chapter', 'book_id', 'id')->with("translator");
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }

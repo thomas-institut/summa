@@ -7,19 +7,18 @@ use App\Http\Models\Translator;
 use App\Http\Models\Work;
 use App\Http\Operations\Output;
 use App\Http\Operations\WebManager;
-
-
 use Rareloop\Lumberjack\Exceptions\TwigTemplateNotFoundException;
-
 use Rareloop\Lumberjack\Http\Responses\TimberResponse;
 use Rareloop\Lumberjack\Http\ServerRequest;
 use Rareloop\Lumberjack\Post;
-
-
 use Timber\Timber;
 
 
-
+/**
+ * Class SiteController
+ * @package App\Http\Controllers
+ * @author Mark Eschweiler - Universität zu Köln / Thomas-Institut
+ */
 class SiteController extends StandardController
 {
 

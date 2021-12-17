@@ -1,11 +1,15 @@
 <?php
 
 
-
 namespace App\Http\Models;
 //use DareOne\models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Chapter
+ * @package App\Http\Models
+ * @author Mark Eschweiler - Universität zu Köln / Thomas-Institut
+ */
 class Chapter extends Model
 {
     protected $fillable = [
@@ -13,7 +17,7 @@ class Chapter extends Model
     ];
 
     protected $table = "s_chapters";
-    protected $primaryKey ="id";
+    protected $primaryKey = "id";
     public $timestamps = false;
 
     function book()
@@ -35,13 +39,6 @@ class Chapter extends Model
     {
         return $this->hasMany('App\Http\Models\Article', 'chapter_id', 'id');
     }
-
-
-
-
-
-
-
 
 
 }
