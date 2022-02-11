@@ -25,9 +25,11 @@ Router::get('/redaktion/chapters/{chapterId}', 'AdminController@chapter');
 Router::post('/redaktion/chapters/{chapterId}', 'AdminController@setChapter');
 Router::post('/redaktion/translators/{translatorId}', 'AdminController@setTranslator');
 Router::post('/redaktion/translators', 'AdminController@createTranslator');
-Router::get('/redaktion/index/{workId}/{bookId}/{chapterId}/{articleId}', 'AdminController@article');
+Router::get('/redaktion/index/{workId}/{bookId}/{chapterId}/{articleId}/{mode}', 'AdminController@article');
 Router::post('/redaktion/preview', 'AdminController@getPreview');
-Router::post('/redaktion/index/{workId}/{bookId}/{chapterId}/{articleId}', 'AdminController@setChunk');
+Router::post('/redaktion/index/{workId}/{bookId}/{chapterId}/{articleId}/{mode}', 'AdminController@setChunk');
+Router::post('/redaktion/create-chunk/{workId}/{bookId}/{chapterId}/{articleId}/{mode}', 'AdminController@createChunk');
+
 
 
 

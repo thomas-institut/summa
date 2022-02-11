@@ -1,6 +1,10 @@
 {% extends "base.twig" %}
 {% block content %}
-        <div class="content-container m-auto bg-light shadow d-flex flex-column p-0 p-md-5 viewer-box" style="height: 100%!important; ">
+        <div id="all_wrapper" class="content-container m-auto bg-light shadow d-flex flex-column p-0 p-md-5 viewer-box" style="height: 100%!important; ">
+            <script>
+                var modalToggle = document.getElementById('addChunkModal') // relatedTarget
+                myModal.hide(modalToggle)
+            </script>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ webInfo.baseurl }}redaktion">Redaktion</a></li>
@@ -8,6 +12,7 @@
                 </ol>
             </nav>
             <hr>
+            <h1 class="text-center">{{ webInfo.mode|upper }}</h1>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 {% for work in works %}
                     {% for book in work.books %}
@@ -17,30 +22,44 @@
                                     <button class="nav-link {% if loop.index == 1 %}active{% endif %}" id="navtab{{ chunk.id }}" data-bs-toggle="tab" data-bs-target="#tab{{ chunk.id }}" type="button" role="tab" aria-controls="navtab{{ chunk.id }}" aria-selected="{% if loop.index == 1 %}true{% else %}false{% endif %}">{{ chunk.type }}:{{ chunk.project_id }}</button>
                                 </li>
                             {% endfor %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link bg-success" type="button" style="color: white!important;" data-bs-toggle="modal" data-bs-target="#addChunkModal">Absatz anfügen</button>
+                            </li>
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}
             </ul>
             <div class="tab-content" id="myTabContent">
+                {% set article_id = 0 %}
                 {% for work in works %}
                     {% for book in work.books %}
                         {% for chapter in book.chapters %}
+                            {% set article_id = chapter.articles.0.id %}
+
+
                             {% for chunk in chapter.articles.0.chunks %}
+
+
                             <div class="tab-pane fade {% if loop.index == 1 %}show active{% endif %}" id="tab{{ chunk.id }}" role="tabpanel" aria-labelledby="tab{{ chunk.id }}">
                                 <div id="box{{ chunk.id }}" class="card mb-3" style="border-top-right-radius: 0!important; border-top-left-radius: 0!important;">
                                     <div class="card-body">
                                         <div class="w-100 mb-2">
                                             <div class="form-floating">
-                                                <textarea class="form-control input-text"  placeholder="Leave a comment here" name="input-preview" id="editor{{ chunk.id }}" style="height: 100px; white-space: pre-wrap!important;" hx-post="{{ webInfo.baseurl }}redaktion/preview?chunk={{ chunk.id }}"  hx-target="#preview_text{{ chunk.id }}" hx-trigger="keyup changed delay:1s" hx-swap="innerHTML" hx-indicator="#spinner{{ chunk.id }}">{{ chunk.text_ger_md }}</textarea>
+                                                <textarea class="form-control input-text"  placeholder="Leave a comment here" name="input-preview" id="editor{{ chunk.id }}" style="height: 100px; white-space: pre-wrap!important;" hx-post="{{ webInfo.baseurl }}redaktion/preview?chunk={{ chunk.id }}"  hx-target="#preview_text{{ chunk.id }}" hx-trigger="keyup changed delay:1s" hx-swap="innerHTML" hx-indicator="#spinner{{ chunk.id }}">{% if webInfo.mode == "translation" %}{{ chunk.text_ger_md }}{% else %}{{ chunk.text_lat_md }}{% endif %}</textarea>
                                                 <label for="floatingTextarea2">Editor</label>
                                             </div>
                                         </div>
                                         <div class="w-100 fs-6 mb-2">
-                                            <span class="text-summa-primary">Transkription: </span>{{ chunk.text_lat }}
+                                            {% if webInfo.mode == "translation" %}
+                                                <span class="text-summa-primary">Transkription: </span>{% if chunk.text_lat %}{{ chunk.text_lat }}{% else %}<br><i>kein Text vorhanden</i>{% endif %}
+                                            {% else %}
+                                                <span class="text-summa-primary">Übersetzung: </span>{% if chunk.text_ger == "" %}{{ chunk.text_ger }}{% else %}<br><i>kein Text vorhanden</i>{% endif %}
+                                            {% endif %}
                                         </div>
 
                                         <div class="w-100 fs-6 mb-2" id="preview_text{{ chunk.id }}">
-                                            <span class="text-summa-primary">Vorschau: </span>
+                                            {% if webInfo.mode == "translation" %}
+                                            <span class="text-summa-primary">Vorschau <small>(Übersetzung)</small>: </span>
                                             <span>
                                                 {% if chunk.text_ger %}
                                                     {{ chunk.text_ger }}
@@ -48,14 +67,24 @@
                                                     <span class="text-danger">kein Text</span>
                                                 {% endif %}
                                             </span>
+                                                {% else %}
+                                                    <span class="text-summa-primary">Vorschau <small>(Transkription)</small>: </span>
+                                                    <span>
+                                                {% if chunk.text_lat %}
+                                                    {{ chunk.text_lat }}
+                                                {% else %}
+                                                    <span class="text-danger">kein Text</span>
+                                                {% endif %}
+                                            </span>
+                                            {% endif %}
                                             <div id="spinner{{ chunk.id }}" class="spinner-border htmx-indicator fs-6" role="status">
                                                 <span class="visually-hidden">Loading...</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <form hx-post="{{ webInfo.baseurl }}redaktion/index/Sth/{{ book.project_id }}/{{ chapter.project_id }}/{{ chapter.articles.0.project_id }}" hx-select="#preview_wrapper" hx-target="#preview_wrapper">
-                                            <textarea hidden id="input{{ chunk.id }}" class="input-wrapper" name="chunk_text" value="{{ chunk.text_ger_md }}" style="white-space: pre-wrap!important;"></textarea>
+                                        <form hx-post="{{ webInfo.baseurl }}redaktion/index/Sth/{{ book.project_id }}/{{ chapter.project_id }}/{{ chapter.articles.0.project_id }}/{{ webInfo.mode }}" hx-select="#preview_wrapper" hx-target="#preview_wrapper">
+                                            <textarea hidden id="input{{ chunk.id }}" class="input-wrapper" name="chunk_text" value="{% if webInfo.mode == "translation" %}{{ chunk.text_ger_md }}{% else %}{{ chunk.text_lat_md }}{% endif %}" style="white-space: pre-wrap!important;"></textarea>
                                             <input hidden id="id{{ chunk.id }}" name="chunk_id" value="{{ chunk.id }}">
                                             <button class="btn btn-outline-success w-100" type="submit">Veröffentlichen</button>
                                         </form>
@@ -160,10 +189,45 @@
                     {% endfor %}
                 </table>
             </div>
+            <script>
+                var myModal = new bootstrap.Modal(document.getElementById('addChunkModal'), {
+                    keyboard: false
+                })
+                myModal.hide()
+                $('body').removeClass('modal-open');
+                $('body').removeAttr("style")
+                $('.modal-backdrop').remove();
 
 
+            </script>
+            <div class="modal fade" id="addChunkModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Absatz hinzufügen</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form  hx-post="{{ webInfo.baseurl }}redaktion/create-chunk/Sth/{{ webInfo.location.bookId }}/{{ webInfo.location.chapterId }}/{{ webInfo.location.articleId }}/{{ webInfo.mode }}" hx-select="#all_wrapper" hx-target="#all_wrapper" hx-swap="outerHTML">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="project_id" placeholder="p1, p2, p3, p4..." name="project_id">
+                                    <label for="project_id">Projekt-ID</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="thomas_id" placeholder="Absatz 1, Absatz 2, Arg. 1, C.3, Ad5..." name="thomas_id">
+                                    <label for="project_id">Thomas-ID</label>
+                                </div>
+                                <input type="hidden" name="article_id" value="{{ article_id }}">
 
+                                <button type="submit" class="btn btn-outline-success w-100"  >Hinzufügen</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
+
 
     {% include "templates/viewer.navigation.twig" %}
         {% endblock %}

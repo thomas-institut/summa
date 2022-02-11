@@ -5,6 +5,7 @@
             <h1 class="p-2 p-sm-4">Redaktion</h1>
             <hr>
             <div class="p-2 p-sm-4">
+
                <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="editor-tab" data-bs-toggle="tab" data-bs-target="#editor" type="button" role="tab" aria-controls="Editor" aria-selected="true">Editor</button>
@@ -19,8 +20,38 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="editor" role="tabpanel" aria-labelledby="editor-tab">
                         <div class="card"  style="border-top-right-radius: 0!important; border-top-left-radius: 0!important;">
-                            <i class="text-center text-summa-primary">Wähle einen Artikel</i>
-                            {% include 'templates/redaktion/redaktion.toc.twig' %}
+                            <div class="accordion" id="accordionEditor">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTranscription">
+                                        <button class="accordion-button d-flex flex-column collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTranscription" aria-expanded="false" aria-controls="collapseTranscription">
+                                            <span>Transkription</span>
+                                            <small><i>Transkription des lateinischen Textes [Markdown-Editor]</i></small>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTranscription" class="accordion-collapse collapse" aria-labelledby="headingTranscription" data-bs-parent="#accordionEditor">
+                                        <div class="accordion-body">
+                                            {% set mode="transcription" %}
+                                            {% include 'templates/redaktion/redaktion.toc.twig' %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTranslation">
+                                        <button class="accordion-button d-flex flex-column collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTranslation" aria-expanded="false" aria-controls="collapseTranslation">
+                                            <span>Übersetzung</span>
+                                            <small><i>Übersetzung des lateinischen Textes in die deutsche Sprache [Markdown-Editor]</i></small>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTranslation" class="accordion-collapse collapse" aria-labelledby="headingTranslation" data-bs-parent="#accordionEditor">
+                                        <div class="accordion-body">
+                                            {% set mode="translation" %}
+                                            {% include 'templates/redaktion/redaktion.toc.twig' %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
 
                     </div>

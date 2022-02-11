@@ -145,9 +145,16 @@ class AdminController extends StandardController
     }
 
 
-    public function article(ServerRequest $request, $workId, $bookId, $chapterId, $articleId)
+    public function article(ServerRequest $request, $workId, $bookId, $chapterId, $articleId, $mode)
     {
         $webInfo = WebManager::get($request);
+        $webInfo["mode"]=$mode;
+        $webInfo["location"]= [
+            "workId" => $workId,
+            "bookId" => $bookId,
+            "chapterId" => $chapterId,
+            "articleId" => $articleId
+        ];
         $works = Output::create($workId, $bookId, $chapterId, $articleId);
         try {
             if ($webInfo["user"]->ID != 0) {
@@ -174,13 +181,26 @@ class AdminController extends StandardController
         return new TimberResponse('views/templates/redaktion/redaktion.article.preview.twig', ["preview" => $preview, "chunk" => $chunk]);
     }
 
-    public function setChunk(ServerRequest $request, $workId, $bookId, $chapterId, $articleId)
+    public function setChunk(ServerRequest $request, $workId, $bookId, $chapterId, $articleId, $mode)
     {
         $webInfo = WebManager::get($request);
+        $webInfo["location"]= [
+            "workId" => $workId,
+            "bookId" => $bookId,
+            "chapterId" => $chapterId,
+            "articleId" => $articleId
+        ];
         $works = Output::create($workId, $bookId, $chapterId, $articleId);
         $chunk = Chunk::find($request->getParsedBody()["chunk_id"]);
-        $old_md = $chunk->text_ger;
-        $chunk->text_ger = $request->getParsedBody()["chunk_text"];
+        if ($mode=="translation"){
+            $old_md = $chunk->text_ger;
+            $chunk->text_ger = $request->getParsedBody()["chunk_text"];
+            $backupField = "text_ger";
+        } else {
+            $old_md = $chunk->text_lat;
+            $chunk->text_lat = $request->getParsedBody()["chunk_text"];
+            $backupField = "text_lat";
+        }
         $chunk->save();
         $webInfo["chunk_change"] = true;
         $chunkBackup = new ChunkBackup;
@@ -188,8 +208,44 @@ class AdminController extends StandardController
         $chunkBackup->uid = get_current_user_id();
         $chunkBackup->old_md = $old_md;
         $chunkBackup->new_md = $request->getParsedBody()["chunk_text"];
-        $chunkBackup->field = "text_ger";
+        $chunkBackup->field = $backupField;
         $chunkBackup->save();
+        try {
+            if ($webInfo["user"]->ID != 0) {
+                if ($webInfo["user"]->user_status < 2) {
+                    return new TimberResponse('views/templates/redaktion/redaktion.article.twig', ["webInfo" => $webInfo, "works" => $works]);
+                } else {
+                    return new TimberResponse('views/templates/errors/401.twig', ["webInfo" => $webInfo]);
+                }
+            } else {
+                return new TimberResponse('views/templates/errors/401.twig', ["webInfo" => $webInfo]);
+            }
+
+
+        } catch (TwigTemplateNotFoundException $e) {
+            return new TimberResponse('views/templates/errors/404.twig', ["webInfo" => $webInfo]);
+        }
+    }
+
+    public function createChunk(ServerRequest $request, $workId, $bookId, $chapterId, $articleId, $mode){
+        $webInfo = WebManager::get($request);
+        $webInfo["location"]= [
+            "workId" => $workId,
+            "bookId" => $bookId,
+            "chapterId" => $chapterId,
+            "articleId" => $articleId
+        ];
+        error_log(print_r($request->getParsedBody(), true));
+        $chunk = new Chunk();
+        $chunk -> article_id = $request->getParsedBody()["article_id"];
+        $chunk -> project_id = $request->getParsedBody()["project_id"];
+        $chunk -> thomas_id = $request->getParsedBody()["thomas_id"];
+        $chunk -> save();
+
+
+
+        $works = Output::create($workId, $bookId, $chapterId, $articleId);
+
         try {
             if ($webInfo["user"]->ID != 0) {
                 if ($webInfo["user"]->user_status < 2) {
