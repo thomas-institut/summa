@@ -104,7 +104,7 @@ class Output
      */
     private static function getAllChunks($articleId)
     {
-        $chunks = Chunk::where("article_id", "=", $articleId)->get()->toArray();
+        $chunks = Chunk::where("article_id", "=", $articleId)->orderBy("project_id", "ASC")->get()->toArray();
         for ($i = 0; $i < count($chunks); $i++) {
             $chunks[$i]["text_lat_md"] = $chunks[$i]["text_lat"];
             $chunks[$i]["text_ger_md"] = $chunks[$i]["text_ger"];

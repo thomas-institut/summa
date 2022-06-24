@@ -210,7 +210,7 @@
                         <div class="modal-body">
                             <form  hx-post="{{ webInfo.baseurl }}redaktion/create-chunk/Sth/{{ webInfo.location.bookId }}/{{ webInfo.location.chapterId }}/{{ webInfo.location.articleId }}/{{ webInfo.mode }}" hx-select="#all_wrapper" hx-target="#all_wrapper" hx-swap="outerHTML">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="project_id" placeholder="p1, p2, p3, p4..." name="project_id">
+                                    <input type="number" class="form-control" id="project_id" name="project_id">
                                     <label for="project_id">Projekt-ID</label>
                                 </div>
                                 <div class="form-floating mb-3">
