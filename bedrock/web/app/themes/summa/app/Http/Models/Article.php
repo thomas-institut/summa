@@ -28,7 +28,7 @@ class Article extends Model
 
     function chunks()
     {
-        return $this->hasMany('App\Http\Models\Chunk', 'article_id', 'id');
+        return $this->hasMany('App\Http\Models\Chunk', 'article_id', 'id')->orderBy("project_id", "ASC");
     }
 
 
