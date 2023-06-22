@@ -22,12 +22,10 @@
                 <li class="nav-item">
                     <a class="nav-link {% if webInfo.route == "corpus" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}corpus" >CORPUS</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if webInfo.route == "mitwirken" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}mitwirken">MITWIRKEN</a>
-                </li>
+
                 <li class="nav-item dropdown ">
                     <a class="nav-link {% if webInfo.route == "mitwirken" or webInfo.route == "styleguide" or webInfo.route == "uebersetzungswerkstatt" %}nav-link-active{% endif %} dropdown-toggle" href="{{ webInfo.baseurl }}mitwirken" id="pDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Mitwirken
+                        MITWIRKEN
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="pDropdown">
                         <li><a class="dropdown-item" href="{{ webInfo.baseurl }}styleguide">STYLEGUIDE</a></li>
