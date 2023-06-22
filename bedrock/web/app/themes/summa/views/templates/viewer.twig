@@ -65,7 +65,7 @@
                                         <td class="chunk-box w-50">
                                             <div class="chunk_content" id="#{{ work.project_id }}_{{ book.project_id }}_{{ chapter.project_id }}_{{ article.project_id }}_{{ chunk.project_id }}_ger">{% if chapter.translation_status == 2 %}{{ chunk.text_ger }}{% elseif chapter.translation_status == 0 %}
                                                     <small class="text-dark text-center">Für diesen Absatz fehlt eine Übersetzung:
-                                                    <a href="{{ webInfo.baseurl }}mitwirken" class="text-stc-primary">Übersetzer werden?</a>
+                                                    <a href="{{ webInfo.baseurl }}mitwirken" class="text-stc-primary">Mitwirken?</a>
                                                     </small>
                                                 {% elseif chapter.translation_status == 1 %}
                                                     {% if chunk.text_ger != "" and chunk.text_ger != "\n" %}
