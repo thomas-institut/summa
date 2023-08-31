@@ -16,6 +16,9 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="translator-tab" data-bs-toggle="tab" data-bs-target="#translator" type="button" role="tab" aria-controls="translator" aria-selected="false">Übersetzer:innen</button>
                 </li>
+                   <li class="nav-item" role="presentation">
+                       <button class="nav-link" id="glossary-tab" data-bs-toggle="tab" data-bs-target="#glossary" type="button" role="tab" aria-controls="glossary" aria-selected="false">Glossar</button>
+                   </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="editor" role="tabpanel" aria-labelledby="editor-tab">
@@ -151,11 +154,105 @@
                                     $('body').removeAttr("style")
                                     $('.modal-backdrop').remove();
                                     //$('.modal-backdrop').toggle();
-
                                 </script>
                             </div>
 
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="glossary" role="tabpanel" aria-labelledby="qtab">
+                        <button class="btn btn-success w-100"  data-bs-toggle="modal" data-bs-target="#addGlossaryItem">Hinzufügen</button>
+                        {% if webInfo.glossary_change %}<span class="alert alert-success">Glossar erfolgreich erweitert</span>{% endif %}
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseGerman" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Deutsches Glossar ({{ glossary.german|length }})
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseGerman" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <ul class="list-group list-group-flush">
+                                            {% for glossary_item in glossary.german %}
+                                                <a href="" class="list-group-item">
+                                                    {{ glossary_item.name }}, <small>{{ glossary_item.genus }} </small>
+                                                </a>
+                                            {% endfor %}
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseLatin" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                        Lateinisches Glossar ({{ glossary.latin|length }})
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseLatin" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">{% for glossary_item in glossary.latin %}
+                                            <a href="" class="list-group-item">
+                                                {{ glossary_item.name }}, <small>{{ glossary_item.genus }} </small>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="modal" tabindex="-1" id="addGlossaryItem">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Glossar ergänzen</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form hx-post="{{ webInfo.baseurl }}redaktion/glossary" hx-select="glossary" hx-swap="outerHTML">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="glossary_name"  name="name">
+                                                        <label for="glossary_name">Wort</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select" id="floatingSelectLanguage"  name="language">
+                                                            <option value="ger">Deutsch</option>
+                                                            <option value="lat">Latein</option>
+                                                        </select>
+                                                        <label for="floatingSelectLanguage">Sprache</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select" id="floatingSelectGenus"  name="genus">
+                                                            <option value="f">Femininum</option>
+                                                            <option value="m">Maskulinum</option>
+                                                            <option value="n">Neutrum</option>
+                                                        </select>
+                                                        <label for="floatingSelectGenus">Genus</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <textarea class="form-control" id="floatingTextarea" name="notes"></textarea>
+                                                        <label for="floatingTextarea">Notizen / Kommentar</label>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-success w-100"  >Hinzufügen</button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <script>
+                            var myModal = new bootstrap.Modal(document.getElementById('addGlossaryItem'), {
+                                keyboard: false
+                            })
+                            myModal.hide()
+                            $('body').removeClass('modal-open');
+                            $('body').removeAttr("style")
+                            $('.modal-backdrop').remove();
+                            //$('.modal-backdrop').toggle();
+
+                        </script>
+                    </div>
+
+                </div>
                     </div>
                 </div>
             </div>

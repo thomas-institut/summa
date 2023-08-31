@@ -6,6 +6,7 @@ use App\Http\Models\Book;
 use App\Http\Models\Chapter;
 use App\Http\Models\Chunk;
 use App\Http\Models\ChunkBackup;
+use App\Http\Models\Glossary_Item;
 use App\Http\Models\Translator;
 use App\Http\Models\Work;
 use App\Http\Operations\Output;
@@ -28,10 +29,12 @@ class AdminController extends StandardController
         $toc = Work::with("booksNoChunks")->get();
         $books = Book::with("chaptersNoArticles")->get();
         $translators = Translator::all();
+        $glossary["german"] = Glossary_Item::orderBy("name", "asc")->where("language", "=", "ger")->get();
+        $glossary["latin"] = Glossary_Item::orderBy("name", "asc")->where("language", "=", "lat")->get();
         try {
             if ($webInfo["user"]->ID != 0) {
                 if ($webInfo["user"]->user_status < 2) {
-                    return new TimberResponse('views/templates/redaktion/redaktion.twig', ["webInfo" => $webInfo, "toc" => $toc, "books" => $books, "translators" => $translators]);
+                    return new TimberResponse('views/templates/redaktion/redaktion.twig', ["webInfo" => $webInfo, "toc" => $toc, "books" => $books, "translators" => $translators, "glossary"=>$glossary]);
                 } else {
                     return new TimberResponse('views/templates/errors/401.twig', ["webInfo" => $webInfo]);
                 }
@@ -144,6 +147,33 @@ class AdminController extends StandardController
         }
     }
 
+    public function createGlossaryItem(ServerRequest $request){
+        $webInfo = WebManager::get($request);
+        $glossaryItem = new Glossary_Item;
+        $glossaryItem->name = $request->getParsedBody()["name"];
+        $glossaryItem->language = $request->getParsedBody()["language"];
+        $glossaryItem->genus = $request->getParsedBody()["genus"];
+        if (isset($request->getParsedBody()["notes"])){
+            $glossaryItem->notes = $request->getParsedBody()["notes"];
+        }
+        $glossaryItem->save();
+        $webInfo["glossary_change"] = true;
+        $glossary["german"] = Glossary_Item::orderBy("name", "asc")->where("language", "=", "ger")->get();
+        $glossary["latin"] = Glossary_Item::orderBy("name", "asc")->where("language", "=", "lat")->get();
+        try {
+            if ($webInfo["user"]->ID != 0) {
+                if ($webInfo["user"]->user_status < 2) {
+                    return new TimberResponse('views/templates/redaktion/redaktion.twig', ["webInfo" => $webInfo, "glossary"=>$glossary]);
+                } else {
+                    return new TimberResponse('views/templates/errors/401.twig', ["webInfo" => $webInfo]);
+                }
+            } else {
+                return new TimberResponse('views/templates/errors/401.twig', ["webInfo" => $webInfo]);
+            }
+        } catch (TwigTemplateNotFoundException $e) {
+            return new TimberResponse('views/templates/errors/404.twig', ["webInfo" => $webInfo]);
+        }
+    }
 
     public function article(ServerRequest $request, $workId, $bookId, $chapterId, $articleId, $mode)
     {
