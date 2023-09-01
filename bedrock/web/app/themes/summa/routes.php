@@ -15,7 +15,7 @@ Router::get('index/{workId}', 'SiteController@work');
 Router::get('index/{workId}/{bookId}', 'SiteController@book');
 Router::get('index/{workId}/{bookId}/{chapterId}', 'SiteController@chapter');
 Router::get('index/{workId}/{bookId}/{chapterId}/{articleId}', 'SiteController@article');
-
+Router::get('glossar', 'GlossaryItemController@all');
 Router::get('glossar/{name}', 'GlossaryItemController@public');
 
 
@@ -29,6 +29,7 @@ Router::post('/redaktion/translators/{translatorId}', 'AdminController@setTransl
 Router::post('/redaktion/translators', 'AdminController@createTranslator');
 Router::post('/redaktion/glossary', 'AdminController@createGlossaryItem');
 Router::get('/redaktion/glossary/{name}', 'GlossaryItemController@show');
+Router::post('/redaktion/glossary/{name}', 'GlossaryItemController@update');
 Router::post('/redaktion/glossary/add-relation', 'GlossaryItemController@createRelation');
 Router::get('/redaktion/index/{workId}/{bookId}/{chapterId}/{articleId}/{mode}', 'AdminController@article');
 Router::post('/redaktion/preview', 'AdminController@getPreview');

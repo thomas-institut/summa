@@ -1,0 +1,36 @@
+{% extends "base.twig" %}
+{% block content %}
+    <div class="content-container m-auto bg-light shadow d-flex flex-column" style="min-height: 100vh!important;">
+        <div class="content-padding">
+            <h1 class="p-2 p-sm-4">Glossar</h1>
+            <hr>
+            <div class="p-2 p-sm-4 d-flex flex-row">
+                <div class="w-50 card me-1">
+                    <div class="card-header">Latein</div>
+                    <ul class="list-group list-group-flush h-auto">
+                    {% for entry in glossaryItems.latin %}
+                        <a class="list-group-item fs-6" href="{{ webInfo.baseurl }}glossar/{{ entry.name }}">{{ entry.name }} <sub>({{ entry.genus }}.)</sub></a>
+                    {% endfor %}
+                    </ul>
+
+                </div>
+
+                <div class="w-50 card ms-1">
+                    <div class="card-header">Deutsch</div>
+                    <ul class="list-group list-group-flush h-auto">
+                        {% for entry in glossaryItems.german %}
+                            <a class="list-group-item fs-6" href="{{ webInfo.baseurl }}glossar/{{ entry.name }}">{{ entry.name }} <sub>({{ entry.genus }}.)</sub></a>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between footer-picture pt-5" style="padding-bottom: 0!important; margin-bottom: 0!important;">
+            <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/logo/summa21_Logo_quer.png" class="d-none d-md-block align-self-end" height="50" width="auto" style="margin-bottom: 0!important;">
+            <img src="{{ webInfo.baseurl }}app/themes/summa/assets/img/thomas_kopf.png" class="d-none d-md-block" height="150" width="auto">
+        </div>
+    </div>
+
+
+{% endblock %}

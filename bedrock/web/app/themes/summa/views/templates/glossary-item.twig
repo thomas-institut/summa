@@ -5,28 +5,9 @@
     <div class="card">
         <h1 class="card-header text-center">{{ glossaryItem.name }}, <small>({{ glossaryItem.genus }}.)</small></h1>
         <div class="card-body">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="glossary_name"  name="name" value="{{ glossaryItem.name }}" disabled>
-                <label for="glossary_name">Wort</label>
-            </div>
-            <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelectLanguage"  name="language" disabled>
-                    <option value="ger" {% if glossaryItem.language == "ger" %}selected{% endif %}>Deutsch</option>
-                    <option value="lat" {% if glossaryItem.language == "ger" %}selected{% endif %}>Latein</option>
-                </select>
-                <label for="floatingSelectLanguage">Sprache</label>
-            </div>
-            <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelectGenus"  name="genus" disabled>
-                    <option value="f" {% if glossaryItem.genus == "f" %}selected{% endif %}>Femininum</option>
-                    <option value="m" {% if glossaryItem.genus == "m" %}selected{% endif %}>Maskulinum</option>
-                    <option value="n" {% if glossaryItem.genus == "n" %}selected{% endif %}>Neutrum</option>
-                </select>
-                <label for="floatingSelectGenus">Genus</label>
-            </div>
-            <div class="form-floating mb-3">
-                <textarea class="form-control" id="floatingTextarea" name="notes" disabled>{{ glossaryItem.note }}</textarea>
-                <label for="floatingTextarea">Notizen / Kommentar</label>
+
+            <div class="mb-3 p-3 card">
+                <span>{{ glossaryItem.md_notes }}</span>
             </div>
             <div class="w-100 d-flex flex-column flex-sm-row justify-content-between">
                 <div class="w-33">

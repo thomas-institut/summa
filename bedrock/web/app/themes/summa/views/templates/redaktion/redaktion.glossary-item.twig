@@ -4,37 +4,48 @@
 <div id="all_wrapper" class="content-container m-auto bg-light shadow d-flex flex-column p-0 p-md-5 viewer-box" style="min-height: 100%!important; ">
     <div class="card">
         <div class="card-header">{{ glossaryItem.name }}</div>
-        <div class="card-body">
-            <button class="btn btn-success w-100 mb-3"  data-bs-toggle="modal" data-bs-target="#addRelation">Beziehung hinzufügen</button>
+        <div class="card-body" id="content_wrapper">
             {% if webInfo.alert == 1 %}
                 <span class="alert alert-success">Beziehung erfolgreich angelegt</span>
             {% elseif webInfo.alert == 2 %}
                 <span class="alert alert-warning">Etwas ist schief gelaufen...</span>
             {% endif %}
+            <form hx-post="{{ webInfo.baseurl }}redaktion/glossary/{{ glossaryItem.name }}" hx-select="content_wrapper" hx-target="#content_wrapper" hx-swap="outerHTML">
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="glossary_name"  name="name" value="{{ glossaryItem.name }}">
-                <label for="glossary_name">Wort</label>
-            </div>
-            <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelectLanguage"  name="language">
-                    <option value="ger" {% if glossaryItem.language == "ger" %}selected{% endif %}>Deutsch</option>
-                    <option value="lat" {% if glossaryItem.language == "ger" %}selected{% endif %}>Latein</option>
-                </select>
-                <label for="floatingSelectLanguage">Sprache</label>
-            </div>
-            <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelectGenus"  name="genus">
-                    <option value="f" {% if glossaryItem.genus == "f" %}selected{% endif %}>Femininum</option>
-                    <option value="m" {% if glossaryItem.genus == "m" %}selected{% endif %}>Maskulinum</option>
-                    <option value="n" {% if glossaryItem.genus == "n" %}selected{% endif %}>Neutrum</option>
-                </select>
-                <label for="floatingSelectGenus">Genus</label>
-            </div>
-            <div class="form-floating mb-3">
-                <textarea class="form-control" id="floatingTextarea" name="notes">{{ glossaryItem.note }}</textarea>
-                <label for="floatingTextarea">Notizen / Kommentar</label>
-            </div>
+
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="name"  name="name" value="{{ glossaryItem.name }}">
+                    <label for="name">Eintrag</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelectLanguage"  name="language">
+                        <option value="ger" {% if glossaryItem.language == "ger" %}selected{% endif %}>Deutsch</option>
+                        <option value="lat" {% if glossaryItem.language == "ger" %}selected{% endif %}>Latein</option>
+                    </select>
+                    <label for="floatingSelectLanguage">Sprache</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelectGenus"  name="genus">
+                        <option value="f" {% if glossaryItem.genus == "f" %}selected{% endif %}>Femininum</option>
+                        <option value="m" {% if glossaryItem.genus == "m" %}selected{% endif %}>Maskulinum</option>
+                        <option value="n" {% if glossaryItem.genus == "n" %}selected{% endif %}>Neutrum</option>
+                    </select>
+                    <label for="floatingSelectGenus">Genus</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="floatingTextarea" name="notes">{{ glossaryItem.notes }}</textarea>
+                    <label for="floatingTextarea">Notizen / Kommentar (RAW)</label>
+                </div>
+                <div class="card mb-3 p-3">
+                    <div class>{{ glossaryItem.md_notes }}</div>
+
+                </div>
+
+                <button class="btn btn-primary w-100 mb-3"  type="submit">Speichern</button>
+            </form>
+
             <div class="w-100 d-flex flex-column flex-sm-row justify-content-between">
                 <div class="w-33">
                     <h5 class="text-center text-dark">Übersetzungen</h5>
@@ -68,6 +79,7 @@
                     </ul>
                 </div>
             </div>
+            <button class="btn btn-success w-100 mb-3"  data-bs-toggle="modal" data-bs-target="#addRelation">Beziehung hinzufügen</button>
         </div>
     </div>
     <div class="modal" tabindex="-1" id="addRelation">

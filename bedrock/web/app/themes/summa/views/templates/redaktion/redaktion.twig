@@ -173,7 +173,7 @@
                                     <div class="accordion-body">
                                         <ul class="list-group list-group-flush">
                                             {% for glossary_item in glossary.german %}
-                                                <a href="" class="list-group-item">
+                                                <a href="{{ webInfo["baseurl"] }}redaktion/glossary/{{ glossary_item.name }}" class="list-group-item">
                                                     {{ glossary_item.name }}, <small>{{ glossary_item.genus }} </small>
                                                 </a>
                                             {% endfor %}
@@ -190,7 +190,7 @@
                                 </h2>
                                 <div id="flush-collapseLatin" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">{% for glossary_item in glossary.latin %}
-                                            <a href="" class="list-group-item">
+                                            <a href="{{ webInfo["baseurl"] }}redaktion/glossary/{{ glossary_item.name }}" class="list-group-item">
                                                 {{ glossary_item.name }}, <small>{{ glossary_item.genus }} </small>
                                             </a>
                                         {% endfor %}
