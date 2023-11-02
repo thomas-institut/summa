@@ -150,13 +150,13 @@ class AdminController extends StandardController
     public function createGlossaryItem(ServerRequest $request){
         $webInfo = WebManager::get($request);
         $glossaryItem = new Glossary_Item;
-        $glossaryItem->name = $request->getParsedBody()["name"];
-        $glossaryItem->language = $request->getParsedBody()["language"];
-        if (isset($request->getParsedBody()["definition"])){
-            $glossaryItem->definition = $request->getParsedBody()["definition"];
+        $glossaryItem->name = $request->post()["name"];
+        $glossaryItem->language = $request->post()["language"];
+        if (isset($request->post()["definition"])){
+            $glossaryItem->definition = $request->post()["definition"];
         }
-        if (isset($request->getParsedBody()["references"])){
-            $glossaryItem->references = $request->getParsedBody()["references"];
+        if (isset($request->post()["references"])){
+            $glossaryItem->references = $request->post()["references"];
         }
         $glossaryItem->save();
         $webInfo["glossary_change"] = true;
