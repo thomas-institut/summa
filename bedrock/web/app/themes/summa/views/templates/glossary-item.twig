@@ -15,17 +15,21 @@
                 <strong>
                     weitere Belegstellen:
                 </strong>
-                <small>{{ glossaryItem.md_references }}</small>
+                <small>{% if glossaryItem.md_references %}{{ glossaryItem.md_references }}{% else %}<i class="text-secondary">noch nicht vorhanden</i>{% endif %}</small>
             </div>
             <div class="mb-1 px-3 card border-0">
                 <strong>
                     Vergleiche:
                 </strong>
+                {% if glossaryItem["relations"]|length != 0 %}
                 <ul class="list-group list-group-flush">
                     {% for relationItem in glossaryItem["relations"] %}
                         <a href="{{ webInfo.baseurl }}glossar/{{ relationItem.name }}" class="list-group-item d-flex flex-column" ><small>{{ relationItem.name }}</small></a>
                     {% endfor %}
                 </ul>
+                {% else %}
+                    <small><i class="text-secondary">noch nicht vorhanden</i></small>
+                {% endif %}
             </div>
 
 
