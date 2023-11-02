@@ -27,7 +27,7 @@ Router::get('/redaktion/chapters/{chapterId}', 'AdminController@chapter');
 Router::post('/redaktion/chapters/{chapterId}', 'AdminController@setChapter');
 Router::post('/redaktion/translators/{translatorId}', 'AdminController@setTranslator');
 Router::post('/redaktion/translators', 'AdminController@createTranslator');
-Router::post('/redaktion/glossary', 'GlossaryItemController@all');
+Router::post('/redaktion/glossary', 'AdminController@createGlossaryItem');
 Router::get('/redaktion/glossary/{name}', 'GlossaryItemController@show');
 Router::post('/redaktion/glossary/{name}', 'GlossaryItemController@update');
 Router::post('/redaktion/glossary-add-relation/', 'GlossaryItemController@createRelation');
