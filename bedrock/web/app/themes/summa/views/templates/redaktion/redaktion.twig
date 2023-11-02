@@ -174,7 +174,7 @@
                                         <ul class="list-group list-group-flush">
                                             {% for glossary_item in glossary.german %}
                                                 <a href="{{ webInfo["baseurl"] }}redaktion/glossary/{{ glossary_item.name }}" class="list-group-item">
-                                                    {{ glossary_item.name }}, <small>{{ glossary_item.genus }} </small>
+                                                    {{ glossary_item.name }}
                                                 </a>
                                             {% endfor %}
                                         </ul>
@@ -191,7 +191,7 @@
                                 <div id="flush-collapseLatin" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">{% for glossary_item in glossary.latin %}
                                             <a href="{{ webInfo["baseurl"] }}redaktion/glossary/{{ glossary_item.name }}" class="list-group-item">
-                                                {{ glossary_item.name }}, <small>{{ glossary_item.genus }} </small>
+                                                {{ glossary_item.name }}
                                             </a>
                                         {% endfor %}
                                     </div>
@@ -217,18 +217,14 @@
                                                         <label for="floatingSelectLanguage">Sprache</label>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <select class="form-select" id="floatingSelectGenus"  name="genus">
-                                                            <option value="f">Femininum</option>
-                                                            <option value="m">Maskulinum</option>
-                                                            <option value="n">Neutrum</option>
-                                                        </select>
-                                                        <label for="floatingSelectGenus">Genus</label>
+                                                        <textarea class="form-control" id="floatingTextareaD" name="definition"></textarea>
+                                                        <label for="floatingTextareaD">Begriffserklärung</label>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <textarea class="form-control" id="floatingTextarea" name="notes"></textarea>
-                                                        <label for="floatingTextarea">Notizen / Kommentar</label>
+                                                        <textarea class="form-control" id="floatingTextareaR" name="references"></textarea>
+                                                        <label for="floatingTextareaR">weitere Belegstellen</label>
                                                     </div>
-                                                    <button type="submit" class="btn btn-outline-success w-100"  >Hinzufügen</button>
+                                                    <button type="submit" class="btn btn-outline-success w-100">Hinzufügen</button>
                                                 </form>
                                             </div>
 

@@ -9,6 +9,7 @@ use App\Http\Models\Glossary_Relation;
 use App\Http\Operations\WebManager;
 use Laminas\Diactoros\Response\JsonResponse;
 use Michelf\MarkdownExtra;
+use Rareloop\Lumberjack\Exceptions\TwigTemplateNotFoundException;
 use Rareloop\Lumberjack\Http\Responses\TimberResponse;
 use Rareloop\Lumberjack\Http\ServerRequest;
 
@@ -24,67 +25,97 @@ class GlossaryItemController extends StandardController
         $webInfo = WebManager::get($request);
         $glossaryItems["german"] = Glossary_Item::orderBy("name", "ASC")->where("language", "=", "ger")->get();
         $glossaryItems["latin"] = Glossary_Item::orderBy("name", "ASC")->where("language", "=", "lat")->get();
+
         return new TimberResponse('views/templates/glossary.twig', ["webInfo" => $webInfo, "glossaryItems"=>$glossaryItems]);
+
+
     }
 
 
     public function public(ServerRequest $request, $name) {
         $webInfo = WebManager::get($request);
-        $glossaryItem = Glossary_Item::with('relations')->where("name", "=", $name)->get();
-        if (count($glossaryItem)==1){
-            $glossaryItem = $glossaryItem[0];
-            $glossaryItem["md_notes"]=MarkdownExtra::defaultTransform($glossaryItem["notes"]);
-            return new TimberResponse('views/templates/glossary-item.twig', ["webInfo" => $webInfo, "glossaryItem"=>$glossaryItem]);
+        $glossaryItem = Glossary_Item::with('relations')->where("name", "=", $name)->first();
 
-        } elseif (count($glossaryItem)==0){
-            return new JsonResponse(["webInfo" => $webInfo, "error"=>"more than 2 items"]);
-        } else {
-            return new TimberResponse('views/templates/errors/404.twig', ["webInfo" => $webInfo]);
+        if (isset($glossaryItem["definition"]) && $glossaryItem["definition"] !== "") {
+            $glossaryItem["md_definition"] = MarkdownExtra::defaultTransform($glossaryItem["definition"]);
         }
+        if (isset($glossaryItem["references"]) && $glossaryItem["references"] !== "") {
+            $glossaryItem["md_references"] = MarkdownExtra::defaultTransform($glossaryItem["references"]);
+        }
+        return new TimberResponse('views/templates/glossary-item.twig', ["webInfo" => $webInfo, "glossaryItem"=>$glossaryItem]);
+
+
     }
     public function show(ServerRequest $request, $name) {
         $webInfo = WebManager::get($request);
-        $glossaryItem = Glossary_Item::with('relations')->where("name", "=", $name)->get();
-        $glossaryItems["german"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "ger")->get();
-        $glossaryItems["latin"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "lat")->get();
-        if (count($glossaryItem)==1){
-            $glossaryItem = $glossaryItem[0];
-            $glossaryItem["md_notes"]=MarkdownExtra::defaultTransform($glossaryItem["notes"]);
-            return new TimberResponse('views/templates/redaktion/redaktion.glossary-item.twig', ["webInfo" => $webInfo, "glossaryItem"=>$glossaryItem, "glossaryItems"=>$glossaryItems]);
+        $glossaryItem = Glossary_Item::with('relations')->where("name", "=", $name)->first();
+        try {
+            if (isset($glossaryItem["definition"]) && $glossaryItem["definition"] !== "") {
+                $glossaryItem["md_definition"] = MarkdownExtra::defaultTransform($glossaryItem["definition"]);
+            }
+            if (isset($glossaryItem["references"]) && $glossaryItem["references"] !== "") {
+                $glossaryItem["md_references"] = MarkdownExtra::defaultTransform($glossaryItem["references"]);
+            }
 
-        } elseif (count($glossaryItem)==0){
-            return new JsonResponse(["webInfo" => $webInfo, "error"=>"more than 2 items"]);
-        } else {
+
+            $glossaryItems["german"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "ger")->get();
+            $glossaryItems["latin"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "lat")->get();
+
+            try {
+                if ($webInfo["user"]->ID != 0) {
+                    if ($webInfo["user"]->user_status < 2) {
+                        return new TimberResponse('views/templates/redaktion/redaktion.glossary-item.twig', ["webInfo" => $webInfo, "glossaryItem"=>$glossaryItem, "glossaryItems"=>$glossaryItems]);
+                    } else {
+                        return new TimberResponse('views/templates/errors/401.twig', ["webInfo" => $webInfo]);
+                    }
+                } else {
+                    return new TimberResponse('views/templates/errors/401.twig', ["webInfo" => $webInfo]);
+                }
+            } catch (TwigTemplateNotFoundException $e) {
+                return new TimberResponse('views/templates/errors/404.twig', ["webInfo" => $webInfo]);
+            }
+
+
+
+        } catch (\Exception $e){
             return new TimberResponse('views/templates/errors/404.twig', ["webInfo" => $webInfo]);
         }
     }
 
     public function update(ServerRequest $request, $name){
-        $webInfo = WebManager::get($request);
-        $glossaryItem = Glossary_Item::where("name", "=", $name)->first();
-        $glossaryItem->name = $request->post()["name"];
-        $glossaryItem->language = $request->post()["language"];
-        $glossaryItem->genus = $request->post()["genus"];
-        if (isset($request->post()["notes"])){
-            $glossaryItem->notes = $request->post()["notes"];
+        try {
+            $webInfo = WebManager::get($request);
+            $glossaryItem = Glossary_Item::where("name", "=", $name)->first();
+            $glossaryItem->name = $request->post()["name"];
+            $glossaryItem->language = $request->post()["language"];
+            if (isset($request->post()["definition"])){
+                $glossaryItem->definition = $request->post()["definition"];
+            }
+            if (isset($request->post()["references"])){
+                $glossaryItem->references = $request->post()["references"];
+            }
+            $glossaryItem->save();
+            $webInfo["alert"]=1;
+        } catch (\Exception $e) {
+            $webInfo["alert"]=2;
         }
-        $glossaryItem->save();
 
-        $glossaryItem = Glossary_Item::with('relations')->where("name", "=", $name)->get();
-        $glossaryItem["md_notes"]=MarkdownExtra::defaultTransform($glossaryItem[0]["notes"]);
+
+        $glossaryItem = Glossary_Item::with('relations')->where("name", "=", $name)->first();
+        if (isset($glossaryItem["definition"]) && $glossaryItem["definition"] !== "") {
+            $glossaryItem["md_definition"] = MarkdownExtra::defaultTransform($glossaryItem["definition"]);
+        }
+        if (isset($glossaryItem["references"]) && $glossaryItem["references"] !== "") {
+            $glossaryItem["md_references"] = MarkdownExtra::defaultTransform($glossaryItem["references"]);
+        }
+
+
         $glossaryItems["german"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "ger")->get();
         $glossaryItems["latin"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "lat")->get();
-        if (count($glossaryItem)==1){
-            $glossaryItem = $glossaryItem[0];
-            $glossaryItem["md_notes"]=MarkdownExtra::defaultTransform($glossaryItem["notes"]);
-            error_log(print_r($glossaryItem, true));
-            return new TimberResponse('views/templates/redaktion/redaktion.glossary-item.twig', ["webInfo" => $webInfo, "glossaryItem"=>$glossaryItem, "glossaryItems"=>$glossaryItems]);
 
-        } elseif (count($glossaryItem)==0){
-            return new JsonResponse(["webInfo" => $webInfo, "error"=>"more than 2 items"]);
-        } else {
-            return new TimberResponse('views/templates/errors/404.twig', ["webInfo" => $webInfo]);
-        }
+        return new TimberResponse('views/templates/redaktion/redaktion.glossary-item.twig', ["webInfo" => $webInfo, "glossaryItem"=>$glossaryItem, "glossaryItems"=>$glossaryItems]);
+
+
     }
 
     public function createRelation(ServerRequest $request){
@@ -93,25 +124,26 @@ class GlossaryItemController extends StandardController
             $glossaryRelation = new Glossary_Relation;
             $glossaryRelation->subject_id = intval($request->post()["subject_id"]);
             $glossaryRelation->object_id = intval($request->post()["object_id"]);
-            $glossaryRelation->relation_type = $request->post()["relation_type"];
-            $glossaryRelation->score=intval($request->post()["score"]);
-            $glossaryRelation->notes=$request->post()["notes"];
             $glossaryRelation->save();
             $webInfo["alert"]=1;
         } catch (\ErrorException $e){
             $webInfo["alert"]=2;
         }
 
-        $glossaryItem = Glossary_Item::with('relations')->where("id", "=", $request->post()["subject_id"])->get();
-        $glossaryItems["german"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "ger")->get();
-        $glossaryItems["latin"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "lat")->get();
-        if (count($glossaryItem)==1){
-            $glossaryItem = $glossaryItem[0];
-            return new TimberResponse('views/templates/redaktion/redaktion.glossary-item.twig', ["webInfo" => $webInfo, "glossaryItem"=>$glossaryItem, "glossaryItems"=>$glossaryItems]);
+        try {
+            if (isset($glossaryItem["definition"]) && $glossaryItem["definition"] !== "") {
+                $glossaryItem["md_definition"] = MarkdownExtra::defaultTransform($glossaryItem["definition"]);
+            }
+            if (isset($glossaryItem["references"]) && $glossaryItem["references"] !== "") {
+                $glossaryItem["md_references"] = MarkdownExtra::defaultTransform($glossaryItem["references"]);
+            }
 
-        } elseif (count($glossaryItem)==0){
-            return new JsonResponse(["webInfo" => $webInfo, "error"=>"more than 2 items"]);
-        } else {
+
+            $glossaryItems["german"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "ger")->get();
+            $glossaryItems["latin"]=Glossary_Item::orderBy("name", "asc")->where("language", "=", "lat")->get();
+
+            return new TimberResponse('views/templates/redaktion/redaktion.glossary-item.twig', ["webInfo" => $webInfo, "glossaryItem"=>$glossaryItem, "glossaryItems"=>$glossaryItems]);
+        } catch (\Exception $e){
             return new TimberResponse('views/templates/errors/404.twig', ["webInfo" => $webInfo]);
         }
     }

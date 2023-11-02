@@ -3,17 +3,15 @@
 
 <div id="all_wrapper" class="content-container m-auto bg-light shadow d-flex flex-column p-0 p-md-5 viewer-box" style="min-height: 100%!important; ">
     <div class="card">
+        {% if webInfo.alert == 1 %}
+            <span class="alert alert-success mb-2 w-100">Änderungen gespeichert</span>
+        {% elseif webInfo.alert == 2 %}
+            <span class="alert alert-warning mb-2 w-100">Etwas ist schief gelaufen...</span>
+        {% endif %}
         <div class="card-header">{{ glossaryItem.name }}</div>
         <div class="card-body" id="content_wrapper">
-            {% if webInfo.alert == 1 %}
-                <span class="alert alert-success">Beziehung erfolgreich angelegt</span>
-            {% elseif webInfo.alert == 2 %}
-                <span class="alert alert-warning">Etwas ist schief gelaufen...</span>
-            {% endif %}
-            <form hx-post="{{ webInfo.baseurl }}redaktion/glossary/{{ glossaryItem.name }}" hx-select="content_wrapper" hx-target="#content_wrapper" hx-swap="outerHTML">
 
-
-
+            <form hx-post="{{ webInfo.baseurl }}redaktion/glossary/{{ glossaryItem.name }}" hx-select="#all_wrapper" hx-target="#all_wrapper" hx-swap="outerHTML">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="name"  name="name" value="{{ glossaryItem.name }}">
                     <label for="name">Eintrag</label>
@@ -21,63 +19,40 @@
                 <div class="form-floating mb-3">
                     <select class="form-select" id="floatingSelectLanguage"  name="language">
                         <option value="ger" {% if glossaryItem.language == "ger" %}selected{% endif %}>Deutsch</option>
-                        <option value="lat" {% if glossaryItem.language == "ger" %}selected{% endif %}>Latein</option>
+                        <option value="lat" {% if glossaryItem.language == "lat" %}selected{% endif %}>Latein</option>
                     </select>
                     <label for="floatingSelectLanguage">Sprache</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelectGenus"  name="genus">
-                        <option value="f" {% if glossaryItem.genus == "f" %}selected{% endif %}>Femininum</option>
-                        <option value="m" {% if glossaryItem.genus == "m" %}selected{% endif %}>Maskulinum</option>
-                        <option value="n" {% if glossaryItem.genus == "n" %}selected{% endif %}>Neutrum</option>
-                    </select>
-                    <label for="floatingSelectGenus">Genus</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" id="floatingTextarea" name="notes">{{ glossaryItem.notes }}</textarea>
-                    <label for="floatingTextarea">Notizen / Kommentar (RAW)</label>
+                    <textarea class="form-control" id="floatingTextarea" name="definition">{{ glossaryItem.definition }}</textarea>
+                    <label for="floatingTextarea">Begriffserklärung</label>
                 </div>
                 <div class="card mb-3 p-3">
-                    <div class>{{ glossaryItem.md_notes }}</div>
+                    <small>{% if glossaryItem.md_definition %}{{ glossaryItem.md_definition }}{% else %}<i class="text-secondary"><small>Formatierter Text</small></i>{% endif %}</small>
 
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="floatingTextarea" name="references">{{ glossaryItem.references }}</textarea>
+                    <label for="floatingTextarea">weitere Belegstellen</label>
+                </div>
+                <div class="card mb-3 p-3">
+                    <small>{% if glossaryItem.md_references %}{{ glossaryItem.md_references }}{% else %}<i class="text-secondary"><small>Formatierter Text</small></i>{% endif %}</small>
                 </div>
 
                 <button class="btn btn-primary w-100 mb-3"  type="submit">Speichern</button>
             </form>
 
-            <div class="w-100 d-flex flex-column flex-sm-row justify-content-between">
+            <div class="w-100 d-flex flex-column flex-sm-row justify-content-start">
                 <div class="w-33">
-                    <h5 class="text-center text-dark">Übersetzungen</h5>
+                    <h5 class="text-center text-dark">Vergleiche</h5>
                     <ul class="list-group list-group-flush">
                         {% for relationItem in glossaryItem["relations"] %}
-                            {% if relationItem.pivot.relation_type == "translation" %}
-                                <a href="{{ webInfo.baseurl }}/redaktion/glossary/{{ relationItem.name }}" class="list-group-item" >{{ relationItem.name }}, <small>({{ relationItem.genus }}.)</small></a>
-                            {% endif %}
+                                <a href="{{ webInfo.baseurl }}/redaktion/glossary/{{ relationItem.name }}" class="list-group-item" >{{ relationItem.name }}</a>
                         {% endfor %}
 
                     </ul>
                 </div>
-                <div class="w-33">
-                    <h5 class="text-center text-dark">Synonyme</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for relationItem in glossaryItem["relations"] %}
-                            {% if relationItem.pivot.relation_type == "synonym" %}
-                                <a href="{{ webInfo.baseurl }}/redaktion/glossary/{{ relationItem.name }}" class="list-group-item" >{{ relationItem.name }}, <small>({{ relationItem.genus }}.)</small></a>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="w-33">
-                    <h5 class="text-center text-dark">Antonyme</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for relationItem in glossaryItem["relations"] %}
-                            {% if relationItem.pivot.relation_type == "antonym" %}
-                            <a href="{{ webInfo.baseurl }}/redaktion/glossary/{{ relationItem.name }}" class="list-group-item" >{{ relationItem.name }}, <small>({{ relationItem.genus }}.)</small></a>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
+
             </div>
             <button class="btn btn-success w-100 mb-3"  data-bs-toggle="modal" data-bs-target="#addRelation">Beziehung hinzufügen</button>
         </div>
@@ -90,7 +65,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form hx-post="{{ webInfo.baseurl }}redaktion/glossary/add-relation" hx-select="all_wrapper" hx-swap="outerHTML">
+                    <form hx-post="{{ webInfo.baseurl }}redaktion/glossary-add-relation" hx-select="#all_wrapper" hx-target="#all_wrapper" hx-swap="outerHTML">
                         <input name="subject_id" type="hidden" value="{{ glossaryItem.id }}">
 
                         <div class="form-floating mb-3">
@@ -99,40 +74,24 @@
                                 {% if glossaryItem.language == 'lat' %}
                                     <option disabled>---DEUTSCH---</option>
                                     {% for option in glossaryItems["german"] %}
-                                        <option value="{{ option.id }}">{{ option.name }}, <small>({{ option.genus }}.)</small></option>
+                                        <option value="{{ option.id }}">{{ option.name }}</option>
                                     {% endfor %}
                                     <option disabled>---LATEIN---</option>
                                     {% for option in glossaryItems["latin"] %}
-                                        <option value="{{ option.id }}">{{ option.name }}, <small>({{ option.genus }}.)</small></option>
+                                        <option value="{{ option.id }}">{{ option.name }}</option>
                                     {% endfor %}
                                 {% else %}
                                     <option disabled>---LATEIN---</option>
                                     {% for option in glossaryItems["latin"] %}
-                                        <option value="{{ option.id }}">{{ option.name }}, <small>({{ option.genus }}.)</small></option>
+                                        <option value="{{ option.id }}">{{ option.name }}</option>
                                     {% endfor %}
                                     <option disabled>---DEUTSCH---</option>
                                     {% for option in glossaryItems["german"] %}
-                                        <option value="{{ option.id }}">{{ option.name }}, <small>({{ option.genus }}.)</small></option>
+                                        <option value="{{ option.id }}">{{ option.name }}</option>
                                     {% endfor %}
                                 {% endif %}
                             </select>
                             <label for="floatingSelectObject">Beziehung zu</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelectType"  name="relation_type">
-                                <option value="translation" selected>Übersetzung</option>
-                                <option value="synonym">Synonym</option>
-                                <option value="antonym">Antonym</option>
-                            </select>
-                            <label for="floatingSelectGenus">Beziehungstyp</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="number" min="0" max="100" value="50" class="form-control" id="glossary_score"  name="score">
-                            <label for="glossary_score">Score (0-100)</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" id="floatingTextarea" name="notes"></textarea>
-                            <label for="floatingTextarea">Notizen / Kommentar</label>
                         </div>
                         <button type="submit" class="btn btn-outline-success w-100"  >Hinzufügen</button>
                     </form>

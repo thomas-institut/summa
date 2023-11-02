@@ -24,7 +24,7 @@ class Glossary_Item extends Model
 
     public function relations() {
         return $this->belongsToMany(Glossary_Item::class, Glossary_Relation::class, 'subject_id', 'object_id')
-            ->withPivot(['relation_type', 'score', 'notes'])->orderBy("score", "DESC");
+            ->orderBy("name", "asc");
     }
 
 

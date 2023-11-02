@@ -3,54 +3,32 @@
 
 <div id="all_wrapper" class="content-container m-auto bg-light shadow d-flex flex-column p-0 p-md-5 viewer-box" style="min-height: 100%!important; ">
     <div class="card">
-        <h1 class="card-header text-center">{{ glossaryItem.name }}, <small>({{ glossaryItem.genus }}.)</small></h1>
-        <div class="card-body">
-
-            <div class="mb-3 p-3 card">
-                <span>{{ glossaryItem.md_notes }}</span>
+        <h1 class="card-header text-center">{{ glossaryItem.name }}</h1>
+        <div class="card-body min-vh-100">
+            <div class="mb-1 px-3 card border-0">
+                <strong>
+                    Begriffserklärung:
+                </strong>
+                <small>{% if glossaryItem.md_definition %}{{ glossaryItem.md_definition }}{% else %}<i class="text-secondary">noch nicht vorhanden</i>{% endif %}</small>
             </div>
-            <div class="w-100 d-flex flex-column flex-sm-row justify-content-between">
-                <div class="w-33">
-                    <h5 class="text-center text-dark">Übersetzungen</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for relationItem in glossaryItem["relations"] %}
-                            {% if relationItem.pivot.relation_type == "translation" %}
-                                <a href="{{ webInfo.baseurl }}glossar/{{ relationItem.name }}" class="list-group-item d-flex flex-column" >
-                                    <span>
-                                        {{ relationItem.name }},
-                                        <small>
-                                            ({{ relationItem.genus }}.)
-                                        </small>
-                                    </span>
-                                    <small class="text-secondary"><i>{{ relationItem.pivot.notes }}</i></small>
-                                </a>
-
-                            {% endif %}
-                        {% endfor %}
-
-                    </ul>
-                </div>
-                <div class="w-33">
-                    <h5 class="text-center text-dark">Synonyme</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for relationItem in glossaryItem["relations"] %}
-                            {% if relationItem.pivot.relation_type == "synonym" %}
-                                <a href="{{ webInfo.baseurl }}/redaktion/glossary/{{ relationItem.name }}" class="list-group-item" >{{ relationItem.name }}, <small>({{ relationItem.genus }}.)</small></a>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="w-33">
-                    <h5 class="text-center text-dark">Antonyme</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for relationItem in glossaryItem["relations"] %}
-                            {% if relationItem.pivot.relation_type == "antonym" %}
-                            <a href="{{ webInfo.baseurl }}/redaktion/glossary/{{ relationItem.name }}" class="list-group-item" >{{ relationItem.name }}, <small>({{ relationItem.genus }}.)</small></a>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
+            <div class="mb-1 px-3 card border-0">
+                <strong>
+                    weitere Belegstellen:
+                </strong>
+                <small>{{ glossaryItem.md_references }}</small>
             </div>
+            <div class="mb-1 px-3 card border-0">
+                <strong>
+                    Vergleiche:
+                </strong>
+                <ul class="list-group list-group-flush">
+                    {% for relationItem in glossaryItem["relations"] %}
+                        <a href="{{ webInfo.baseurl }}glossar/{{ relationItem.name }}" class="list-group-item d-flex flex-column" ><small>{{ relationItem.name }}</small></a>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
         </div>
     </div>
     <div class="modal" tabindex="-1" id="addRelation">

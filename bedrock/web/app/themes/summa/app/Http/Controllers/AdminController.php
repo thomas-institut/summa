@@ -152,9 +152,11 @@ class AdminController extends StandardController
         $glossaryItem = new Glossary_Item;
         $glossaryItem->name = $request->getParsedBody()["name"];
         $glossaryItem->language = $request->getParsedBody()["language"];
-        $glossaryItem->genus = $request->getParsedBody()["genus"];
-        if (isset($request->getParsedBody()["notes"])){
-            $glossaryItem->notes = $request->getParsedBody()["notes"];
+        if (isset($request->getParsedBody()["definition"])){
+            $glossaryItem->definition = $request->getParsedBody()["definition"];
+        }
+        if (isset($request->getParsedBody()["references"])){
+            $glossaryItem->references = $request->getParsedBody()["references"];
         }
         $glossaryItem->save();
         $webInfo["glossary_change"] = true;
