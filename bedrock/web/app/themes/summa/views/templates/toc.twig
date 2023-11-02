@@ -40,7 +40,7 @@
                                         <ul class="list-group list-group-flush">
                                             {% for article in chapter.articles_no_chunks %}
                                                 <a class="list-group-item index-list-item d-flex flex-row" href="{{ webInfo.baseurl }}index/Sth/{{ book.project_id }}/{{ chapter.project_id }}#{{ article.project_id }}">
-                                                    <span class="text-summa-primary" style="min-width: 40px!important; margin-left: 35px!important; font-size: 15px!important;">{{ article.thomas_id }}</span>
+                                                    <span class="text-summa-primary" style="min-width: 40px!important; margin-left: 35px!important; font-size: 15px!important;">{% if article.thomas_id != "intro" %}{{ article.thomas_id }}{% else %}A.0{% endif %}</span>
                                                     <span class="text-dark" style="font-size: 15px!important; font-weight: lighter">
                                                                 {% if article.title_lat != "" and article.title_ger != "" %}
                                                                     {{ article.title_lat }}
@@ -52,7 +52,7 @@
                                                                     {% endif %}
                                                                 {% endif %}
                                                             </span>
-                                                    <i class="fas fa-external-link-square-alt text-white"></i>
+                                                    <i class="fas fa-external-link-square-alt text-white ms-1"></i>
                                                 </a>
                                             {% endfor %}
                                         </ul>
