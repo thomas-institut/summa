@@ -159,7 +159,7 @@
 
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="glossary_wrapper" role="tabpanel" aria-labelledby="qtab">
+                    <div class="tab-pane fade" id="glossary" role="tabpanel" aria-labelledby="qtab">
                         <button class="btn btn-success w-100"  data-bs-toggle="modal" data-bs-target="#addGlossaryItem">Hinzufügen</button>
                         {% if webInfo.glossary_change %}<span class="alert alert-success">Glossar erfolgreich erweitert</span>{% endif %}
                         <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -204,7 +204,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form hx-post="{{ webInfo.baseurl }}redaktion/glossary" hx-select="#glossary_wrapper" hx-target="#glossary_wrapper" hx-swap="outerHTML">
+                                                <form hx-post="{{ webInfo.baseurl }}redaktion/glossary" hx-select="#glossary" hx-target="#glossary" hx-swap="outerHTML">
                                                     <div class="form-floating mb-3">
                                                         <input type="text" class="form-control" id="glossary_name"  name="name">
                                                         <label for="glossary_name">Wort</label>
