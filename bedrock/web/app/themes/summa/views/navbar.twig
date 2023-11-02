@@ -22,7 +22,9 @@
                 <li class="nav-item">
                     <a class="nav-link {% if webInfo.route == "corpus" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}corpus" >CORPUS</a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link {% if webInfo.route == "glossar" %}nav-link-active{% endif %}" href="{{ webInfo.baseurl }}glossar" >GLOSSAR</a>
+                </li>
                 <li class="nav-item dropdown ">
                     <a class="nav-link {% if webInfo.route == "mitwirken" or webInfo.route == "styleguide" or webInfo.route == "übersetzungswerkstatt" %}nav-link-active{% endif %} dropdown-toggle" href="{{ webInfo.baseurl }}mitwirken" id="pDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         MITWIRKEN
